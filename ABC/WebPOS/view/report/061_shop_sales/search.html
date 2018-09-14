@@ -1,0 +1,391 @@
+{{fill "css"}}
+<link rel="stylesheet" href="/static/css/report/report.css"/>
+<link rel="stylesheet" href="/static/css/report/monthPicker.min.css"/>
+<link rel="stylesheet" href="/static/css/report/handle.common.css"/>
+<link rel="stylesheet" href="/static/css/report/button_report.css"/>
+<link rel="stylesheet" href="/static/lib/jquery.tablesorter/theme.blue/style.css"/>
+<link rel="stylesheet" href="/static/lib/jquery-ui/jquery.multiselect.filter.css"/>
+<style>
+    table.search-condition-table th {
+        width: 120px; !important;
+    }
+    textarea {
+        padding: 5px !important;
+        resize: none !important; /* Remove this if you want the user to resize the textarea */
+    }
+    @media print{
+        header {
+            position: absolute;
+        }
+
+        a[href]:after {
+            content: none !important;
+        }
+
+        thead {
+            display: table-header-group;
+        }
+
+        tbody {
+            display: table-row-group;
+        }
+
+        table.floatThead-table {
+            display: none !important;
+        }
+
+        html {
+            zoom: 80%;
+            -ms-transform: scale(0.83);
+        }
+    }
+    @media print and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        body{
+            margin-left: -100px;
+        }
+    }
+
+</style>
+{{end}}
+
+{{fill "script"}}
+<script src='/static/js/fixed_midashi_src.js'></script>
+<script src="/static/js/multiselect.js"></script>
+<script src="/static/js/input_date.js"></script>
+<script src="/static/js/input.array.js"></script>
+<script src="/static/js/input.number.js"></script>
+<script src="/static/js/input.form-name.js"></script>
+<script src="/static/js/input.select.date.js"></script>
+<script src="/static/js/monthPicker.min.js"></script>
+<script src="/static/js/report.search.handle.js"></script>
+<script src="/static/js/report.download.handle.js"></script>
+<script src="/static/js/report.date.handle.js"></script>
+<script src="/static/js/report.single.goods.js"></script>
+<script src="/static/lib/jquery.tablesorter/jquery.tablesorter.js"></script>
+<script src="/static/lib/jquery-ui/jquery.multiselect.filter.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="/static/js/report.submit.search.js"></script>
+<script>
+    setTimeout(function () {
+        if($("input[name=flag]").val() != "") {
+         //JAN
+         {{if ne (len .form.JanArrays) 0}}
+            {{if ne (index .form.JanArrays 0) ""}}
+                 {{range $key,$make := .form.JanArrays}}
+                    $("#jan_cd_array").val({{$make}});
+                 {{end}}
+                $("#jan_cd_single").val("");
+            {{end}}
+         {{end}}
+         {{if ne .form.JanSingle ""}}
+            $("#jan_cd_single").val({{.form.JanSingle}});
+         {{end}}
+        //単位 - 期間
+        {{if eq .form.GroupType "0"}}
+        $("input[id=type_day]").prop('checked', true);
+        $("tr.select_date").css("display","table-row");
+        $("tr.select_week").css("display","none");
+        $("tr.select_month").css("display","none");
+        $("input[name=date_from]").val({{.form.DateFrom}});
+        $("input[name=date_to]").val({{.form.DateTo}});
+        {{else if eq .form.GroupType "1"}}
+        $("input[id=type_week]").prop('checked', true);
+        $("tr.select_date").css("display","none");
+        $("tr.select_week").css("display","table-row");
+        $("tr.select_month").css("display","none");
+        $("input[name=week_from]").val({{.form.WeekFrom}});
+        $("input[name=week_to]").val({{.form.WeekTo}});
+        {{else}}
+        $("input[id=type_month]").prop('checked', true);
+        $("tr.select_date").css("display","none");
+        $("tr.select_week").css("display","none");
+        $("tr.select_month").css("display","table-row");
+        $("input[name=month_from]").val({{.form.MonthFrom}});
+        $("input[name=month_to]").val({{.form.MonthTo}});
+        {{end}}
+
+        //店舗
+        {{if ne (len .list_shop) 1}}
+        $("select[name=shop_cd]").multiselect("uncheckAll");
+        {{range $key,$shop := .form.ShopCd}}
+        $('select[name=shop_cd] option[value="{{$shop}}"]').prop("selected", true);
+        {{end}}
+
+        $("select[name=shop_cd]").multiselect("refresh");
+        {{end}}
+
+        countLines();
+        $("#btn_search").trigger("click");
+        }
+
+    },100);
+</script>
+<script>
+    $(".multiselect").multiselect({
+        open: function () {
+            $("input[type='search']:first").focus();
+        }
+    }).multiselectfilter();
+
+    // Set width texterea when scroll area
+    function setWith() {
+    }
+
+
+    // Set width revert default texterea when not scroll
+    function countLines(){
+        var scrollHeigh = $("textarea[name='jan_cd_array']").prop('scrollHeight');
+
+        var widthDefault = "101px";
+        var widthScrollIE = "121px";
+        var widthScrollNotIE = "111px";
+        var  versionIE = GetIEVersion();
+        if (versionIE ==0 ){
+            if (scrollHeigh <= 122) {
+                $("textarea[name='jan_cd_array']").css("width",widthDefault);
+            } else {
+                $("textarea[name='jan_cd_array']").css("width",widthScrollNotIE);
+            }
+        } else if (versionIE == 9){
+            if (scrollHeigh <= 82) {
+                $("textarea[name='jan_cd_array']").css("width",widthDefault);
+            } else {
+                $("textarea[name='jan_cd_array']").css("width",widthScrollIE);
+            }
+        } else {
+            if (scrollHeigh <= 93) {
+                $("textarea[name='jan_cd_array']").css("width",widthDefault);
+            } else {
+                $("textarea[name='jan_cd_array']").css("width",widthScrollIE);
+            }
+        }
+    }
+
+    function GetIEVersion() {
+        var sAgent = window.navigator.userAgent;
+        var Idx = sAgent.indexOf("MSIE");
+
+        // If IE, return version number.
+        if (Idx > 0)
+            return parseInt(sAgent.substring(Idx+ 5, sAgent.indexOf(".", Idx)));
+
+        // If IE 11 then look for Updated user agent string.
+        else if (!!navigator.userAgent.match(/Trident\/7\./))
+            return 11;
+
+        else
+            return 0; //It is not IE
+    }
+
+    $("#jan_cd_array").bind('drop paste', function(e) {
+        var elem = $(this);
+        elem.focus();
+        setTimeout(function() {
+            // gets the copied text after a specified time (100 milliseconds)
+            var janArrayValue = elem.val();
+            janArrayValue = janArrayValue.replace(new RegExp('\r?\n','g'), '');
+            if (janArrayValue.length > (13 * 250)) {
+                janArrayValue = janArrayValue.slice(0, (13 * 250) - janArrayValue.length);
+            }
+            elem.val(janArrayValue);
+            countLines();
+        }, 100);
+    });
+    $(document).ready(function() {
+        // check input 15 JAN
+        $("textarea[name=jan_cd_array]").keydown(function (e) {
+            var areaItem = $("textarea[name=jan_cd_array]").val();
+            var arr = areaItem.split("\n");
+            var crsfLine = arr.length - 1;
+            if ((areaItem.length - crsfLine) >= 250*13) {
+                // Allow: backspace, delete, tab, escape, enter and .
+                if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                    // Allow: Ctrl+A, Command+A
+                    (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                    // Allow: home, end, left, right, down, up
+                    (e.keyCode >= 35 && e.keyCode <= 40)) {
+                    // let it happen, don't do anything
+                    return;
+                }
+                e.preventDefault();
+            }
+            //Enter search
+            if (e.keyCode === 13){
+                if (!e.shiftKey) {
+                    e.preventDefault();
+                    setTimeout(function () {
+                        $("#btn_search").trigger("click");
+                    },100);
+                }
+            }
+        });
+    });
+    //Event input JAN
+    $("#jan_cd_single").bind({
+        paste : function(){
+            $("#jan_cd_array").val("");
+        },
+    });
+    $("#jan_cd_single").focus(function () {
+        if ($("#jan_cd_single").val().length == 0 ){
+            $("#jan_cd_single").val("9784");
+        }
+        if ($("#jan_cd_array").val().length > 0 ){
+            $("#jan_cd_array").val("");
+        }
+    });
+
+    $("#jan_cd_array").focus(function () {
+        if ($("#jan_cd_single").val().length > 0){
+            $("#jan_cd_single").val("");
+        }
+    });
+//    $("#jan_cd_array").bind({
+//        paste : function(){
+//            $("#jan_cd_single").val("");
+//        },
+//    });
+
+</script>
+{{end}}
+
+{{fill "main"}}
+<span class="page-header main-report">{{.MenuName}}</span>
+<table class="table_search noborder" >
+    <tr>
+        <td style="vertical-align: top;">
+            <div id="search_condition_area" style="vertical-align: top; ">
+                <form id="form_search">
+                    {{ .csrfField }}
+                    <input type="hidden" name="page" value="1"/>
+                    <input type="hidden" name="search_handle_type"/>
+                    <input type="hidden" name="type_query" value="1" class="type_query"/>
+                    <input type="hidden" name="flag" value="{{if ne .form.JAN ""}}1{{end}}" />
+                    <input type="hidden" name="link_revert" value="{{.link_revert}}"/>
+                    <input type="hidden" name="jan_code" value=""/>
+                    <table class="search-condition-table">
+                        <!-- 店舗-->
+                        <tr>
+                            <th style="width: 100px !important;">店舗</th>
+                            <td>
+                                {{if eq (len .list_shop) 1}}
+                                {{$shop := (index .list_shop 0)}}
+                                <input name="shop_cd" value="{{$shop.ShopCD}}" type="hidden"/>
+                                {{$shop.SharedBookStoreCode}} ({{$shop.ShopCD}}) {{$shop.ShopName}}
+                                {{$shop.SharedBookStoreCode}} ({{$shop.ShopCD}}) {{$shop.ShopName}}
+                                {{else}}
+                                {{$ListShopForm := .form.ShopCd}}
+                                <select  id="shop_cd" name="shop_cd" class="multiselect" multiple="multiple">
+                                    {{range $key, $shop := .list_shop}}
+                                    <option value="{{$shop.ShopCD}}">{{$shop.SharedBookStoreCode}} ({{$shop.ShopCD}}) {{$shop.ShopName}}</option>
+                                    {{end}}
+                                </select>
+                                {{end}}
+                            </td>
+                        </tr>
+                        <!-- JANコード前方一致-->
+                        <tr>
+                            <th>JANコード前方一致</th>
+                            <td>
+                                <div style="display:table">
+                                    <div style="display: table-cell;">
+                                        <input maxlength="13" class="input-jan jan-item" name="jan_cd_single" id = "jan_cd_single" type="text" style="vertical-align: middle;" value="9784">
+                                    </div>
+                                    <div style="display: table-cell;padding-left: 15px;">
+                                        <span>※JANコードの前方一致検索を行います。</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- JANコード完全一致-->
+                        <tr class="current_jan">
+                            <th style="vertical-align: top;padding-top: 5px !important;">
+                                JANコード完全一致
+                            </th>
+                            <td>
+                                <textarea name="jan_cd_array" id="jan_cd_array" cols="12" rows="6"  onKeyUp="countLines()" onscroll="setWith();" style="margin-left: 2px;"></textarea>
+                            </td>
+                        </tr>
+                        <!--単位-->
+                        <tr class="current_report">
+                            <th>単位</th>
+                            <td>
+                                <label class="radio_label" for="type_day">
+                                    <input type="radio" name="group_type" id="type_day" value="0" checked>
+                                    <span>日別</span>
+                                </label>
+                                <label class="radio_label" for="type_week">
+                                    <input type="radio" name="group_type" id="type_week" value="1" >
+                                    <span>週別</span>
+                                </label>
+                                <label class="radio_label" for="type_month">
+                                    <input type="radio" name="group_type" id="type_month" value="2" >
+                                    <span>月別</span>
+                                </label>
+                            </td>
+                        </tr>
+                        <!-- 期間 -->
+                        <tr class="select_date" >
+                            <th>期間</th>
+                            <td>
+                                <input data-name="日付(前)" id="date_from" size="10" name="date_from" type="text" class="input_date " placeholder="YYYY/MM/DD" value="{{.default_date_from}}"/>
+                                <label for="date_from" class="demeter-date btn-selected-date-form">日付</label>
+                                <span class="demeter-date">～</span>
+                                <input data-name="日付(後)" id="date_to" size="10" name="date_to" type="text" class="input_date" placeholder="YYYY/MM/DD" value="{{.default_date_to}}"/>
+                                <label for="date_to" class="demeter-date btn-selected-date-form">日付</label>
+                            </td>
+                        </tr>
+                        <tr class="select_week" style="display: none">
+                            <th>期間</th>
+                            <td>
+                                <input id="week_from" style="width: 140px;" name="week_from" type="text" class="input_week " placeholder="YYYY/MM/DD～MM/DD" readonly value=""/>
+                                <label for="week_from" class="demeter-date btn-selected-date-form">週</label>
+                                <span class="demeter-week">～</span>
+                                <input id="week_to" style="width: 140px; " name="week_to" type="text" class="input_week " placeholder="YYYY/MM/DD～MM/DD" readonly value=""/>
+                                <label for="week_to" class="demeter-date btn-selected-date-form">週</label>
+                            </td>
+                        </tr>
+                        <tr class="select_month" style="display: none">
+
+                            <th>期間</th>
+                            <td>
+                                <input id="month_from" size="10" name="month_from" type="text" class="input_month " placeholder="YYYY/MM" value=""/>
+                                <label for="month_from" class="demeter-date btn-selected-date-form">年月</label>
+                                <span class="demeter-month">～</span>
+                                <input id="month_to" size="10" name="month_to" type="text" class="input_month" placeholder="YYYY/MM" value=""/>
+                                <label for="month_to" class="demeter-date btn-selected-date-form">年月</label>
+                            </td>
+                        </tr>
+                        <tr class="current_report current_all">
+                            <!-- フォーマット -->
+                            <th>フォーマット</th>
+                            <td>
+                                <select name="download_type" class="download_type">
+                                    <option value="0" id="type_0" {{if eq .form.DownloadType "0"}} selected{{end}}>
+                                    集計結果
+                                    </option>
+                                    <option value="1" id="type_1" {{if eq .form.DownloadType "1"}} selected{{end}}>
+                                    集計結果+推移
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+
+
+
+                        <tr class="single-item">
+                            <td></td>
+                            <td colspan="2" style="text-align: left">
+                                <label id="btn_search" class="report-search-button">集計実行</label>
+                                <label id="btn_download_csv" class="report-search-button btn-image-download-report-csv">ダウンロード</label>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </td>
+    </tr>
+</table>
+<div id="query_result" class="current_report"></div>
+{{end}}
+

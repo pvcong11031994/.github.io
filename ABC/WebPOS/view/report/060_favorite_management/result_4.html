@@ -1,0 +1,107 @@
+{{$DATA := .list_user_jan}}
+<table class="table_search noborder" >
+    <tr>
+        <td style="vertical-align: top;">
+            <div id="search_condition_area" style="vertical-align: top; ">
+                <form id="form_favorite" onsubmit="editFavoriteData(); return false;">
+                    <p style="text-align: right; padding-right: 20px; margin: 0px;"><b>{{len $DATA}}件</b></p>
+                    <table class="query-result query-result-3 tablesorter" id="tbl_report_result" style="width: max-content; display: -ms-grid; -ms-grid-columns: max-content;" _fixedhead ="rows:2; cols:3" >
+                        <thead>
+                        <tr>
+                            <td data-sorter="false" colspan="3">
+                                <div id="pagination">
+                                    <label class="click_for_init_sales_compare" onclick="initSalesCompareClick()">初速比較</label>
+                                    <label class="click_for_sales_comparison" onclick="salesCompareClick() ">売上比較</label>
+                                </div>
+                            <td data-sorter="false" colspan="9">
+                                <div style="white-space: normal; float: right; ">
+                                    <label id="btn_copy_jan" class="report-search-button" onclick="copyJanToClipboard()">JANをコピーする</label>
+                                    <label id="btn_add_row" class="report-search-button" onclick="addNewFavoriteRow()">行を新規追加する</label>
+                                    <button type="submit" id="btn_save" class="report-search-button">更新</button>
+                                    <label id="btn_delete" class="report-search-button" onclick="deleteFavoriteData()">削除</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="col">
+                            <th class="row-name" data-sorter="false">
+                                <label style="display: table" class="check_label" >
+                                    <input type="checkbox" name="check-all" style="margin-right: 5px" onchange="checkAll(this)">
+                                    <span style="display: table-cell; vertical-align: middle">更新</span>
+                                </label>
+                            </th>
+                            <th class="row-name">優先順位</th>
+                            <th class="row-name">JAN</th>
+                            <th class="row-name" id="resize-col">品名</th>
+                            <th class="row-name">著者名</th>
+                            <th class="row-name">出版社</th>
+                            <th class="row-name">単価</th>
+                            <th class="row-name">発売日</th>
+                            <th class="row-name">メモ</th>
+                            <th class="row-name">登録日</th>
+                            <th class="row-name">更新日</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {{range $i, $row := $DATA}}
+                        <tr id="favorite-old">
+                            <td style="text-align: center">
+                                <label class="check_label">
+                                    <input type="checkbox" name="checkboxJan" id="update-checkbox"/>
+                                </label>
+                            </td>
+                            <td style="text-align: center">
+                                <span style="display: none">{{$row.PriorityNumber}}</span>
+                                <input name="priority_number" style="width: 50px; padding-right: 2px; padding-left: 2px; text-align: right" value="{{$row.PriorityNumber}}" onkeypress='validate(event)'/>
+                            </td>
+                            <td class="click_for_single_item_transition" name="jan_code">{{$row.JanCode}}</td>
+                            <td class="cells-goods-name link_data" title="{{$row.ProductName}}">{{$row.ProductName}}</td>
+                            <td class="cells-writer-name" title="{{$row.AuthorName}}">{{$row.AuthorName}}</td>
+                            <td title="{{$row.MakerName}}">{{$row.MakerName}}</td>
+                            <td class="number">{{$row.ListPrice  | sum_format}}</td>
+                            <td class="number">{{$row.SellingDate}}</td>
+                            <td style="text-align: center">
+                                <span style="display: none">{{$row.Memo}}</span>
+                                <input name="memo" style="width: 100%; padding-right: 2px; padding-left: 2px" value="{{$row.Memo}}"/>
+                            </td>
+                            <td class="number">{{$row.CreateDate}}</td>
+                            <td class="number">{{$row.UpdateDate}}</td>
+                        </tr>
+                        {{end}}
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </td>
+    </tr>
+</table>
+<script>
+    $(document).ready(function() {
+        //Fix resize and freeze header IE
+        var  versionIE = GetIEVersion();
+        if (versionIE === 9 || versionIE === 11) {
+            var defaultBorder = "2px";
+            var defaultTopBottom = "1.75px";
+            $("th[id=resize-col]").css("border-left-width", defaultBorder);
+            $("th[id=resize-col]").css("border-top-width", defaultTopBottom);
+            $("th[id=resize-col]").css("border-bottom-width", defaultTopBottom);
+            $("th[id=resize-col]").css("border-right-width", defaultBorder);
+        }
+    });
+
+    //resize col 品名
+    $("#resize-col").resizable({
+        minWidth: 10
+    });
+    $(".ui-resizable-s").remove();
+    $(".ui-resizable-se").remove();
+    $("#resize-col").resize(function() {
+        FixedMidashi.create();
+        //Fix resize IE
+        var  versionIE = GetIEVersion();
+        if (versionIE === 9 || versionIE === 11) {
+            var defaultBorder = "2px";
+            $("th[id=resize-col]").css("border-right-width", defaultBorder);
+        }
+    });
+</script>

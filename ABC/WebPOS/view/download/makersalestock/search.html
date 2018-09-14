@@ -1,0 +1,173 @@
+{{fill "css"}}
+<link rel="stylesheet" href="/static/css/report/report.css"/>
+<link rel="stylesheet" href="/static/css/report/handle.common.css"/>
+<link rel="stylesheet" href="/static/css/report/button_report.css"/>
+{{end}}
+
+{{fill "script"}}
+<script src="/static/js/multiselect.js"></script>
+<script src="/static/lib/subpage/subpage.js"></script>
+<script src="/static/js/input_date.js"></script>
+<script src="/static/js/input.array.js"></script>
+<script src="/static/js/input.number.js"></script>
+<script src="/static/js/input.form-name.js"></script>
+<script src="/static/js/input.form-name.js"></script>
+<script src="/static/js/input.select.date.js"></script>
+<script src="/static/js/report.submit.search.js"></script>
+{{end}}
+
+{{fill "main"}}
+<span class="page-header main-report">{{.MenuName}}</span>
+<table class="table_search noborder" >
+    <tr>
+        <td style="vertical-align: top;">
+            <div id="search_condition_area" style="vertical-align: top; min-width: 80px !important;">
+                <form id="form_search">
+                    {{ .csrfField }}
+                    <input type="hidden" name="layout_cols"/>
+                    <input type="hidden" name="layout_rows"/>
+                    <input type="hidden" name="layout_sums"/>
+                    <table class="search-condition-table">
+                        <!-- メーカー-->
+                        <tr class="current_report">
+                            <th>出版社</th>
+                            <td>
+                                <input maxlength="50" class="input-jan" data-form-name="maker_cd" name="maker_cd" type="text" value="{{.maker}}"/>
+                            </td>
+                        </tr>
+                        <!-- 店舗-->
+                        <tr class="current_report">
+                            <th>店舗</th>
+                            <td>
+                                {{if eq (len .list_shop) 1}}
+                                {{$shop := (index .list_shop 0)}}
+                                <input name="shop_cd" value="{{$shop.ServerName}}|{{$shop.ShopCD}}" type="hidden"/>
+                                {{$shop.SharedBookStoreCode}} ({{$shop.ShopCD}}) {{$shop.ShopName}}
+                                {{else}}
+                                <select style="width: 380px; display:none;" name="shop_cd" class="multiselect" multiple="multiple">
+                                    {{range $key, $shop := .list_shop}}
+                                    <option value="{{$shop.ServerName}}|{{$shop.ShopCD}}" selected>{{$shop.SharedBookStoreCode}} ({{$shop.ShopCD}}) {{$shop.ShopName}}</option>
+                                    {{end}}
+                                </select>
+                                {{end}}
+                            </td>
+                        </tr>
+                        <!-- 期間 -->
+                        <tr>
+                            <th>期間</th>
+                            <td>
+                                <input data-name="日付(前)" id="date_from" size="10" name="date_from" type="text" class="input_date input-range required" placeholder="YYYY/MM/DD" value="{{.date}}"/>
+                                <label for="date_from" class="demeter-date btn-selected-date-form">日付</label>
+                                <span class="demeter-date">～</span>
+                                <input data-name="日付(後)" id="date_to" size="10" name="date_to" type="text" class="input_date input-range required" placeholder="YYYY/MM/DD" value="{{.date}}"/>
+                                <label for="date_to" class="demeter-date btn-selected-date-form">日付</label>
+                            </td>
+                        </tr>
+                        <!-- JAN-->
+                        <tr>
+                            <th>JAN</th>
+                            <td>
+                                <input maxlength="13" class="input-jan jan-item" name="jan_cd" type="text"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!-- 商品区分 -->
+                            <th class="top-category">商品区分</th>
+                            <td>
+                                <label class="radio_label" for="book">
+                                    <input type="radio" name="bqgm_goods_type" id="book" value="1" checked>
+                                    <span>和書</span>
+                                </label>
+                                <label class="radio_label" for="zasshi_month">
+                                    <input type="radio" name="bqgm_goods_type" id="zasshi_month" value="2">
+                                    <span>雑誌（月刊誌）</span>
+                                </label>
+                                <label class="radio_label" for="zasshi_week">
+                                    <input type="radio" name="bqgm_goods_type" id="zasshi_week" value="3">
+                                    <span>雑誌（週刊誌）</span>
+                                </label>
+                                <label class="radio_label" for="zasshi_other">
+                                    <input type="radio" name="bqgm_goods_type" id="zasshi_other" value="4">
+                                    <span>雑誌（その他）</span>
+                                </label>
+                            </td>
+                        </tr>
+                        <!-- データモード -->
+                        <tr>
+                            <th></th>
+                            <td>
+                                <label class="radio_label" for="type_sale">
+                                    <input type="radio" id="type_sale" name="data_mode" value="0" checked/>
+                                    <span>売上</span>
+                                </label>
+                                <label class="radio_label" for="type_stock">
+                                    <input type="radio" id="type_stock" name="data_mode" value="1"/>
+                                    <span>在庫</span>
+                                </label>
+                            </td>
+                        </tr>
+                        <!-- 実施ボタン -->
+                        <tr>
+                            <td colspan="2" style="text-align: center">
+                                <button type="button" class="report-search-button" id="btn_search">CSVダウンロード</button>
+                                <button type="button" class="report-search-button" id="btn-clear">クリア</button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </td>
+    </tr>
+</table>
+<div style="display: none;">
+    <div style="display: block;" class="err-msg model fade in">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body" style="text-align: center; color: red">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning subpage-close">閉じる</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}
+
+{{append "script"}}
+<script>
+    $("#btn-clear").click(function () {
+        $("#form_search")[0].reset()
+    });
+
+    $("#btn_search").click(function () {
+
+        $.ajax({
+            type: "POST",
+            url: {{.link}},
+            data: $("#form_search").serialize(),
+            success: function (res) {
+                if (res.Success) {
+                    var downloadUrl = "{{.link_download}}?f=" + res.DownloadToken;
+                    console.log(downloadUrl);
+                    window.location.replace(downloadUrl)
+                } else {
+                    $(".err-msg .modal-body").html(res.Msg);
+                    $(".err-msg").subpage();
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                $(".err-msg .modal-body").html("インターナルサーバエラー");
+                $(".err-msg").subpage();
+                console.log(XMLHttpRequest);
+                console.log(textStatus);
+                console.log(errorThrown);
+            }
+        });
+    })
+</script>
+{{end}}

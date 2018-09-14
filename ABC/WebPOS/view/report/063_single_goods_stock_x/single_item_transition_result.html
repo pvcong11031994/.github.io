@@ -1,0 +1,372 @@
+{{$super := .super}}
+{{$DATA := .data}}
+{{$DATATOTAL := .datatotal}}
+
+{{$rowDisplay := .row_display}}
+{{$SUM_KEY_FIELD := .SUM_KEY_FIELD}}
+{{$listResult := .list_result_graph}}
+{{$hTitle := .h_title}}
+{{$viewWindowMode := .view_window_mode}}
+{{$showTextEvery := .show_text_every}}
+
+{{$rangeType := .rangeType}}
+{{$listCols := .listCols}}
+
+<style>
+    div.image {
+        float: left;
+        height: 100%;
+        padding: 10px;
+    }
+    div.image img {
+        max-width: 280px;
+        min-width: 280px;
+        max-height: 360px;
+        min-height: 360px;
+    }
+    div.info_item {
+        float: left;
+        height: 100%;
+        /*padding: 10px;*/
+    }
+    table.table_list th{
+        text-align: left !important;
+    }
+    .google-visualization-tooltip {
+        /*background-color: blue!important;*/
+        width: auto!important;
+        top: 20px!important;
+        right: 0px!important;
+        border: none !important;
+        box-shadow: none!important;
+        left: inherit!important;
+    }
+</style>
+<!-- 単品 -->
+<table class="table_search noborder" >
+    <tr>
+        <td style="display: none">
+            <div class="image">
+                <img src="/static/img/book.jpg"/>
+            </div>
+        </td>
+        <td>
+            <div class="info_item">
+                <table class="table_list query-result">
+                    <tr>
+                        <th style="min-width: 70px!important;">ＪＡＮ</th>
+                        <td>{{$DATATOTAL.JanCd}}</td>
+                    </tr>
+                    <tr>
+                        <th style="min-width: 70px!important;">品名</th>
+                        <td>{{$DATATOTAL.GoodsName}}</td>
+                    </tr>
+                    <tr>
+                        <th style="min-width: 70px!important;">著者</th>
+                        <td>{{$DATATOTAL.AuthorName}}</td>
+                    </tr>
+                    <tr>
+                        <th style="min-width: 70px!important;">出版社</th>
+                        <td>{{$DATATOTAL.PublisherName}}</td>
+                    </tr>
+                    <tr>
+                        <th style="min-width: 70px!important;">発売日</th>
+                        <td>{{$DATATOTAL.SaleDate}}</td>
+                    </tr>
+                    <tr>
+                        <th style="min-width: 70px!important;">本体価格</th>
+                        <td>{{$DATATOTAL.Price | sum_format}}</td>
+                    </tr>
+                    <tr>
+                        <th style="min-width: 70px!important;">期間入荷累計</th>
+                        <td>{{$DATATOTAL.ReturnTotal | sum_format}}</td>
+                    </tr>
+                    <tr>
+                        <th style="min-width: 70px!important;">期間売上累計</th>
+                        <td>{{$DATATOTAL.SaleTotal | sum_format}}</td>
+                    </tr>
+                    <tr>
+                        <th style="min-width: 70px!important;">在庫</th>
+                        <td>{{$DATATOTAL.StockTotal | sum_format}}</td>
+                    </tr>
+                    <tr>
+                        <th style="min-width: 70px!important;">初売上日</th>
+                        <td>{{$DATATOTAL.FirstSaleDate}}</td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+        <td>
+            <div id="graph_area" class="graph_area" style="width: 850px;max-height: 350px;min-height: 350px;"></div>
+        </td>
+    </tr>
+</table>
+<!-- 日別推移 -->
+<div class="data_view">
+    <table class="query-result feeze-header " id="tbl_report_result" _fixedhead ="rows:{{if eq $rangeType "0"}}4{{else}}3{{end}}; cols:2">
+        <thead>
+            {{if eq $rangeType "0"}}
+            <tr class="col">
+                <th></th>
+                <th class="col-name">年</th>
+                {{range $j, $item := $listCols}}
+                <th {{if eq (checkSunday $item.McKey) 1}} class="sum-col"{{end}}>{{$item.Mcyyyy}}</th>
+                {{end}}
+                <th></th>
+                <th></th>
+            </tr>
+            <tr class="col">
+                <th></th>
+                <th class="col-name">月</th>
+                {{range $j, $item := $listCols}}
+                <th {{if eq (checkSunday $item.McKey) 1}} class="sum-col"{{end}}>{{$item.Mcmm}}</th>
+                {{end}}
+                <th></th>
+                <th></th>
+            </tr>
+            <tr class="col">
+                <th></th>
+                <th class="col-name">日</th>
+                {{range $j, $item := $listCols}}
+                <th {{if eq (checkSunday $item.McKey) 1}} class="sum-col"{{end}}>{{$item.Mcdd}}</th>
+                {{end}}
+                <th></th>
+                <th></th>
+            </tr>
+            {{else if eq $rangeType "1"}}
+            <tr class="col">
+                <th></th>
+                <th class="col-name">年</th>
+                {{range $j, $item := $listCols}}
+                <th >{{$item.Mcyyyy}}</th>
+                {{end}}
+                <th></th>
+                <th></th>
+            </tr>
+            <tr class="col">
+                <th></th>
+                <th class="col-name">週</th>
+                {{range $j, $item := $listCols}}
+                <th >{{$item.Mcweekdate}}</th>
+                {{end}}
+                <th></th>
+                <th></th>
+            </tr>
+            {{else}}
+            <tr class="col">
+                <th></th>
+                <th class="col-name">年</th>
+                {{range $j, $item := $listCols}}
+                <th >{{$item.Mcyyyy}}</th>
+                {{end}}
+                <th></th>
+                <th></th>
+            </tr>
+            <tr class="col">
+                <th></th>
+                <th class="col-name">月</th>
+                {{range $j, $item := $listCols}}
+                <th >{{$item.Mcmm}}</th>
+                {{end}}
+                <th></th>
+                <th></th>
+            </tr>
+            {{end}}
+            <tr>
+                <th class="col-name">店舗</th>
+                <th class="col-name"></th>
+                {{range $j, $item := $listCols}}
+                <th class="sum-name">合計</th>
+                {{end}}
+                <th class="sum-name">売上数合計</th>
+                <th class="sum-name">現在在庫数</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th class="sum-name" rowspan="2">全店合計</th>
+                <th class="sum-name">売上数</th>
+                {{range $k, $item := $listCols}}
+                <td class="number {{if eq (checkSunday $item.McKey) 1}} sum-col {{end}}">{{(index $DATATOTAL.SaleDay $item.McKey) | sum_format}}</td>
+                {{end}}
+                <td class="sum-col number" rowspan="2">{{$DATATOTAL.SaleTotalDate | sum_format}}</td>
+                <td class="sum-col number" rowspan="2">{{$DATATOTAL.StockCountByShopSearchDate | sum_format}}</td>
+            </tr>
+            <tr>
+                <th class="sum-name">入荷数</th>
+                {{range $k, $item := $listCols}}
+                <td class="number {{if eq (checkSunday $item.McKey) 1}} sum-col {{end}}">{{(index $DATATOTAL.ReturnDay $item.McKey) | sum_format}}</td>
+                {{end}}
+            </tr>
+            {{range $j, $row := $DATA}}
+            <tr>
+                <th class="sum-name" rowspan="2">{{$row.ShopName}}</th>
+                <th class="sum-name">売上数</th>
+                {{range $k, $item := $listCols}}
+                <td class="number {{if eq (checkSunday $item.McKey) 1}} sum-col {{end}}">{{(index $row.SaleDay $item.McKey) | sum_format}}</td>
+                {{end}}
+                <td class="sum-col number" rowspan="2">{{$row.SaleTotalDate | sum_format}}</td>
+                <td class="sum-col number" rowspan="2">{{$row.StockCountByShop | sum_format}}</td>
+            </tr>
+            <tr>
+                <th class="sum-name">入荷数</th>
+                {{range $k, $item := $listCols}}
+                <td class="number {{if eq (checkSunday $item.McKey) 1}} sum-col {{end}}">{{(index $row.ReturnDay $item.McKey) | sum_format}}</td>
+                {{end}}
+            </tr>
+
+            {{end}}
+        </tbody>
+    </table>
+</div>
+
+
+<!--</div>-->
+{{if gt (len $listResult) 0}}
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['line','corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var dataTable = new google.visualization.DataTable();
+
+        //add tick
+        var tickstep = {{.max}}/4;
+        var ticks = [];
+        for(var t= 0 ;t <= {{.max}}  ;t+=tickstep) {
+            ticks.push(t)
+        }
+
+        var tickstepQuantity = {{.max_quantity}}/4;
+        var ticksQuantity = [];
+        for(var t= 0 ;t <= {{.max_quantity}}  ;t+=tickstepQuantity) {
+            ticksQuantity.push(t)
+        }
+
+        dataTable.addColumn('string', 'Year');
+        dataTable.addColumn('number', "期間入荷累計");
+        dataTable.addColumn({type: 'string', role: 'tooltip'});
+        dataTable.addColumn('number', "期間売上累計");
+        dataTable.addColumn({type: 'string', role: 'tooltip'});
+        dataTable.addColumn('number', "販売数");
+        dataTable.addColumn({type: 'string', role: 'tooltip'});
+        dataTable.addRows([
+            {{range $j, $value := $listResult}}
+                [{{$value.Header}},
+                {{$value.ValueReceivingQuantity}},{{$value.TooltipReceivingQuantity}},
+                {{$value.ValueSalesQuantityDay}},{{$value.TooltipSalesQuantityDay}},
+                {{$value.ValueSales}},{{$value.TooltipSales}}],
+            {{end}}
+        ]);
+        var options = {
+            title: '販売数推移',
+            seriesType: 'area',
+            areaOpacity:1,
+            series: {
+                0: {
+                    color: '#d2edfa',
+                    targetAxisIndex: 1
+                },
+                1: {
+                    color: '#f3f1e4',
+                    targetAxisIndex: 1
+                },
+                2: {
+                    color: '#0086cd',
+                    type: 'line',
+                    pointSize:3,
+                    targetAxisIndex: 0
+                }
+            },
+            legend:{
+                alignment: 'center',
+                position: 'top',
+                maxTextLines:1,
+            },
+            hAxis: {
+                title:'{{$hTitle}}',
+                showTextEvery:{{$showTextEvery}},
+                maxTextLines:1,
+            },
+
+            vAxes:{
+                    1:{
+                title:'累\n計\n数',
+                    format:'#,###',
+                    {{if $viewWindowMode}}
+                viewWindow:{
+                    min:0,
+                        max:{{.max_quantity}},
+                },
+                ticks: ticksQuantity,
+                    {{end}}
+
+                },
+                0:{
+                    title:'販\n売\n数',
+                        format:'#,###',
+                    {{if $viewWindowMode}}
+                    viewWindow:{
+                        min:0,
+                            max:{{.max}},
+                    },
+                    ticks: ticks,
+                        {{end}}
+                }
+            },
+            vAxis:{
+            },
+            tooltip:{
+                isHtml:true,
+            },
+        };
+        var chart = new google.visualization.ComboChart(document.getElementById('graph_area'));
+        chart.draw(dataTable, options);
+        doDrawFinal(document.getElementById('graph_area'));
+    }
+</script>
+<script>
+    function doDrawFinal( domItem ) {
+        $(domItem).find("svg text").first().attr("x", (($(domItem).find("svg").width() - $(domItem).find("svg text").first().width()) / 2).toFixed(0));
+        $(domItem).find("svg text").first().attr("y", "10");
+        var $flag = false;
+        $(domItem).find("svg text").each(function () {
+            switch ($(this).text()){
+                case "販":
+                    $(this).attr("x",50);
+                    $(this).attr("y",160)
+                    $(this).attr("transform","rotate(0 70 175)");
+                    break;
+                case "売":
+                    $(this).attr("x",50);
+                    $(this).attr("y",175);
+                    $(this).attr("transform","rotate(0 70 175)");
+                    break;
+                case "数":
+                    if ($flag){
+                        $(this).attr("x",50);
+                        $(this).attr("y",190);
+                        $(this).attr("transform","rotate(0 70 175)");
+                    } else {
+                        $flag = true;
+                        $(this).attr("x",800);
+                        $(this).attr("y",190);
+                        $(this).attr("transform","rotate(0 70 175)");
+                    }
+                    break;
+                case "累":
+                    $(this).attr("x",800);
+                    $(this).attr("y",160);
+                    $(this).attr("transform","rotate(0 70 175)");
+                    break;
+                case "計":
+                    $(this).attr("x",800);
+                    $(this).attr("y",175);
+                    $(this).attr("transform","rotate(0 70 175)");
+                    break;
+            }
+        });
+    }
+</script>
+{{end}}
+

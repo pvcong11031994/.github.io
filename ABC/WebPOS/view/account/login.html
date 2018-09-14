@@ -1,0 +1,112 @@
+{{fill "title"}}ログイン{{end}}
+
+{{fill "body-class"}}class="login"{{end}}
+
+{{fill "css"}}
+<link rel="stylesheet" href="/static/css/account/login.css"/>
+<link rel="stylesheet" href="/static/css/main.css"/>
+<style>
+    .content-view a{
+        color: #3c82f5;
+        text-decoration: underline;
+    }
+    .title {
+        font-weight: 700;
+        font-size: larger;
+    }
+    .x_panel {
+        padding: 7px 10px !important;
+        height : 320px;
+        overflow : hidden;
+    }
+    table.login-table{
+        width: 100%!important;
+        float: left;
+        border: transparent;
+    }
+    table.login-table td{
+        padding: 0px 25px 0px 25px;
+		vertical-align: top;
+    }
+    div.image {
+        float: left;
+        height: 100%;
+    }
+    div.image img {
+        margin-top: 20px;
+        /*max-width: 180px;*/
+        /*min-width: 180px;*/
+        max-height: 525px;
+        min-height: 525px;
+        width: 230px;
+    }
+    body{
+        background: #f3f1e4!important;
+    }
+</style>
+{{end}}
+{{fill "body"}}
+<table class="login-table noborder">
+    <tr>
+        <td style="width: 440px!important;">
+            <div class="animate form login_form" style="height: 475px">
+                <section class="login_content">
+                    <form method="POST">
+                        {{ .csrfField }}
+                        <img src="/static/img/logo/logo_wp_cloud_01.png" class="logo"/>
+                        <div>
+                            <input name="user" type="text" class="form-control" placeholder="ユーザID" value="{{.userID}}" oninvalid="this.setCustomValidity('ユーザIDを入力してください。')" oninput="setCustomValidity('')" required {{if .focusID}}autofocus{{end}}/>
+                        </div>
+                        <div>
+                            <input name="pwd" type="password" class="form-control" placeholder="パスワード" oninvalid="this.setCustomValidity('パスワードを入力してください。')" oninput="setCustomValidity('')" required {{if .focusPW}}autofocus{{end}}/>
+                        </div>
+                        <div>
+                            <button class="btn btn-default submit" >ログイン</button>
+                        </div>
+                        <div style="padding-top: 10px;">
+                            <span id="span_alert" style="color: red; font-size: 12px;">
+                                {{if .msg}}
+                                    {{if .flag}}
+                                    <br>
+                                    {{end}}
+                                    {{.msg}}
+                                {{else}}
+                                &nbsp;
+                                <br>
+                                &nbsp;
+                                {{end}}
+                            </span>
+                        </div>
+                    </form>
+
+                    <div class="separator col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 0px; color: black">
+                            <textarea style="width: 100%;resize: vertical; margin-top: 0px; margin-bottom: 0px; min-height:150px; max-height:500px; height: 300px;" readonly>{{.status_content}}</textarea>
+                        </div>
+                        <!--<div class="clearfix"></div>-->
+                        <!--<br/>-->
+                        <!--<div class="col-md-12 col-sm-12 col-xs-12" style="padding: 0px; color: black">-->
+                            <!--<div class="x_panel content-view" data-content="{{.notify_content}}">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    </div>
+                </section>
+            </div>
+        </td>
+        <td>
+            <div class="x_panel content-view" data-content="{{.notify_content}}" style="overflow: scroll;height: 563px;margin-top: 25px">
+                <span class="title">お知らせ</span>
+            </div>
+        </td>
+        <!--<td style="width: 15%">-->
+            <!--<div class="image">-->
+                <!--<a href="/" target="_blank">-->
+                <!--<img src="/static/img/logo/logo_login.png">-->
+                <!--</a>-->
+            <!--</div>-->
+        <!--</td>-->
+    </tr>
+</table>
+<!--(important-not delete) flag for ログイン, recognize when session timeout-->
+<input type="hidden" name="flag_is_login_screen_name" id="flag_is_login_screen_id" value="flag_is_login_screen_value">
+{{end}}

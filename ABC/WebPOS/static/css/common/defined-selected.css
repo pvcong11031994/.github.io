@@ -1,0 +1,11 @@
+.select2-search {
+    display: none !important;
+}
+
+span.select2-chosen {
+    line-height: 30px !important;
+}
+
+.select2-container {
+    display: none;
+}

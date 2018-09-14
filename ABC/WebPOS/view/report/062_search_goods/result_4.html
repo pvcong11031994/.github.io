@@ -1,0 +1,233 @@
+{{$DATA := .data}}
+<div>
+    <p><b>集計結果</b>&emsp;<b>全{{$DATA.TotalItemCount}}件</b></p>
+    <div id="pagination">
+        {{if gt (convert_int $DATA.TotalPageCount) 1}}
+        <span><b>ページ</b></span>
+        <label id="page_prev" class="btn-support-form">前へ</label>
+        <select id="page_select">
+            {{range $i, $v := arr 1 (convert_int $DATA.TotalPageCount)}}
+            <option value="{{$v}}" {{if eq $v (convert_int $DATA.DisplayPage)}}selected{{end}}>{{$v}}</option>
+            {{end}}
+        </select>
+        <label id="page_next" class="btn-support-form">次へ</label>
+        {{end}}
+        <label class="click_for_init_sales_compare">初速比較</label>
+        <label class="click_for_sales_comparison">売上比較</label>
+        <label class="click_for_favorite_management">お気に入り管理</label>
+    </div>
+</div>
+
+<div class="shop_item">
+    <table class="query-result query-result-3 tablesorter" id="tbl_report_result" _fixedhead ="rows:1; cols:3" style="width: max-content; display: -ms-grid; -ms-grid-columns: max-content;">
+        <thead>
+        <tr class="col">
+                <th class="row-name " data-sorter="false">
+                    <label style="margin-left: 7px; margin-right: -6px" class="check_label" for="checkbox">
+                        <input type="checkbox" id="checkbox" name="checkall" onchange="checkAll(this)">
+                    </label>
+                </th>
+                <th class="row-name">JAN</th>
+                <th class="row-name" id="resize-col" style="width: 200px">品名</th>
+                <th class="row-name header-writer-name">著者</th>
+                <th class="row-name">出版社</th>
+                <th class="row-name">発売日</th>
+                <th class="row-name">本体価格</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{range $i,$value := $DATA.ProductList}}
+            <tr>
+                <td style="text-align: center">
+                    <label class="check_label" for="checkbox_{{$i}}">
+                        <input type="checkbox" name="checkboxJan" id="checkbox_{{$i}}">
+                    </label>
+                </td>
+                <td class="click_for_single_item_transition" name="jan_code_new">{{$value.ISBN}}</td>
+                <td class="cells-goods-name click_for_product_name link_data" name="product_name_new">{{$value.ProductName}}</td>
+                <td class="cells-writer-name" name="author_name_new">{{$value.Author.AuthorName}}</td>
+                <td name="publisher_name_new">{{$value.Publisher.PublisherName}}</td>
+                <td name="release_date_new">{{$value.Release.ReleaseDate}}</td>
+                <td class="number" name="usual_price_new">{{$value.Price.UsualPrice | sum_format}}</td>
+            </tr>
+        {{end}}
+        </tbody>
+    </table>
+</div>
+<!-- Dialog message error -->
+<div style="display: none">
+    <div style="display: block;" class="err-msg model fade in">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body" style="text-align: center; color: red">
+                    <p>商品は15件以内で選択してください。</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn subpage-close" style="color: #fff !important; background-color: #0086cd !important;">閉じる</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        //Fix resize and freeze header IE
+        var  versionIE = GetIEVersion();
+        if (versionIE === 9 || versionIE === 11) {
+            var defaultBorder = "2px";
+            var defaultTopBottom = "1.75px";
+            $("th[id=resize-col]").css("border-left-width", defaultBorder);
+            $("th[id=resize-col]").css("border-top-width", defaultTopBottom);
+            $("th[id=resize-col]").css("border-bottom-width", defaultTopBottom);
+        }
+    });
+
+    //resize col 品名
+    $("#resize-col").resizable({
+        minWidth: 10
+    });
+
+    $(".ui-resizable-s").remove();
+    $(".ui-resizable-se").remove();
+    $("#resize-col").resize(function() {
+        FixedMidashi.create();
+
+        //Fix resize IE
+        var  versionIE = GetIEVersion();
+        if (versionIE === 9 || versionIE === 11) {
+            var defaultBorder = "2px";
+            $("th[id=resize-col]").css("border-right-width", defaultBorder);
+        }
+    });
+    function checkAll(e) {
+        if (e.checked) {
+            $("input:checkbox[name='checkboxJan']").prop("checked",true);
+        } else {
+            $("input:checkbox[name='checkboxJan']").prop("checked",false);
+        }
+        FixedMidashi.create();
+    }
+
+    //Event click init_sales_compare
+    $(".click_for_init_sales_compare").click(function () {
+        var $urlInitSalesCompareAjax = "/report/init_sales_compare";
+        var selected = [];
+        $("input[name=checkboxJan]:checked").each(function () {
+            selected.push($(this).parent().parent().next().text());
+        });
+        var lenSelected = selected.length;
+        if (lenSelected > 15) {
+            $(".err-msg").subpage({
+                onClose: function () {
+                    $(".back-top-dashboard").click();
+                }
+            });
+        } else {
+            var listJanSelected = "";
+            for (i=0; i<lenSelected; i++) {
+                listJanSelected += selected[i];
+            }
+            $("textarea[name=jan_cd_array]").val(listJanSelected);
+            $("input[name=key_search]").val("1");
+            var $form = $("#form_search");
+            $form.attr("method","POST");
+            $form.attr("action",$urlInitSalesCompareAjax);
+            $form.attr("target","_blank");
+            $form.submit();
+        }
+    });
+
+    //Event click sales_comparison
+    $(".click_for_sales_comparison").click(function () {
+        var $urlSalesComparisonsAjax = "/report/sales_comparison";
+        var selected = [];
+        $("input[name=checkboxJan]:checked").each(function () {
+            selected.push($(this).parent().parent().next().text());
+        });
+        var lenSelected = selected.length;
+        if (lenSelected > 15) {
+            $(".err-msg").subpage({
+                onClose: function () {
+                    $(".back-top-dashboard").click();
+                }
+            });
+        } else {
+            var listJanSelected = "";
+            for (i=0; i<lenSelected; i++) {
+                listJanSelected += selected[i];
+            }
+            $("textarea[name=jan_cd_array]").val(listJanSelected);
+            $("input[name=key_search]").val("1");
+            var $form = $("#form_search");
+            $form.attr("method","POST");
+            $form.attr("action",$urlSalesComparisonsAjax);
+            $form.attr("target","_blank");
+            $form.submit();
+        }
+    });
+
+    //Event click favorite_management
+    $(".click_for_favorite_management").click(function() {
+        var $urlFavoriteManagementAjax = "/report/favorite_management";
+        var JanCodeList = [];
+        var ProductNameList = [];
+        var AuthorNameList = [];
+        var MakerNameList = [];
+        var UnitPriceList = [];
+        var ReleaseDateList = [];
+        var KeyCode = "KEYCODEDEFAULT";
+        $("input[name=checkboxJan]:checked").each(function() {
+            JanCodeList.push($(this).parent().parent().parent().find('td[name="jan_code_new"]').text() + KeyCode);
+            ProductNameList.push($(this).parent().parent().parent().find('td[name="product_name_new"]').text() + KeyCode);
+            AuthorNameList.push($(this).parent().parent().parent().find('td[name="author_name_new"]').text() + KeyCode);
+            MakerNameList.push($(this).parent().parent().parent().find('td[name="publisher_name_new"]').text() + KeyCode);
+            UnitPriceList.push($(this).parent().parent().parent().find('td[name="usual_price_new"]').text() + KeyCode);
+            ReleaseDateList.push($(this).parent().parent().parent().find('td[name="release_date_new"]').text() + KeyCode);
+        });
+
+        var listJanSelected = "";
+        var listProductNameSelected = "";
+        var listAuthorNameSelected = "";
+        var listMakerNameSelected = "";
+        var listUnitPriceListSelected = "";
+        var listReleaseDateSelected = "";
+        for (i=0; i<JanCodeList.length; i++) {
+            listJanSelected += JanCodeList[i];
+            listProductNameSelected += ProductNameList[i];
+            listAuthorNameSelected += AuthorNameList[i];
+            listMakerNameSelected += MakerNameList[i];
+            listUnitPriceListSelected += UnitPriceList[i];
+            listReleaseDateSelected += ReleaseDateList[i];
+        }
+
+        //Set value input
+        $("input[name=key_search]").val("1");
+        $("input[name=jan_code_list]").val(listJanSelected);
+        $("input[name=product_name_list]").val(listProductNameSelected);
+        $("input[name=author_name_list]").val(listAuthorNameSelected);
+        $("input[name=publisher_name_list]").val(listMakerNameSelected);
+        $("input[name=usual_price_list]").val(listUnitPriceListSelected);
+        $("input[name=release_date_list]").val(listReleaseDateSelected);
+        $("input[name=length_list_selected]").val(JanCodeList.length);
+
+        //Post form
+        var $form = $("#form_search");
+        $form.attr("method","POST");
+        $form.attr("action",$urlFavoriteManagementAjax);
+        $form.attr("target","_blank");
+        $form.submit();
+    });
+
+</script>
+<style>
+    .click_for_single_item_transition, .click_for_init_sales_compare, .click_for_sales_comparison, .click_for_favorite_management{
+        color:blue;
+        text-decoration: underline;
+    }
+    .shop_info td{
+        padding-right: 30px !important;
+    }
+</style>

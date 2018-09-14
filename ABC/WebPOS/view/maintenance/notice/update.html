@@ -1,0 +1,80 @@
+{{fill "css"}}
+<style>
+    .dashboard-notice {
+        max-width: 800px;
+        padding: 0px;
+        margin: 0 auto;
+        border: none;
+        min-height: 200px;
+    }
+    .dashboard-notice textarea {
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        max-height: 450px;
+    }
+    .dashboard-notice h3.page-header{
+        text-align: center;
+    }
+</style>
+{{end}}
+
+{{fill "script"}}
+<script src="/static/lib/subpage/subpage.js"></script>
+<script>
+    $("#notice_form").on("submit", function(e){
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            data: $("#notice_form").serialize(),
+            success: function(res) {
+                $("#notice_modal .modal-body").html(res.msg);
+                if (res.is_success) {
+                    $("#notice_modal").subpage({
+                        onYes : function () {
+                            $(".back-top-dashboard").click();
+                        }
+                    });
+                } else {
+                    $("#notice_modal").subpage({
+                        onYes : function () {$("textarea").focus();}
+                    });
+                }
+            }
+        });
+    });
+</script>
+{{end}}
+
+{{fill "main"}}
+<div class="dashboard-notice">
+    <span class="page-header">{{.MenuName}}</span>
+    <form id="notice_form" method="post" style="padding: 10px">
+        {{ .csrfField }}
+        <textarea name="content" rows="15" autofocus maxlength="8000" style="width: 100%;resize: vertical; margin-top: 0px;">{{.notify_content}}</textarea>
+        <div style="margin: 10px auto; float: right" class="div-button">
+            <input type="submit" class="btn  btn-primary  btn-confirm" value="更新"/>
+            <input type="button" class="btn  btn-warning  btn-back-no-save back-top-dashboard" value="戻る"/>
+        </div>
+    </form>
+</div>
+
+<div style="display: none;">
+    <div style="display: block;" class="modal fade in" id="notice_modal">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">お知らせ更新</h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning subpage-yes">閉じる</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}

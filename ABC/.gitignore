@@ -1,0 +1,12 @@
+session_store
+cache_store
+*.log
+*.exe
+*.OK
+BATCH/
+GOLIB/
+WebPOS/.idea/
+WebPOS/tmp/
+WebPOS/pkg/windows_amd64/
+WebPOS/src/WebPOS/.idea/
+GOLIB/pkg/windows_amd64/

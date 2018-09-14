@@ -1,0 +1,100 @@
+{{fill "title"}}ユーザメンテナンス{{end}}
+
+{{append "css"}}
+<link rel="stylesheet" href="/static/css/ordercontrol/order-control.css"/>
+<link rel="stylesheet" href="/static/lib/subpage/subpage.css"/>
+<link rel="stylesheet" href="/static/lib/subpage/spinners.css"/>
+<link rel="stylesheet" href="/static/css/common/defined-selected.css"/>
+<style>
+    span.select2-chosen {
+        line-height: 30px !important;
+    }
+</style>
+{{end}}
+{{append "script"}}
+<script src="/static/lib/select2/select2.js"></script>
+<script src="/static/js/multiselect.js"></script>
+<script src="/static/lib/subpage/subpage.js"></script>
+<script>
+    $("select[name='flg_auth']").select2();
+    $( "form" ).submit(function( event ) {
+        if (!$("#shop_cd option:selected").length) {
+            //$( "#span_alert" ).text( "店舗を選択して下さい。" ).show().fadeOut( 5000 );
+            //return false;
+        }
+        {{if eq .flg_auth "1"}}
+        return true;
+        {{else}}
+        //return false;
+        $(".confirm-search").subpage({
+        });
+        return false;
+        {{end}}
+    });
+</script>
+{{end}}
+{{fill "main"}}
+<span class="page-header">ユーザメンテナンス</span>
+<form id="maintenance-user-search" class="order-control" method="post" action="{{.link_result_list}}">
+        {{ .csrfField }}
+        <table class="info form-table">
+        <tr>
+            <td>店舗</td>
+            <td>
+                <select style="width: 350px;max-height: 25px;" name="shop_cd" id="shop_cd" class="multiselect" multiple="multiple">
+                    {{if eq .flg_auth "1"}}
+                    <option value="{{.honbu_shop_cd}}">{{.honbu_shop_name}}</option>
+                    {{end}}
+                    {{range $key, $shop := .shops}}
+                        <option value="{{$shop.ShopCD}}">{{$shop.ShopName}}</option>
+                    {{end}}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>ユーザ名</td>
+            <td>
+                <input type="text" name="user_name" style="width: 100%" class="input_text"/>
+            </td>
+        </tr>
+        <tr>
+            <td>権限</td>
+            <td>
+                <select style="width: 200px" name="flg_auth">
+                    <option value="0">店舗</option>
+                    <option value="1">本部</option>
+                    <option value="2">すべて</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" style="text-align: right;">
+                <button type="submit" class="btn btn-primary btn-search btn-me right-20" style="margin-right: 1px !important;">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    検索
+                </button>
+                <button type="button" class="btn btn-back-no-save btn-me right-20 btn-warning back-top-dashboard" style="margin-right: 0 !important;">戻る</button>
+            </td>
+        </tr>
+    </table>
+    <span id="span_alert" style="color: red;"></span>
+</form>
+<div style="display: none;">
+    <div style="display: block;" class="confirm-search modal fade in">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body" style="text-align:center">
+                    権限がありません
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary subpage-no">戻る</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}

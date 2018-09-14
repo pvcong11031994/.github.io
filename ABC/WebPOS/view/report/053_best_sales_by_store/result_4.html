@@ -1,0 +1,129 @@
+{{$shopName := .shop_name}}
+{{$DATA := .data}}
+{{$COUNT_SUM_COL := len .data.HeaderSum}}
+{{$formatSum := .data.FormatSum}}
+{{$SUM_KEY_FIELD := .SUM_KEY_FIELD}}
+{{$groupType := .groupType}}
+<script>
+    $(document).ready(function() {
+        //Fix resize and freeze header IE
+        var  versionIE = GetIEVersion();
+        if (versionIE === 9 || versionIE === 11) {
+            var defaultBorder = "2px";
+            var defaultTopBottom = "1.75px";
+            $("th[id=resize-col]").css("border-left-width", defaultBorder);
+            $("th[id=resize-col]").css("border-top-width", defaultTopBottom);
+            $("th[id=resize-col]").css("border-bottom-width", defaultTopBottom);
+        }
+    });
+</script>
+<div>
+    <p><b>集計結果</b>&emsp;<b>全{{.total_count}}件</b></p>
+    <p class="info_vj_charging">ただいまの検索料金は<br> &yen;{{.data.VJCharging | sum_format}}になります。</p>
+    {{if gt $DATA.PageCount 1}}
+        <div id="pagination">
+            <span><b>ページ</b></span>
+            <label id="page_prev" class="btn-support-form">前へ</label>
+            <select id="page_select">
+                {{range $i, $v := arr 1 $DATA.PageCount}}
+                <option value="{{$v}}" {{if eq $v $DATA.ThisPage}}selected{{end}}>{{$v}}</option>
+                {{end}}
+            </select>
+            <label id="page_next" class="btn-support-form">次へ</label>
+        </div>
+    {{end}}
+    <table class="table_list query-result">
+        <br>
+        <tr>
+            <td><th style="font-size: 14px; min-width: 70px!important;">店舗名称</th></td>
+            <td style="font-size: 14px;">{{$shopName}}</td>
+        </tr>
+    </table>
+    <table class="query-result query-result-3 tablesorter feeze-header" id="tbl_report_result" style="width: max-content; display: -ms-grid; -ms-grid-columns: max-content;" _fixedhead ="rows:{{if eq $groupType "0"}}4{{else}}3{{end}}; cols:3" >
+        <thead>
+        {{range $i, $name := $DATA.HeaderCol}}
+            <tr class="col">
+                {{range $i2, $name2 := $DATA.HeaderRow}}
+                    {{if gt (minus (len $DATA.HeaderRow) 1) $i2}}
+                        <th data-sorter="false" class="th_blank" style="border: transparent"></th>
+                    {{end}}
+                {{end}}
+
+                <th data-sorter="false" class="col-name">{{$name}}</th>
+                {{if eq $i 0}}<th data-sorter="false" style="vertical-align: top;" class="sum-col" colspan="{{$COUNT_SUM_COL}}" rowspan="{{len $DATA.HeaderCol}}">販売期間合計</th>{{end}}
+                {{range $j, $colKey := $DATA.ListColKey}}
+                <th data-sorter="false"  colspan="{{$COUNT_SUM_COL}}" class="{{if eq (CheckSundayArray (index $DATA.Cols $colKey)) 1}} sum-col {{end}}">{{index (index $DATA.Cols $colKey) $i}}</th>
+                {{end}}
+            </tr>
+        {{end}}
+
+        <tr class="col">
+            {{range $i, $name := .data.HeaderRow}}
+            <th class="row-name {{if eq $name "著者"}}header-writer-name{{end}}" {{if eq $name "品名"}}id="resize-col"{{end}}>{{$name}}</th>
+            {{end}}
+            {{range $i, $name := $DATA.HeaderSum}}
+            <th class="sum-name">{{$name}}</th>
+            {{end}}
+            {{range $j, $colKey := $DATA.ListColKey}}
+                {{range $i, $name := $DATA.HeaderSum}}
+                <th class="sum-name">{{$name}}</th>
+                {{end}}
+            {{end}}
+        </tr>
+
+        </thead>
+
+        <tbody>
+        {{range $i, $rowKey := $DATA.ListRowKey}}
+        <tr>
+            {{range $j, $v := (index $DATA.Rows $rowKey)}}
+            <td class=" {{if eq $j 2}}cells-goods-name{{else if eq $j 3}}cells-writer-name{{end}} {{if gt $j 4}}number{{end}}"
+                {{if or (eq $j 2) (eq $j 3)}}title="{{$v}}"{{end}}>
+                {{if gt $j 4}}
+                    {{$v | sum_format}}
+                {{else}}
+                    {{$v}}
+                {{end}}
+            </td>
+            {{end}}
+
+            {{range $j, $v := (index (index $DATA.Data $rowKey) $SUM_KEY_FIELD)}}
+            <td class="sum-col {{(index $formatSum $j)}}">{{$v | sum_format}}</td>
+            {{end}}
+            {{range $j, $colKey := $DATA.ListColKey}}
+            {{if index (index $DATA.Data $rowKey) $colKey}}
+            {{range $i, $v := index (index $DATA.Data $rowKey) $colKey}}
+            <td class="number {{if eq (CheckSundayArray (index $DATA.Cols $colKey)) 1}} sum-col {{end}}" >{{$v | sum_format}}</td>
+            {{end}}
+            {{else}}
+            {{range $t1, $t2 := $DATA.HeaderSum}}
+            <td class="{{if eq (CheckSundayArray (index $DATA.Cols $colKey)) 1}} sum-col {{end}}"></td>
+            {{end}}
+            {{end}}
+            {{end}}
+        </tr>
+        {{end}}
+        </tbody>
+    </table>
+<input type="hidden" value="{{.rand_string}}" name="rand_string_select">
+</div>
+<script>
+
+    //resize col 品名
+    $("#resize-col").resizable({
+        minWidth: 10
+    });
+    $(".ui-resizable-s").remove();
+    $(".ui-resizable-se").remove();
+    $("#resize-col").resize(function() {
+        FixedMidashi.create();
+
+        //Fix resize IE
+        var  versionIE = GetIEVersion();
+        if (versionIE === 9 || versionIE === 11) {
+            var defaultBorder = "2px";
+            $("th[id=resize-col]").css("border-right-width", defaultBorder);
+        }
+    });
+
+</script>

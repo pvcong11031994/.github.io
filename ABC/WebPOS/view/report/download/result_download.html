@@ -1,0 +1,14 @@
+<div style="display: none">
+    <div class="query-file-download">{{.download_short_file_name}}
+        <span class="btn-download-report-csv btn-download-file" title="CSVダウンロード">CSV</span>
+    </div>
+    <form class="report-form-download-file" action="{{.report_download}}" method="post">
+        {{ .csrfField }}
+        <input type="hidden" name="f" value="{{.download_file_name}}"/>
+    </form>
+</div>
+<script>
+    $(function () {
+        $(".btn-download-file").trigger("click");
+    });
+</script>

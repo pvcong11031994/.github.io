@@ -1,0 +1,358 @@
+/*################################### 売上確認検索画面 ####################################*/
+.inputStyle {
+    max-height: 24px !important;
+    min-height: 24px !important;
+    height: 24px !important;
+    padding-left: 8px !important;
+    left: 10px;
+    position: relative;
+}
+
+/*################################### 売上確認一覧画面 ###############################*/
+div.div-sale-confirm-list div.dataTables_wrapper div.dataTables_paginate {
+    margin: 0;
+    border: 1px solid #aed0ea;
+    background: #deedf7 50% 50% repeat-x;
+    width: 100%;
+    text-align: right !important;
+    float: left !important;
+}
+
+div.div-sale-confirm-list div.dataTables_paginate .ui-state-default {
+    background: none !important;
+    outline: none;
+    border: none !important;
+}
+
+div.div-sale-confirm-list .no-footer {
+    border-bottom-color: #aed0ea !important;
+}
+
+table.table-sale-confirm-list tr.even td {
+    background: #DEEBF6 !important;
+}
+
+table.table-sale-confirm-list tr.odd td {
+    background: #FFFFFF !important;
+}
+
+div.div-sale-confirm-list {
+    margin-top: 20px;
+    font-size: 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0;
+    border: 1px solid gray;
+}
+
+table.table-sale-confirm-list td {
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
+}
+
+table.table-sale-confirm-list th {
+    text-align: center;
+    padding: 4px !important;
+    height: 20px !important;
+}
+
+table.table-sale-confirm-list thead th {
+    border-bottom-color: #aed0ea;
+}
+
+table.table-sale-confirm-list .number-column {
+    text-align: right !important;
+    width: 40px;
+}
+
+.text-column {
+    text-align: left !important;
+}
+
+table.table-sale-confirm-list .center-column {
+    text-align: center !important;
+}
+
+table.table-sale-confirm-list .filter-ellipsis {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+table.table-sale-confirm-list .filter-goods-name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    /*max-width: 230px;*/
+}
+
+table.table-sale-confirm-list .filter-goods-name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    /*max-width: 230px;*/
+}
+
+table.table-sale-confirm-list .filter-publisher-name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    /*max-width: 85px;*/
+}
+
+table.table-sale-confirm-list .filter-memo {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    /*max-width: 85px;*/
+}
+
+table.table-sale-confirm-list .filter-artist-name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    /*max-width: 100px;*/
+}
+
+table.table-sale-confirm-list td.auto {
+    background-color: #90EE90;
+    text-align: center;
+}
+
+table.table-sale-confirm-list td.manual {
+    background-color: #D8BFD8;
+    text-align: center;
+}
+
+div.div-sale-confirm-list .btn-auto.active {
+    background-color: #D8BFD8;
+    border-color: #ccc;
+}
+
+div.div-sale-confirm-list .btn-manual.active {
+    background-color: #90EE90;
+    border-color: #ccc;
+}
+
+div.div-sale-confirm-list .header-info {
+    margin-bottom: 30px;
+}
+
+div.div-sale-confirm-list .header-info td {
+    vertical-align: top;
+}
+
+div.div-sale-confirm-list .header-info table {
+    margin-right: 20px;
+}
+
+div.div-sale-confirm-list .editable {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    border: 1px solid transparent;
+    min-height: 21px;
+    padding: 1px;
+    margin: 0;
+}
+
+div.div-sale-confirm-list span.editable:HOVER {
+    border: 1px solid #74b2e2;
+}
+
+div.div-sale-confirm-list input.editable {
+    border: 1px solid #74b2e2;
+    padding: 1px;
+    margin: 0;
+    min-height: 21px;
+}
+
+table.table-sale-confirm-list .DataTables_sort_icon {
+    display: none;
+}
+
+table.table-sale-confirm-list .sorting {
+    padding: 4px 4px 4px 4px !important;
+}
+
+table.table-sale-confirm-list .sorting.ui-state-default {
+    cursor: default !important;
+}
+
+table.table-sale-confirm-list .hidden-sort th {
+    border: none !important;
+    background: transparent;
+}
+
+/*################################### 売上確認単品画面 ###############################*/
+table.sale-detail {
+}
+
+#sale_detail_outer {
+    border: 2px #BBBBBB solid;
+}
+
+table#sale_detail tr:nth-child(even), table.sale-detail tr:nth-child(even) {
+    background: #DEEBF6
+}
+
+table#sale_detail tr:nth-child(odd), table.sale-detail tr:nth-child(odd) {
+    background: #FFFFFF
+}
+
+table#transferconfirm_list tr:nth-child(even), table.transferconfirm_list tr:nth-child(even) {
+    background: #FAFAFA
+}
+
+table#transferconfirm_list tr:nth-child(odd), table.transferconfirm_list tr:nth-child(odd) {
+    background: #FFFFFF
+}
+
+table.sale-detail th, table.sale-detail td {
+    border-style: solid;
+    border-color: #BBBBBB;
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: 12px;
+    white-space: nowrap;
+    font-weight: normal;
+    padding: 0px 2px !important;
+}
+
+table.sale-detail th {
+    background: #d7ebf9 url("/static/lib/jquery-ui/images/ui-bg_glass_80_d7ebf9_1x400.png") 50% 50% repeat-x;
+    text-align: center;
+}
+
+table.sale-detail td {
+    text-align: right;
+    border-width: 1.33px 1.33px 1.33px 0px;
+}
+
+table.dataTable {
+    margin-left: 0px;
+}
+
+table.table-no-border,
+table.table-no-border > tbody,
+table.table-no-border > tbody > th,
+table.table-no-border > tbody > tr,
+table.table-no-border > tbody > tr > td {
+    border: none !important;
+    vertical-align: top !important;
+}
+
+table.info-shop {
+}
+
+table.info-memo {
+}
+
+table.info-shop td:nth-child(1):not([colspan]),
+table.info-shop td:nth-child(3):not([colspan]),
+table.info-memo td:nth-child(1):not([colspan]),
+table.info-memo td:nth-child(2):not([colspan]) {
+    background-color: #d1d1d1;
+    font-weight: bold;
+    white-space: nowrap !important;
+}
+
+table.info-memo input.memo-text {
+    width: 300px;
+}
+
+#sale_detail_outer_header {
+    margin-top: 20px;
+}
+
+#sale_detail_outer, #sale_detail_outer_header {
+    border: 1px transparent solid;
+}
+
+.shop_name_header {
+    /*min-width:65px;*/
+    /*max-width:65px;*/
+    /*width:65px;*/
+}
+
+.item_number {
+    min-width: 42.6667px;
+    max-width: 42.6667px;
+    width: 42.6667px;
+}
+
+#sale_detail_outer input.order-plan {
+    text-align: right;
+    width: 100%;
+    background-color: #fcf8e3;
+    padding: 0px 2px;
+    border: 1px #777 solid;
+    margin: 0px;
+    ime-mode: disabled;
+}
+
+.sale-detail.div-button-download {
+    position: relative;
+    margin: 15px 0px;
+}
+
+.sale-detail .btn-download-excel {
+    background-color: #8FAADC;
+    width: 65px;
+    color: #F4F4F4 !important;
+}
+
+.sale-detail .btn-download-data {
+    margin-left: 10px;
+    background-color: #8FAADC;
+    width: 65px;
+    color: #F4F4F4 !important;
+}
+
+.sale-detail .btn-download-fax {
+    margin-left: 10px;
+    background-color: #1F4E79;
+    width: 65px;
+    color: #F4F4F4 !important;
+}
+
+.sale-detail .btn-back-save {
+    margin-left: 140px;
+    background-color: #F4B183;
+
+}
+
+.sale-detail .btn-back-no-save {
+    color: #000000;
+    background-color: #ED7D31;
+}
+
+.sale-detail .btn-back {
+    color: #000000;
+    background-color: #ED7D31;
+}
+
+table tbody tr.fill_full_weirdo td {
+    background-color: #FFACA5 !important;
+}
+
+table tbody tr.fill_some_weirdo td:nth-child(1),
+table tbody tr.fill_some_weirdo td:nth-child(2),
+table tbody tr.fill_some_weirdo td:nth-child(3) {
+    background-color: yellow !important;
+}
+
+table.sale-detail tbody tr.fill_some_weirdo td:nth-child(4) {
+    background-color: yellow !important;
+}
+
+.book-name {
+    max-width: 300px;
+}
+
+.select2-drop, .select2-drop-mask {
+    z-index: 10000 !important;
+}
+
+.no-border-right {
+    border-right-color: transparent !important;
+}
+
+#total_order_count {
+    padding: 0px !important;
+}

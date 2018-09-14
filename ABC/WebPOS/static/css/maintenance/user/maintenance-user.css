@@ -1,0 +1,21 @@
+
+.change_pass {
+}
+
+.csv_upload {
+}
+
+.change_pass table tr,
+.csv_upload table tr {
+    max-height: 46px !important;
+    min-height: 46px !important;
+    height: 46px !important;
+}
+
+.change_pass input[type="text"], .change_pass input[type="password"],
+.csv_upload input[type="text"], .csv_upload input[type="password"] {
+    max-height: 32px !important;
+    min-height: 32px !important;
+    height: 32px !important;
+    padding-left: 8px;
+}

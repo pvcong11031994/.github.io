@@ -1,0 +1,177 @@
+
+.maintenance-user-control {
+}
+
+.maintenance-user-control table tr {
+    max-height: 46px !important;
+    min-height: 46px !important;
+    height: 46px !important;
+}
+
+.maintenance-user-control input[type="text"] {
+    max-height: 32px !important;
+    min-height: 32px !important;
+    height: 32px !important;
+    padding-left: 8px;
+}
+
+.maintenance-user-control .haft-center {
+    width: 50%;
+    text-align: center;
+}
+
+.maintenance-user-control #maintenance-user-number {
+    width: 50px;
+    float: left;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.maintenance-user-control .label-middle-last {
+    line-height: 32px;
+    margin: 0px 5px;
+    float: left;
+}
+
+.maintenance-user-shop-title {
+    padding: 0px 0px 0px 15px;
+    display: inline-block;
+    background: #cdcdcd;
+    border: 1px #BABABA solid;
+}
+
+.maintenance-user-shop-title .shop-name {
+    padding: 10px 15px;
+    display: inline-block;
+    background: #fff;
+    margin: 0px 0px 0px 15px;
+    font-weight: normal;
+}
+
+table.maintenance-user-detail tr:nth-child(even) {
+    background: #DEEBF6
+}
+
+table.maintenance-user-detail tr:nth-child(odd) {
+    background: #FFFFFF
+}
+
+table.maintenance-user-detail {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px #BBBBBB;
+}
+
+table.maintenance-user-detail th, table.maintenance-user-detail td {
+    border-width: 0px 0px 1px 1px;
+    border-style: solid;
+    border-color: #BBBBBB;
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: 12px;
+    white-space: normal;
+    font-weight: normal;
+    padding: 0px 0px !important;
+
+}
+
+table.maintenance-user-detail th {
+    border-width: 1px 1px 1px 1px;
+    background-color: #C6E0B4;
+    text-align: center;
+    height: 30px;
+}
+
+table.maintenance-user-detail input[type=text] {
+    border: none !important;
+    height: 27px;
+    padding-left: 5px;
+    width: 100%;
+}
+
+table.maintenance-user-detail select {
+    border: none !important;
+    height: 27px;
+    padding-left: 5px;
+    /*width: 100%;*/
+}
+
+table.maintenance-user-detail input[type=password] {
+    border: none !important;
+    height: 27px;
+    padding-left: 2px;
+    width: 100%;
+}
+
+table.maintenance-user-detail .select2-container .select2-choice {
+    border: none !important;
+    padding-left: 5px;
+    height: 27px;
+
+}
+
+table.dataTable {
+    margin-left: 0px;
+}
+
+.filter-name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 150px;
+    width: 150px;
+}
+
+.btn-delete {
+    background: #ED7D31 !important;
+    color: #000;
+}
+
+.maintenance-user-list-group-button {
+    position: absolute;
+    top: -42px;
+    right: 0px;
+}
+
+.maintenance-user-list-btn-back {
+    background: #9DC3E6;
+    border-color: #9DC3E6;
+}
+
+/*.maintenance-user-list-btn-confirm {*/
+/*background: #FFE699;*/
+/*border-color: #FFE699;*/
+/*}*/
+
+/*.maintenance-user-list-btn-add {*/
+/*background: #FFE699;*/
+/*border-color: #FFE699;*/
+/*}*/
+
+.div-button {
+    margin-bottom: 10px;
+}
+
+.maintenance-user-detail .column-confirm {
+    white-space: nowrap;
+}
+
+table.maintenance-user-detail th {
+    max-width: 100px;
+    background: #d7ebf9 url("/static/lib/jquery-ui/images/ui-bg_glass_80_d7ebf9_1x400.png") 50% 50% repeat-x;
+    text-align: center;
+}
+
+.maintenance-user-list-btn-add-new {
+    background: #CEECF5;
+    border-color: #FFE699;
+}
+
+.text-column {
+    width: 100% !important;
+    min-width: 100px;
+!important;
+}
+
+select {
+    background: none;
+}

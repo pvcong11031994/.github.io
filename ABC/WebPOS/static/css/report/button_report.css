@@ -1,0 +1,125 @@
+.btn-form {
+    height: 30px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 4px 8px;
+    color: white;
+    background-color: #0086cd!important;
+    border: 1px solid #46b8da;
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+
+    cursor: pointer;
+
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+}
+
+.btn-selected-date-form {
+    padding-top: 2px;
+    height: 26px;
+    width: 30px;
+    color: white;
+    background-color: #0086cd!important;
+    border: 1px solid #46b8da;
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: top;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+
+    cursor: pointer;
+
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    margin-bottom: 0;
+
+    border-radius: 4px;
+}
+.btn-selected-date-form:hover {
+    background-color: rgb(73,166,212)!important;
+    border-color: white;
+}
+
+.btn-support-form {
+    margin-left: 2px;
+    padding-top: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+    height: 26px;
+    color: white !important;
+    background-color: #0086cd!important;
+    border: 1px solid #46b8da;
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: top;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+
+    cursor: pointer;
+
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    margin-bottom: 0;
+
+    border-radius: 4px;
+}
+.btn-support-form:hover {
+    background-color: rgb(73,166,212)!important;
+    border-color: white;
+}
+
+.btn-image-download-report-csv {
+    background-image: url(/static/img/icon/download_white.png);
+    background-repeat: no-repeat;
+    background-position: 4px 4px;
+    padding-left: 26px;
+}
+
+.click_for_single_item_transition, .click_for_init_sales_compare, .click_for_sales_comparison, .click_for_favorite_management{
+    color:blue;
+    text-decoration: underline;
+}

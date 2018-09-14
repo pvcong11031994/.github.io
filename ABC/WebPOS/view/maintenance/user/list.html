@@ -1,0 +1,271 @@
+{{fill "title"}}ユーザメンテナンス{{end}}
+
+{{append "css"}}
+<link rel="stylesheet" href="/static/css/maintenance/user/maintenance-user-list.css"/>
+<link rel="stylesheet" href="/static/lib/subpage/subpage.css"/>
+<link rel="stylesheet" href="/static/lib/subpage/spinners.css"/>
+<link rel="stylesheet" href="/static/css/common/defined-selected.css"/>
+{{end}}
+
+{{append "script"}}
+<script src="/static/lib/select2/select2.js"></script>
+<script src="/static/lib/subpage/subpage.js"></script>
+<script src="/static/lib/DataTables/datatables.min.js"></script>
+<script>
+
+    $(document).ready(function(){
+        $(".shop_cd").select2();
+        $("select[name=shop_cd]").each(function () {
+            if ($(this).find("option[value='"+$(this).data("default")+"']").length == 0) {
+                $(this).append("<option value='"+$(this).data("default")+"'>"+$(this).data("default-name")+"</option>")
+                $(this).select2();
+            }
+            $(this).select2('val', $(this).data("default"));
+        });
+
+        $(".flg_auth").select2();
+        $("select[name=flg_auth]").each(function () {
+            $(this).select2('val', $(this).data("default"));
+        });
+
+        $(".franchise_cd").select2();
+        $("select[name=franchise_cd]").each(function () {
+            $(this).select2('val', $(this).data("default"));
+        });
+
+        $(".flg_menu_group").select2();
+        $("select[name=flg_menu_group]").each(function () {
+            $(this).select2('val', $(this).data("default"));
+        });
+
+        $(".corp").select2();
+        $("select[name=corp]").each(function () {
+            if ($(this).find("option[value='"+$(this).data("default")+"']").length == 0) {
+                $(this).append("<option value='"+$(this).data("default")+"'>"+$(this).data("default-name")+"</option>")
+                $(this).select2();
+            }
+            $(this).select2('val', $(this).data("default"));
+        });
+
+        $('.maintenance-user-detail').DataTable({
+            paging          :   false,
+            searching       :   false,
+            info            :   false,
+            ordering        :   false,
+            sDom            :   'rt',
+            initComplete    :   function(settings, json) {
+            }
+        });
+
+        $(".btn-back-top").on("click",function(){
+            location.href = "{{.link_search}}";
+        });
+
+        $(".maintenance-user-list-btn-confirm").on("click",function(){
+            var lineno = $('.maintenance-user-detail tr').length - 1;
+            for(var i = 0;i < lineno;i++){
+                var flg_exec_check = $('#flg_exec_check_' + i);
+                if (flg_exec_check.is(":checked")){
+                    var user_name = $('#user_name_'+ i);
+                    var shop_cd = $('#shop_cd_'+ i);
+                    var franchise_cd = $('#franchise_cd_'+ i);
+                    var flg_menu_group = $('#flg_menu_group_'+ i);
+                    var user_pass = $('#user_pass_'+ i);
+                    if(user_name.val().trim() == ''){
+                        $( "#span_alert" ).text( "ユーザ名を入力してください。" ).show().fadeOut( 5000 );
+                        user_name.focus();
+                        return false;
+                    }
+                    if(shop_cd.val().trim() == '-1' && franchise_cd.val().trim() == '-1'){
+                        $( "#span_alert" ).text( "店舗コードまたはフランチャイズグループコードを入力してください。" ).show().fadeOut( 5000 );
+                        shop_cd.focus();
+                        return false;
+                    }
+                    if(flg_menu_group.val().trim() == ''){
+                        $( "#span_alert" ).text( "メニューグループを入力してください。" ).show().fadeOut( 5000 );
+                        flg_menu_group.focus();
+                        return false;
+                    }
+                    if(user_pass.val().trim() == ''){
+                        $( "#span_alert" ).text( "パスワードを入力してください。" ).show().fadeOut( 5000 );
+                        user_pass.focus();
+                        return false;
+                    }
+                }
+            }
+            if ($("input:checkbox[class=flg_exec_check]:checked").length >=1) {
+                $(".confirm-add").subpage({
+                    onYes: submitFrom
+                });
+            }
+        });
+
+        $('.flg_user_check').on("click", function(event){
+            $(this).parents('td').find('.flg_user').val($(this).is(":checked") ? 1 : 0);
+        });
+
+        $('.flg_exec_check').on("click", function(event){
+            $(this).parents('td').find('.flg_exec').val($(this).is(":checked") ? 1 : 0);
+            if ($("input:checkbox[class=flg_exec_check]:checked").length >=1) {
+                $(".maintenance-user-list-btn-confirm").addClass("btn-success");
+                $(".maintenance-user-list-btn-confirm").removeClass("btn-default");
+            } else {
+                $(".maintenance-user-list-btn-confirm").addClass("btn-default");
+                $(".maintenance-user-list-btn-confirm").removeClass("btn-success");
+            }
+        });
+
+    });
+
+    function submitFrom() {
+        $(".flg_exec_check:not(:checked)").parents("tr").remove();
+        $('form[name=maintenance-user-list]').submit();
+    }
+
+</script>
+{{end}}
+
+{{fill "main"}}
+<span class="page-header">ユーザ一覧</span>
+
+<form class="maintenance-user-list" name="maintenance-user-list" method="post" action="{{.link_result_confirm}}" style="position:relative">
+    {{ .csrfField }}
+    <input type="hidden" name="flg_update" value="1"/>
+    <div class="div-button">
+        <button type="button" class="btn btn-me right-20 maintenance-user-list-btn-confirm ">更新</button>
+        <button type="button" class="btn btn-warning btn-me btn-back-top">戻る</button>
+    </div>
+    <span id="span_alert" style="color: red;"></span>
+    <table class="table_list compact">
+        <thead>
+            <tr>
+                <th>ユーザID</th>
+                <th>ユーザ名</th>
+                <th style="width:200px">店舗名</th>
+                <th >権限</th>
+                <th>フランチャイズコード</th>
+                <th>メニューグループ</th>
+                <th style="width:150px">企業名</th>
+                <th>部署コード</th>
+                <th>所属部署名</th>
+                <th>メール</th>
+                <th>電話</th>
+                <th>FAX</th>
+                <th>パスワード</th>
+                <th>&nbsp;利用不可&nbsp;</th>
+                <th>&nbsp;チェック&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{$listshop := .shops}}
+            {{$listchain := .chains}}
+            {{$listFranchiseCd := .listFranchiseCd}}
+            {{$listmenu := .menugroups}}
+            {{$listcorp := .corps}}
+            {{range $key,$user := .listUser}}
+            <tr>
+                <td style="padding-left: 3px !important;">
+                    {{$user.Um_User_ID}}
+                    <input type="hidden" name="user_id" value="{{$user.Um_User_ID}}"/>
+                </td>
+                <td>
+                    <input type="text" class="text-column input_text" name="user_name" id="user_name_{{$key}}" value="{{$user.Um_User_Name}}" maxlength="20"/>
+                </td>
+                <td>
+                    <select style="width: 200px;max-height: 25px;" name="shop_cd" id="shop_cd_{{$key}}" class="shop_cd" data-default="{{$user.Um_Shop_Cd}}" data-default-name="{{$user.Um_Shop_Name}}">
+                        <option value="-1" selected></option>
+                        <option value="99999999">本部</option>
+                        {{range $key, $shop := $listshop}}
+                        <option value="{{$shop.ShopCD}}">{{$shop.ShopName}}</option>
+                        {{end}}
+                    </select>
+                <td>
+                    <select style="width: 100px;max-height: 25px;" name="flg_auth" id="flg_auth_{{$key}}" class="flg_auth" data-default="{{$user.Um_Flg_Auth}}">
+                        <option value="0">店舗</option>
+                        <option value="1">本部</option>
+                    </select>
+                </td>
+                <td>
+                    <select style="width: 100%;max-height: 25px;" name="franchise_cd" id="franchise_cd_{{$key}}" class="franchise_cd" data-default="{{$user.Um_Franchise_Cd}}">
+                        <option value="-1"></option>
+                        {{range $key,$franchises := $listFranchiseCd}}
+                        <option value="{{$franchises.FranchiseCd}}">{{$franchises.FranchiseCd}}</option>
+                        {{end}}
+                    </select>
+                </td>
+                <td>
+                    <select style="width: 100%;max-height: 25px;" name="flg_menu_group" id="flg_menu_group_{{$key}}" class="flg_menu_group" data-default="{{$user.Um_Flg_Menu_Group}}">
+                        {{range $key,$menus := $listmenu}}
+                        <option value="{{$menus.Menu_Group}}">{{$menus.Menu_Group}}</option>
+                        {{end}}
+                    </select>
+                </td>
+                <td>
+                    <select style="width: 100px;max-height: 25px;" name="corp" id="corp_{{$key}}" class="corp" data-default="{{$user.Um_Corp_Cd}}" data-default-name="{{$user.Um_Corp_Name}}">
+                        {{range $key,$corp := $listcorp}}
+                        <option value="{{$corp.CorpCd}}">{{$corp.CorpName}}</option>
+                        {{end}}
+                    </select>
+                </td>
+                <td>
+                    <input type="text" class="text-column input_text" name="dept_cd" id="dept_cd_{{$key}}" value="{{$user.Um_Dept_Cd}}" maxlength="10"/>
+                </td>
+                <td>
+                    <input type="text" class="text-column input_text" name="dept_name" id="dept_name_{{$key}}" value="{{$user.Um_Dept_Name}}" maxlength="20"/>
+                </td>
+                <td>
+                    <input type="text" class="text-column input_text" name="user_mail" id="user_mail_{{$key}}" value="{{$user.Um_User_Mail}}"maxlength="50"/>
+                </td>
+                <td>
+                    <input type="text" class="text-column input_text" name="user_phone" id="user_phone_{{$key}}" value="{{$user.Um_User_Phone}}" maxlength="15"/>
+                </td>
+                <td>
+                    <input type="text" class="text-column input_text" name="user_xerox" id="user_xerox_{{$key}}" value="{{$user.Um_User_Xerox}}" maxlength="15"/>
+                </td>
+                <td style="width: 100px">
+                    <input type="password" class="text-column input_text" name="user_pass" id="user_pass_{{$key}}" value="{{$user.Um_User_Pass}}" maxlength="50"/></td>
+                <td class="text-center">
+                    {{if eq $user.Um_Flg_Use "0"}}
+                    <label class="check_label" for="flg_user_check_{{$key}}">
+                        <input type="checkbox" id="flg_user_check_{{$key}}" class="flg_user_check"/>
+                        <input type="hidden" name="flg_user" id="flg_user_{{$key}}" value="0" class="flg_user"/>
+                    </label>
+                    {{else}}
+                    <label class="check_label" for="flg_user_check_{{$key}}">
+                        <input type="checkbox" id="flg_user_check_{{$key}}" checked class="flg_user_check"/>
+                        <input type="hidden" name="flg_user" id="flg_user_{{$key}}" value="1" class="flg_user"/>
+                    </label>
+                    {{end}}
+                </td>
+                <td class="text-center">
+                    <label class="check_label" for="flg_exec_check_{{$key}}">
+                        <input type="checkbox" id="flg_exec_check_{{$key}}" class="flg_exec_check"/>
+                        <input type="hidden" name="flg_exec" id="flg_exec_{{$key}}" value="0" class="flg_exec"/>
+                    </label>
+                </td>
+
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+
+</form>
+<div style="display: none;">
+    <div style="display: block;" class="confirm-add modal fade in">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">ユーザ更新</h4>
+                </div>
+                <div class="modal-body">
+                    データを更新します。よろしいですか？
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger subpage-yes">はい</button>
+                    <button type="button" class="btn btn-success subpage-no">いいえ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}

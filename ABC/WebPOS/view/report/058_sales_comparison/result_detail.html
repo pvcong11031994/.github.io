@@ -1,0 +1,127 @@
+{{$DATA := .data}}
+{{$DATATOTAL := .datatotal}}
+{{$listCol := .listCol}}
+{{$rangeType := .rangeType}}
+
+<!-- Result Detail -->
+<div class="data_view">
+    <table class="query-result tablesorter" id="tbl_report_result_detail" _fixedhead ="rows:{{if eq $rangeType "0"}}4{{else}}3{{end}}; cols:1">
+    <thead>
+    {{if eq $rangeType "0"}}
+    <tr class="col">
+        <th data-sorter="false"></th>
+        <th data-sorter="false"></th>
+        <th data-sorter="false"></th>
+        <th data-sorter="false"></th>
+        <th data-sorter="false" class="col-name">年</th>
+        {{range $j, $item := $listCol}}
+        <th data-sorter="false" {{if eq (checkSunday $item.McKey) 1}} class="sum-col"{{end}} >{{$item.Mcyyyy}}</th>
+        {{end}}
+    </tr>
+    <tr class="col">
+        <th data-sorter="false"></th>
+        <th data-sorter="false"></th>
+        <th data-sorter="false"></th>
+        <th data-sorter="false"></th>
+        <th data-sorter="false" class="col-name">月</th>
+        {{range $j, $item := $listCol}}
+        <th data-sorter="false" {{if eq (checkSunday $item.McKey) 1}} class="sum-col"{{end}}>{{$item.Mcmm}}</th>
+        {{end}}
+    </tr>
+    <tr class="col">
+        <th data-sorter="false"></th>
+        <th data-sorter="false"></th>
+        <th data-sorter="false"></th>
+        <th data-sorter="false"></th>
+        <th data-sorter="false" class="col-name">日</th>
+        {{range $j, $item := $listCol}}
+        <th data-sorter="false" {{if eq (checkSunday $item.McKey) 1}} class="sum-col"{{end}}>{{$item.Mcdd}}</th>
+        {{end}}
+    </tr>
+    {{else if eq $rangeType "1"}}
+    <tr class="col">
+        <th data-sorter="false"></th>
+        <th data-sorter="false"></th>
+        <th data-sorter="false"></th>
+        <th data-sorter="false"></th>
+        <th data-sorter="false" class="col-name">年</th>
+        {{range $j, $item := $listCol}}
+        <th data-sorter="false">{{$item.Mcyyyy}}</th>
+        {{end}}
+    </tr>
+    <tr class="col">
+        <th data-sorter="false"></th>
+        <th data-sorter="false"></th>
+        <th data-sorter="false"></th>
+        <th data-sorter="false"></th>
+        <th data-sorter="false" class="col-name">週</th>
+        {{range $j, $item := $listCol}}
+        <th data-sorter="false">{{$item.Mcweekdate}}</th>
+        {{end}}
+    </tr>
+    {{else}}
+    <tr class="col">
+        <th data-sorter="false"></th>
+        <th data-sorter="false"></th>
+        <th data-sorter="false"></th>
+        <th data-sorter="false"></th>
+        <th data-sorter="false" class="col-name">年</th>
+        {{range $j, $item := $listCol}}
+        <th data-sorter="false">{{$item.Mcyyyy}}</th>
+        {{end}}
+    </tr>
+    <tr class="col">
+        <th data-sorter="false"></th>
+        <th data-sorter="false"></th>
+        <th data-sorter="false"></th>
+        <th data-sorter="false"></th>
+        <th data-sorter="false" class="col-name">月</th>
+        {{range $j, $item := $listCol}}
+        <th data-sorter="false">{{$item.Mcmm}}</th>
+        {{end}}
+    </tr>
+    {{end}}
+    <tr>
+        <th class="col-name">店舗名</th>
+        <th class="col-name">入荷累計</th>
+        <th class="col-name">売上累計</th>
+        <th class="col-name">在庫数</th>
+        <th class="col-name">期間合計</th>
+        {{range $j, $item := $listCol}}
+        <th class="sum-name">合計</th>
+        {{end}}
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th class="sum-name">合計</th>
+        <td class="number">{{$DATATOTAL.ReturnTotal | sum_format}}</td>
+        <td class="number">{{$DATATOTAL.SaleTotal | sum_format}}</td>
+        <td class="number">{{$DATATOTAL.StockCurCount | sum_format}}</td>
+        <td class="number">{{$DATATOTAL.SaleTotalDate | sum_format}}</td>
+        {{range $k, $item := $listCol}}
+        <td class="number {{if eq (checkSunday $item.McKey) 1}} sum-col {{end}}">{{(index $DATATOTAL.SaleDay $DATATOTAL.JanCd $item.McKey) | sum_format}}</td>
+        {{end}}
+    </tr>
+    {{range $index, $rowData := $DATA}}
+    <tr>
+        <th class="sum-name" >{{$rowData.ShopName}}</th>
+        <td class="number">{{$rowData.ReturnTotal | sum_format}}</td>
+        <td class="number">{{$rowData.SaleTotal | sum_format}}</td>
+        <td class="number">{{$rowData.StockCurCount | sum_format}}</td>
+        <td class="number">{{$rowData.SaleTotalDate | sum_format}}</td>
+        {{range $k, $item := $listCol}}
+        <td class="number {{if eq (checkSunday $item.McKey) 1}} sum-col {{end}}">{{(index $rowData.SaleDay $rowData.JanCd $item.McKey) | sum_format}}</td>
+        {{end}}
+    </tr>
+    {{end}}
+    </tbody>
+    </table>
+</div>
+<script>
+    setTimeout(function () {
+        $("#tbl_report_result_detail").tablesorter();
+        FixedMidashi.create();
+        window.scrollTo( 0,$("#tbl_report_result_detail").offset().top-101);
+    },100);
+</script>

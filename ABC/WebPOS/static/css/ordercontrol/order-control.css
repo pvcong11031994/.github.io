@@ -1,0 +1,137 @@
+
+.order-control {
+}
+
+.order-control table tr {
+    max-height: 32px !important;
+    min-height: 32px !important;
+    height: 32px !important;
+}
+
+.order-control input[type="text"] {
+    /*max-height: 32px !important;*/
+    /*min-height: 32px !important;*/
+    /*height: 32px !important;*/
+    padding-left: 8px;
+}
+
+.order-control .haft-center {
+    width: 50%;
+    text-align: center;
+}
+
+.order-control #order-number, #order_control_order-number, #customer_control_order-number {
+    width: 50px;
+    float: left;
+    text-align: right;
+    padding-right: 5px;
+}
+
+.order-control .label-middle-last {
+    line-height: 26px;
+    margin: 0px 5px;
+    float: left;
+    font-weight: bold;
+}
+
+.order-shop-title {
+    padding: 0px 0px 0px 15px;
+    display: inline-block;
+    background: #cdcdcd;
+    border: 1px #BABABA solid;
+}
+
+.order-shop-title .shop-name {
+    padding: 10px 15px;
+    display: inline-block;
+    background: #fff;
+    margin: 0px 0px 0px 15px;
+    font-weight: normal;
+}
+
+table.order-detail tr:nth-child(even) {
+    background: #DEEBF6
+}
+
+table.order-detail tr:nth-child(odd) {
+    background: #FFFFFF
+}
+
+table.order-detail {
+    border: 1px #BBBBBB solid;
+}
+
+table.order-detail th, table.order-detail td {
+    border-width: 1px 1px 0px 0px;
+    border-style: solid;
+    border-color: #BBBBBB;
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: 12px;
+    white-space: nowrap;
+    font-weight: normal;
+    padding: 0px 2px !important;
+    min-height: 45px;
+}
+
+table.order-detail th {
+    border-width: 1px 1px 1px 0px;
+    background-color: #C6E0B4;
+    text-align: center;
+    height: 30px;
+}
+
+table.order-detail td {
+    padding-left: 5px !important;
+}
+
+table.order-detail input[type=text] {
+    background: transparent;
+    text-align: right;
+    padding-right: 5px;
+    border: 1px solid #C6E0B4;
+}
+
+table.dataTable {
+    margin-left: 0px;
+}
+
+.filter-name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 150px;
+    width: 150px;
+}
+
+.no-view {
+    display: none !important;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.order-list-group-button {
+    position: absolute;
+    top: -42px;
+    right: 0px;
+}
+
+.order-list-btn-back {
+    background: #9DC3E6;
+    border-color: #9DC3E6;
+}
+
+.order-list-btn-confirm {
+    background: #FFE699;
+    border-color: #FFE699;
+}
+
+.btn-delete {
+    background: #ED7D31 !important;
+    color: #000;
+}

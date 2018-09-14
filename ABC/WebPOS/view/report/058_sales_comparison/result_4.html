@@ -1,0 +1,575 @@
+{{$DATA := .data}}
+{{$DATATOTAL := .datatotal}}
+
+{{$rowDisplay := .row_display}}
+{{$listResult := .list_result_graph}}
+{{$hTitle := .h_title}}
+{{$viewWindowMode := .view_window_mode}}
+{{$showTextEvery := .show_text_every}}
+{{$len := .len_data_single_item}}
+
+{{$rangeType := .rangeType}}
+{{$listCol := .listCol}}
+
+<style>
+    div.image {
+        float: left;
+        height: 100%;
+        padding: 10px;
+    }
+    div.image img {
+        max-width: 280px;
+        min-width: 280px;
+        max-height: 360px;
+        min-height: 360px;
+    }
+    div.info_item {
+        float: left;
+        height: 100%;
+        /*padding: 10px;*/
+    }
+    table.table_list th{
+        text-align: left !important;
+    }
+    .google-visualization-tooltip {
+        /*background-color: blue!important;*/
+        width: auto!important;
+        /*top: 30px!important;
+        right: 0px!important;
+        border: none !important;
+        box-shadow: none!important;
+        left: inherit!important;*/
+    }
+    .click_for_detail_item_transition {
+        color:blue;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+    .click_for_product_name {
+        color:blue;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+</style>
+<script>
+    $(document).ready(function() {
+        //Fix resize and freeze header IE
+        var  versionIE = GetIEVersion();
+        if (versionIE === 9 || versionIE === 11) {
+            var defaultBorder = "2px";
+            var defaultTopBottom = "1.75px";
+            $("th[id=resize-col]").css("border-left-width", defaultBorder);
+            $("th[id=resize-col]").css("border-top-width", defaultTopBottom);
+            $("th[id=resize-col]").css("border-bottom-width", defaultTopBottom);
+        }
+    });
+</script>
+<table class="table_search noborder" >
+    <tr>
+        <td>
+            <div style="position: absolute; z-index: 20; margin-left: 45px; margin-top: 20px">
+                <label>最大値</label>
+                <input type="text" id="input_max_value" class="input-number" style="width: 50px; padding-top: 2px; padding-bottom: 0px"/>
+                <button style="margin-top: -1px; margin-bottom: 0px; width: 45px; padding-top: 0px; height: 25px" type="button" class="btn-selected-date-form" id="change_size" onclick="changeSize()">変更</button>
+            </div>
+            <div id="graph_area" class="graph_area" style="width: 1150px;max-height: 600px;min-height: 350px;"></div>
+        </td>
+    </tr>
+</table>
+<!-- Result Search -->
+<div>
+    <table class="query-result query-result-3 tablesorter feeze-header" id="tbl_report_result" _fixedhead ="rows:1; cols:3" style="width: max-content; display: -ms-grid; -ms-grid-columns: max-content;">
+        <thead>
+        <tr class="col">
+            <th class="row-name"></th>
+            <th class="row-name">ＪＡＮ</th>
+            <th class="row-name" id="resize-col">品名</th>
+            <th class="row-name header-writer-name">著者</th>
+            <th class="row-name">出版社名</th>
+            <th class="row-name">発売日</th>
+            <th class="row-name">本体価格</th>
+            <th class="row-name">入荷累計</th>
+            <th class="row-name">売上累計</th>
+            <th class="row-name">在庫数</th>
+            <th class="row-name">初売上日</th>
+            <th class="row-name">期間売上合計</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{range $index,$rowData := $DATA}}
+        <tr>
+            <td class="click_for_detail_item_transition {{$rowData.JanCd}}">{{if eq $index 0}}A
+                {{else if eq $index 1}}B{{else if eq $index 2}}C{{else if eq $index 3}}D
+                {{else if eq $index 4}}E{{else if eq $index 5}}F{{else if eq $index 6}}G
+                {{else if eq $index 7}}H{{else if eq $index 8}}I{{else if eq $index 9}}J
+                {{else if eq $index 10}}K{{else if eq $index 11}}L{{else if eq $index 12}}M
+                {{else if eq $index 13}}N{{else if eq $index 14}}O{{end}}</td>
+            <td class="click_for_single_item_transition">{{$rowData.JanCd}}</td>
+            <td class="click_for_product_name link_data">{{$rowData.GoodsName}}</td>
+            <td>{{$rowData.AuthorName}}</td>
+            <td>{{$rowData.PublisherName}}</td>
+            <td>{{$rowData.SaleDate}}</td>
+            <td class="number">{{$rowData.Price | sum_format}}</td>
+            <td class="number">{{$rowData.ReturnTotal | sum_format}}</td>
+            <td class="number">{{$rowData.SaleTotal |sum_format}}</td>
+            <td class="number">{{$rowData.StockCurCount | sum_format}}</td>
+            <td>{{$rowData.FirstSaleDate}}</td>
+            <td class="number sum-col">{{$rowData.SaleTotalDate | sum_format}}</td>
+        </tr>
+        {{end}}
+        </tbody>
+    </table>
+</div>
+
+<form id="search-condition">
+    {{ .csrfField }}
+    {{if gt (len .form.JanArrays) 0 }}
+    {{range $k,$v := .form.JanArrays}}
+    <input type="hidden" name="jan_cd" value="{{$v}}">
+    {{end}}
+    {{end}}
+    <input type="hidden" value="{{.form.GroupType}}" name="group_type">
+    <input type="hidden" value="{{.form.DateFrom}}" name="date_from">
+    <input type="hidden" value="{{.form.DateTo}}" name="date_to">
+    {{range $k,$v := .form.ShopCd}}
+    <input type="hidden" name="shop_cd" value="{{$v}}">
+    {{end}}
+    <input type="hidden" name="jan_key">
+</form>
+
+<!--</div>-->
+{{if gt (len $listResult) 0}}
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    //Enter
+    $(document).on("keydown", "input[type=text]", function (e) {
+        if (13 == e.keyCode ) {
+            changeSize();
+        }});
+    //Draw when change max value
+    function changeSize() {
+        var valueInputMax = parseInt($("#input_max_value").val());
+        if ($("#input_max_value").val() === "" || $("#input_max_value").val() === null) {
+            return false
+        } else {
+            //Call draw chart
+            drawChart(valueInputMax);
+        }
+    };
+    //Function Draw Chart
+    function drawChart($maxValue) {
+
+        // ASO-5835 [BA]mBAWEB-v10a 売上比較：グラフの色の変更 - ADD START
+        var arrColorDefault = ["rgb(0,134,205)", "rgb(35,133,181)", "rgb(70,132,157)", "rgb(105,131,133)", "rgb(140,130,109)",
+            "rgb(175,129,85)", "rgb(210,128,61)", "rgb(245,128,35)", "rgb(224,136,37)", "rgb(203,144,39)",
+            "rgb(182,152,41)", "rgb(161,160,43)", "rgb(140,168,45)", "rgb(119,176,47)", "rgb(100,187,48)" ];
+
+        var arrColorDefaultTemp = new Array();
+        if ({{$len}} >= 2) {
+            for (i = 0; i < {{$len}}; i++ ) {
+                var iColorTemp = 1 + Math.floor(14/({{$len}} - 1)) * i;
+                arrColorDefaultTemp[i] = arrColorDefault[iColorTemp - 1];
+            }
+        } else {
+            arrColorDefaultTemp[0] = arrColorDefault[0];
+        }
+        // ASO-5835 [BA]mBAWEB-v10a 売上比較：グラフの色の変更 - ADD END
+
+        if ($maxValue === null || $maxValue === undefined) {
+            $maxValue = {{.max}}
+        }
+
+        var dataTable = new google.visualization.DataTable();
+        //add tick
+        if ($maxValue > 4) {
+            if (($maxValue % 4) !== 0) {
+                $maxValue = $maxValue + (4 - $maxValue % 4)
+            }
+        } else {
+            $maxValue = 4
+        }
+        var tickstep = $maxValue/4;
+        var ticks = [];
+        for(var t= 0 ;t <= $maxValue  ;t+=tickstep) {
+            ticks.push(t)
+        }
+
+        dataTable.addColumn('string', 'Year');
+        var arrAlphabetDefault = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"];
+        var arrAlphabet = arrAlphabetDefault.slice(0, {{$len}});
+        for (var i = 0; i < arrAlphabet.length; i++) {
+            dataTable.addColumn('number', arrAlphabet[i]);
+            dataTable.addColumn({type: 'string', role: 'tooltip'});
+        }
+
+        //Add data rows
+        dataTable.addRows([
+            {{range $j, $value := $listResult}}
+        [{{$value.Header}},
+        {{$value.Value0}},{{$value.Tooltip0}}
+        {{if gt $len 1 }}
+    ,{{$value.Value1}},{{$value.Tooltip1}}
+        {{end}}
+        {{if gt $len 2 }}
+    ,{{$value.Value2}},{{$value.Tooltip2}}
+        {{end}}
+        {{if gt $len 3 }}
+    ,{{$value.Value3}},{{$value.Tooltip3}}
+        {{end}}
+        {{if gt $len 4 }}
+    ,{{$value.Value4}},{{$value.Tooltip4}}
+        {{end}}
+        {{if gt $len 5 }}
+    ,{{$value.Value5}},{{$value.Tooltip5}}
+        {{end}}
+        {{if gt $len 6 }}
+    ,{{$value.Value6}},{{$value.Tooltip6}}
+        {{end}}
+        {{if gt $len 7 }}
+    ,{{$value.Value7}},{{$value.Tooltip7}}
+        {{end}}
+        {{if gt $len 8 }}
+    ,{{$value.Value8}},{{$value.Tooltip8}}
+        {{end}}
+        {{if gt $len 9 }}
+    ,{{$value.Value9}},{{$value.Tooltip9}}
+        {{end}}
+        {{if gt $len 10 }}
+    ,{{$value.Value10}},{{$value.Tooltip10}}
+        {{end}}
+        {{if gt $len 11 }}
+    ,{{$value.Value11}},{{$value.Tooltip11}}
+        {{end}}
+        {{if gt $len 12 }}
+    ,{{$value.Value12}},{{$value.Tooltip12}}
+        {{end}}
+        {{if gt $len 13 }}
+    ,{{$value.Value13}},{{$value.Tooltip13}}
+        {{end}}
+        {{if gt $len 14 }}
+    ,{{$value.Value14}},{{$value.Tooltip14}}
+        {{end}}],
+        {{end}}
+    ]);
+
+        var options = {
+            title: '販売数推移',
+            hAxis: {
+                title:'{{$hTitle}}',
+                showTextEvery:{{$showTextEvery}},
+        maxTextLines:1
+    },
+        vAxis:{
+            title:"販\n売\n数",
+                format:'#,###',
+                {{if $viewWindowMode}}
+            viewWindow:{
+                min:0,
+                    max:$maxValue,
+            },
+            ticks: ticks,
+                {{end}}
+
+        },
+        legend:{
+            alignment: 'center',
+                position: 'right',
+                maxLines:2,
+        },
+        height:570,
+            tooltip:{
+            isHtml:true
+        },
+        colors: arrColorDefaultTemp,
+                pointSize:7,
+                series: {
+            0: { pointShape: { type: 'circle' } },
+            1: { pointShape: { type: 'triangle' } },
+            2: { pointShape: { type: 'triangle', rotation: 90 } },
+            3: { pointShape: { type: 'triangle', rotation: 180 } },
+            4: { pointShape: { type: 'triangle', rotation: 270 } },
+            5: { pointShape: { type: 'square' } },
+            6: { pointShape: { type: 'diamond' } },
+            7: { pointShape: { type: 'star', sides: 3, dent: 0.2 } },
+            8: { pointShape: { type: 'star', sides: 3, dent: 0.2, rotation: 180 } },
+            9: { pointShape: { type: 'star', sides: 4, dent: 0.5 } },
+            10: { pointShape: { type: 'star', sides: 5, dent: 0.5 } },
+            11: { pointShape: { type: 'star', sides: 5, dent: 0.5, rotation: 180 } },
+            12: { pointShape: { type: 'star', sides: 6, dent: 0.5 } },
+            13: { pointShape: { type: 'polygon' } },
+            14: { pointShape: { type: 'polygon', rotation: 180 } },
+        }
+    };
+        var chart = new google.visualization.LineChart(document.getElementById('graph_area'));
+        chart.draw(dataTable, options);
+        doDrawFinal(document.getElementById('graph_area'));
+
+        //Add event select onclick
+        google.visualization.events.addListener(chart, 'select', selectInGraph);
+        function selectInGraph() {
+            var selection = chart.getSelection();
+
+            for (var i = 0; i < selection.length; i++) {
+                var item = selection[i];
+                if (item.row != null && item.column != null) {
+                    //When click line into graph
+                    drawAgainChart(item);
+                } else if (item.row != null) {
+                    return;
+                } else if (item.column != null) {
+                    drawAgainChart(item);
+                }
+            }
+        }
+        function drawAgainChart(item) {
+            //When click graph annotation
+            //Draw color
+            //Array Color default
+            // ASO-5835 [BA]mBAWEB-v10a 売上比較：グラフの色の変更 - EDIT START
+            //var arrColorDefault = ["rgb(0,134,205)", "rgb(0,148,227)","rgb(0,162,249)", "rgb(11,179,255)", "rgb(23,184,255)",
+            //    "rgb(51,184,255)", "rgb(68,189,255)", "rgb(89,197,255)", "rgb(104,202,255)", "rgb(128,210,255)",
+            //    "rgb(142,216,255)", "rgb(162,222,255)", "rgb(176,227,255)", "rgb(187,232,255)", "rgb(200,238,255)" ];
+            var arrColorDefault = ["rgb(0,134,205)", "rgb(35,133,181)", "rgb(70,132,157)", "rgb(105,131,133)", "rgb(140,130,109)",
+                "rgb(175,129,85)", "rgb(210,128,61)", "rgb(245,128,35)", "rgb(224,136,37)", "rgb(203,144,39)",
+                "rgb(182,152,41)", "rgb(161,160,43)", "rgb(140,168,45)", "rgb(119,176,47)", "rgb(100,187,48)" ];
+
+            var arrColorDefaultTemp = new Array();
+            if ({{$len}} >= 2) {
+                for (i = 0; i < {{$len}}; i++ ) {
+                    var iColorTemp = 1 + Math.floor(14/({{$len}} - 1)) * i;
+                    arrColorDefaultTemp[i] = arrColorDefault[iColorTemp - 1];
+                }
+            } else {
+                arrColorDefaultTemp[0] = arrColorDefault[0];
+            }
+            // ASO-5835 [BA]mBAWEB-v10a 売上比較：グラフの色の変更 - EDIT END
+
+            var colorChange = 'rgb(242,83,113)';
+            var arrLineDefault = [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29];
+
+            //Arr Color Result
+            // ASO-5835 [BA]mBAWEB-v10a 売上比較：グラフの色の変更 - EDIT START
+            //var arrColor = arrColorDefault.slice(0, {{$len}});
+            var arrColor = arrColorDefaultTemp.slice(0, {{$len}});
+            // ASO-5835 [BA]mBAWEB-v10a 売上比較：グラフの色の変更 - EDIT END
+            var arrLine = arrLineDefault.slice(0, {{$len}});
+            var flagClick = false;
+            arrColor.push(colorChange);
+            for (i = 0; i < arrLine.length; i++ ) {
+                if (item.column === arrLine[i]) {
+                    arrColor[i] = colorChange;
+                    flagClick = true;
+                }
+            }
+            if (flagClick === false) {
+                return;
+            } else {
+                var arrValueTemp = [];
+                var arrToolTipTemp = [];
+                {{range $j, $value := $listResult}}
+                if (item.column === 1 && arrLine.length > 0) {
+                    arrValueTemp.push({{$value.Value0}});
+                    arrToolTipTemp.push({{$value.Tooltip0}});
+                } else if (item.column === 3 && arrLine.length > 1) {
+                    arrValueTemp.push({{$value.Value1}});
+                    arrToolTipTemp.push({{$value.Tooltip1}});
+                } else if (item.column === 5 && arrLine.length > 2) {
+                    arrValueTemp.push({{$value.Value2}});
+                    arrToolTipTemp.push({{$value.Tooltip2}});
+                } else if (item.column === 7 && arrLine.length > 3) {
+                    arrValueTemp.push({{$value.Value3}});
+                    arrToolTipTemp.push({{$value.Tooltip3}});
+                } else if (item.column === 9 && arrLine.length > 4) {
+                    arrValueTemp.push({{$value.Value4}});
+                    arrToolTipTemp.push({{$value.Tooltip4}});
+                } else if (item.column === 11 && arrLine.length > 5) {
+                    arrValueTemp.push({{$value.Value5}});
+                    arrToolTipTemp.push({{$value.Tooltip5}});
+                } else if (item.column === 13 && arrLine.length > 6) {
+                    arrValueTemp.push({{$value.Value6}});
+                    arrToolTipTemp.push({{$value.Tooltip6}});
+                } else if (item.column === 15 && arrLine.length > 7) {
+                    arrValueTemp.push({{$value.Value7}});
+                    arrToolTipTemp.push({{$value.Tooltip7}});
+                } else if (item.column === 17 && arrLine.length > 8) {
+                    arrValueTemp.push({{$value.Value8}});
+                    arrToolTipTemp.push({{$value.Tooltip8}});
+                } else if (item.column === 19 && arrLine.length > 9) {
+                    arrValueTemp.push({{$value.Value9}});
+                    arrToolTipTemp.push({{$value.Tooltip9}});
+                } else if (item.column === 21 && arrLine.length > 10) {
+                    arrValueTemp.push({{$value.Value10}});
+                    arrToolTipTemp.push({{$value.Tooltip10}});
+                } else if (item.column === 23 && arrLine.length > 11) {
+                    arrValueTemp.push({{$value.Value11}});
+                    arrToolTipTemp.push({{$value.Tooltip11}});
+                } else if (item.column === 25 && arrLine.length > 12) {
+                    arrValueTemp.push({{$value.Value12}});
+                    arrToolTipTemp.push({{$value.Tooltip12}});
+                } else if (item.column === 27 && arrLine.length > 13) {
+                    arrValueTemp.push({{$value.Value13}});
+                    arrToolTipTemp.push({{$value.Tooltip13}});
+                } else if (item.column === 29 && arrLine.length > 14) {
+                    arrValueTemp.push({{$value.Value14}});
+                    arrToolTipTemp.push({{$value.Tooltip14}});
+                }
+                {{end}}
+
+                //arrValueTempNew = arrValueTemp.slice(0, arrColor.length);
+                //arrToolTipTempNew = arrValueTemp.slice(0, arrColor.length);
+                //DRAW NEW
+                var dataTableNew = new google.visualization.DataTable();
+
+                dataTableNew.addColumn('string', 'Year');
+                for (var i = 0; i < arrAlphabet.length; i++) {
+                    dataTableNew.addColumn('number', arrAlphabet[i]);
+                    dataTableNew.addColumn({type: 'string', role: 'tooltip'});
+                }
+                dataTableNew.addColumn('number', 'TMP');
+                dataTableNew.addColumn({type: 'string', role: 'tooltip'});
+
+                //Add ROWS
+                dataTableNew.addRows([
+                    {{range $j, $value := $listResult}}
+                [{{$value.Header}},
+                {{$value.Value0}},{{$value.Tooltip0}}
+                {{if gt $len 1 }}
+            ,{{$value.Value1}},{{$value.Tooltip1}}
+                {{end}}
+                {{if gt $len 2 }}
+            ,{{$value.Value2}},{{$value.Tooltip2}}
+                {{end}}
+                {{if gt $len 3 }}
+            ,{{$value.Value3}},{{$value.Tooltip3}}
+                {{end}}
+                {{if gt $len 4 }}
+            ,{{$value.Value4}},{{$value.Tooltip4}}
+                {{end}}
+                {{if gt $len 5 }}
+            ,{{$value.Value5}},{{$value.Tooltip5}}
+                {{end}}
+                {{if gt $len 6 }}
+            ,{{$value.Value6}},{{$value.Tooltip6}}
+                {{end}}
+                {{if gt $len 7 }}
+            ,{{$value.Value7}},{{$value.Tooltip7}}
+                {{end}}
+                {{if gt $len 8 }}
+            ,{{$value.Value8}},{{$value.Tooltip8}}
+                {{end}}
+                {{if gt $len 9 }}
+            ,{{$value.Value9}},{{$value.Tooltip9}}
+                {{end}}
+                {{if gt $len 10 }}
+            ,{{$value.Value10}},{{$value.Tooltip10}}
+                {{end}}
+                {{if gt $len 11 }}
+            ,{{$value.Value11}},{{$value.Tooltip11}}
+                {{end}}
+                {{if gt $len 12 }}
+            ,{{$value.Value12}},{{$value.Tooltip12}}
+                {{end}}
+                {{if gt $len 13 }}
+            ,{{$value.Value13}},{{$value.Tooltip13}}
+                {{end}}
+                {{if gt $len 14 }}
+            ,{{$value.Value14}},{{$value.Tooltip14}}
+                {{end}}
+            ,arrValueTemp[{{$j}}],arrToolTipTemp[{{$j}}]],
+                {{end}}
+            ]);
+                //END
+                var options = {
+                    series: {
+                {{$len}}:{
+                    visibleInLegend : false
+                }
+            },
+                title: '販売数推移',
+                    hAxis: {
+                    title:'{{$hTitle}}',
+                        showTextEvery:{{$showTextEvery}},
+                    maxTextLines:1
+                },
+                vAxis:{
+                    title:"販\n売\n数",
+                        format:'#,###',
+                        {{if $viewWindowMode}}
+                    viewWindow:{
+                        min:0,
+                            max:$maxValue,
+                    },
+                    ticks: ticks,
+                        {{end}}
+                },
+                legend:{
+                    alignment: 'center',
+                        position: 'right',
+                        maxLines:2,
+                },
+                height:570,
+                    tooltip:{
+                    isHtml:true
+                },
+                colors: arrColor,
+                    pointSize:3
+
+            };
+                //END
+                chart.draw(dataTableNew, options);
+                doDrawFinal(document.getElementById('graph_area'));
+            }
+        }
+
+    }
+</script>
+{{end}}
+<script type="text/javascript">
+    var $flag = false;
+    $(function () {
+        $(document).on("click", ".click_for_detail_item_transition", getDetailData);
+        function getDetailData() {
+            $(".type_query").val("2");
+            if ($flag) {
+                return;
+            }
+            $flag = true;
+            $("input[name='jan_key']").val($(this).next().html().trim());
+            $("div[id='query_result_detail']").html("");
+            $(".click_for_detail_item_transition").css("color","blue");
+            $(this).css("color","red");
+            $.ajax({
+                url: location.pathname + "/query_detail_ajax",
+                type: "POST",
+                cache:false,
+                data: $("form[id='search-condition']").serialize(),
+                success: function (responeHtml) {
+                    $("div[id='query_result_detail']").html(responeHtml);
+                    $("div[id='query_result_detail']").css("display","block");
+                },
+                complete:function () {
+                    $flag = false;
+                    $(".type_query").val("1")
+                },
+            })
+        }
+    });
+
+    //resize col 品名
+    $("#resize-col").resizable({
+        minWidth: 10
+    });
+    $(".ui-resizable-s").remove();
+    $(".ui-resizable-se").remove();
+    $("#resize-col").resize(function() {
+        FixedMidashi.create();
+
+        //Fix resize IE
+        var  versionIE = GetIEVersion();
+        if (versionIE === 9 || versionIE === 11) {
+            var defaultBorder = "2px";
+            $("th[id=resize-col]").css("border-right-width", defaultBorder);
+        }
+    });
+</script>

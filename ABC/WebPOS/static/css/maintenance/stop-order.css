@@ -1,0 +1,106 @@
+
+.dataTables_wrapper .ui-corner-tl {
+    padding: 0px;
+    display: none;
+}
+
+.dataTables_wrapper .ui-corner-bl {
+    margin-top: -5px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    display: none;
+}
+
+.div-pagination-button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+table.maintenance-stop-order-list tr:nth-child(even) {
+    background: #DEEBF6
+}
+
+table.maintenance-stop-order-list tr:nth-child(odd) {
+    background: #FFFFFF
+}
+
+table.maintenance-stop-order-list {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px #BBBBBB solid;
+}
+
+table.maintenance-stop-order-list th,
+table.maintenance-stop-order-list td {
+    border-width: 1px 1px 0px 0px;
+    border-style: solid;
+    border-color: #BBBBBB;
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: 12px;
+    white-space: nowrap;
+    font-weight: normal;
+    padding: 0px 0px !important;
+    min-height: 30px;
+    height: 30px;
+}
+
+table.maintenance-stop-order-list th {
+    border-width: 1px 1px 1px 0px;
+    background: #d7ebf9 url("/static/jquery-ui/images/ui-bg_glass_80_d7ebf9_1x400.png") 50% 50% repeat-x;
+    text-align: center;
+    height: 30px;
+    padding-right: 5px !important;
+    padding-left: 5px !important;
+}
+
+table.maintenance-stop-order-list td {
+    padding-right: 5px !important;
+    padding-left: 5px !important;
+    text-align: left;
+}
+
+table.maintenance-stop-order-list td.number-column {
+    text-align: right;
+}
+
+table.maintenance-stop-order-list td.btn-column {
+    width: 80px;
+    text-align: center;
+}
+
+table.maintenance-stop-order-list td {
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+}
+
+table.table_list th {
+    height: 64px;
+}
+
+input[type="radio"] {
+    margin: 6px 0 0;
+}
+
+.goods-name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 500px;
+    width: 500px;
+    min-width: 500px;
+}
+
+.publisher-name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 120px;
+    width: 120px;
+    min-width: 120px;
+}
+
+.select-date {
+    margin: 0px;
+    padding: 0px 6px;
+    max-height: 30px;
+    background-color: #96CAFF;
+}

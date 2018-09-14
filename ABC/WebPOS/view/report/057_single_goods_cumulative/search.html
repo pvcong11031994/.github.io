@@ -1,0 +1,186 @@
+{{fill "css"}}
+<link rel="stylesheet" href="/static/css/report/report.css"/>
+<link rel="stylesheet" href="/static/css/report/monthPicker.min.css"/>
+<link rel="stylesheet" href="/static/css/report/handle.common.css"/>
+<link rel="stylesheet" href="/static/css/report/button_report.css"/>
+<link rel="stylesheet" href="/static/lib/jquery-ui/jquery.multiselect.filter.css"/>
+{{end}}
+
+{{fill "script"}}
+<script src="/static/js/report.single.goods.js"></script>
+<script src='/static/js/fixed_midashi_src.js'></script>
+<script src="/static/js/multiselect.js"></script>
+<script src="/static/js/input_date.js"></script>
+<script src="/static/js/input.array.js"></script>
+<script src="/static/js/input.number.js"></script>
+<script src="/static/js/input.form-name.js"></script>
+<script src="/static/js/input.select.date.js"></script>
+<script src="/static/js/monthPicker.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="/static/js/report.search.handle.js"></script>
+<script src="/static/js/report.download.handle.js"></script>
+<script src="/static/js/report.date.handle.js"></script>
+<script src="/static/lib/jquery-ui/jquery.multiselect.filter.js"></script>
+<script src="/static/lib/jquery.tablesorter/jquery.tablesorter.js"></script>
+<script src="/static/js/report.submit.search.js"></script>
+<script>
+
+    $(function() {
+        //========================================================================================
+        // event link page from best_sales
+        // search after link page
+        {{if ne .form.JAN ""}}
+        setTimeout(function () {
+            $("#btn_search").trigger("click");
+        },100);
+
+        // event button back browser
+        history.pushState(null, null, location.pathname);
+        window.addEventListener('popstate', function () {
+            var flag = $("input[name=flag_single_item]").val();
+            if (flag != "") {
+                history.pushState(null, null, location.pathname);
+                $("#close_view").trigger("click");
+            } else {
+                history.back();
+            }
+        });
+        {{end}}
+    });
+    $("#close_view").on("click",function () {
+        $("#form_revert").submit();
+    });
+    $(".multiselect").multiselect({
+        open: function () {
+            $("input[type='search']:first").focus();
+        }
+    }).multiselectfilter();
+</script>
+{{end}}
+
+{{fill "main"}}
+<span class="page-header single-item">{{.MenuName}}</span>
+<table class="table_search noborder" >
+    <tr>
+        <td style="vertical-align: top;">
+            <div id="search_condition_area" style="vertical-align: top; ">
+                <form id="form_search">
+                    {{ .csrfField }}
+                    <input type="hidden" name="page" value="1"/>
+                    <input type="hidden" name="layout_cols"/>
+                    <input type="hidden" name="layout_rows"/>
+                    <input type="hidden" name="layout_sums"/>
+                    <input type="hidden" name="search_handle_type"/>
+                    <input type="hidden" name="link_revert" value="{{.link_revert}}"/>
+                    <table class="search-condition-table">
+                        <!-- JAN-->
+                        <tr class="single-item">
+                            <th>JAN</th>
+                            <td>
+                                <input type="text" maxlength="13" class="input-jan jan-item" name="jan_code" data-form-name="jan_code" value="{{.form.JAN}}"/>
+                                <input type="hidden" data-form-name="flag_single_item" name="flag_single_item" value="1">
+                            </td>
+                        </tr>
+                        <!--単位-->
+                        <tr>
+                            <th>単位</th>
+                            <td>
+                                <label class="radio_label" for="type_day">
+                                    <input type="radio" name="group_type" id="type_day" value="0" {{if eq .form.GroupType "0"}}checked{{end}}>
+                                    <span>日別</span>
+                                </label>
+                                <label class="radio_label" for="type_week">
+                                    <input type="radio" name="group_type" id="type_week" value="1" {{if eq .form.GroupType "1"}}checked{{end}}>
+                                    <span>週別</span>
+                                </label>
+                                <label class="radio_label" for="type_month">
+                                    <input type="radio" name="group_type" id="type_month" value="2" {{if eq .form.GroupType "2"}}checked{{end}}>
+                                    <span>月別</span>
+                                </label>
+                            </td>
+                        </tr>
+                        <!-- 期間 -->
+                        <tr class="select_date" {{if ne .form.GroupType "0"}}style="display: none"{{end}}>
+                            <th>期間</th>
+                            <td>
+                                <input data-name="日付(前)" id="date_from" size="10" name="date_from" type="text" class="input_date " placeholder="YYYY/MM/DD" value="{{.form.DateFrom}}"/>
+                                <label for="date_from" class="demeter-date btn-selected-date-form">日付</label>
+                                <span class="demeter-date">～</span>
+                                <input data-name="日付(後)" id="date_to" size="10" name="date_to" type="text" class="input_date" placeholder="YYYY/MM/DD" value="{{.form.DateTo}}"/>
+                                <label for="date_to" class="demeter-date btn-selected-date-form">日付</label>
+                            </td>
+                        </tr>
+                        <tr class="select_week" {{if ne .form.GroupType "1"}}style="display: none"{{end}}>
+                            <th>期間</th>
+                            <td>
+                                <input id="week_from" style="width: 140px;" name="week_from" type="text" class="input_week " placeholder="YYYY/MM/DD～MM/DD" readonly value="{{.form.WeekFrom}}"/>
+                                <label for="week_from" class="demeter-date btn-selected-date-form">週</label>
+                                <span class="demeter-week">～</span>
+                                <input id="week_to" style="width: 140px; " name="week_to" type="text" class="input_week " placeholder="YYYY/MM/DD～MM/DD" readonly value="{{.form.WeekTo}}"/>
+                                <label for="week_to" class="demeter-date btn-selected-date-form">週</label>
+                            </td>
+                        </tr>
+                        <tr class="select_month" {{if ne .form.GroupType "2"}}style="display: none"{{end}}>
+                            <th>期間</th>
+                            <td>
+                                <input id="month_from" size="10" name="month_from" type="text" class="input_month " placeholder="YYYY/MM" value="{{.form.MonthFrom}}"/>
+                                <label for="month_from" class="demeter-date btn-selected-date-form">年月</label>
+                                <span class="demeter-month">～</span>
+                                <input id="month_to" size="10" name="month_to" type="text" class="input_month" placeholder="YYYY/MM" value="{{.form.MonthTo}}"/>
+                                <label for="month_to" class="demeter-date btn-selected-date-form">年月</label>
+                            </td>
+                        </tr>
+
+                        <!-- 店舗-->
+                        <tr>
+                            <th style="width: 100px !important;">店舗</th>
+                            <td>
+                                {{if eq (len .list_shop) 1}}
+                                {{$shop := (index .list_shop 0)}}
+                                <input name="shop_cd" value="{{$shop.ShopCD}}" type="hidden"/>
+                                {{$shop.SharedBookStoreCode}} ({{$shop.ShopCD}}) {{$shop.ShopName}}
+                                {{else}}
+                                {{$ListShopForm := .form.ShopCd}}
+                                <select style="display:none;" name="shop_cd" class="multiselect" multiple="multiple">
+                                    {{range $key, $shop := .list_shop}}
+                                    <option value="{{$shop.ShopCD}}"
+                                            {{if gt (len $ListShopForm) 0}}
+                                                {{range $k,$shopFrom := $ListShopForm }}
+                                                    {{if eq $shop.ShopCD $shopFrom}}
+                                                    selected
+                                                    {{end}}
+                                                {{end}}
+                                            {{else}}
+                                            selected
+                                            {{end}}
+                                    > {{$shop.SharedBookStoreCode}} ({{$shop.ShopCD}}) {{$shop.ShopName}}</option>
+                                    {{end}}
+                                </select>
+                                {{end}}
+                            </td>
+                        </tr>
+                        <tr class="single-item">
+                            <td></td>
+                            <td style="text-align: left">
+                                <label id="btn_search" class="report-search-button">集計実行</label>
+                                <label id="btn_download_csv" class="report-search-button btn-image-download-report-csv">ダウンロード</label>
+                                {{if ne .form.JAN ""}}
+                                <label id="close_view" class="report-search-button close_view">戻る</label>
+                                {{end}}
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </td>
+    </tr>
+</table>
+<div id="query_result" class="current_report">
+</div>
+
+<form id="form_revert" action="{{.link_revert}}" method="post">
+    {{ .csrfField }}
+    <input type="hidden" name="key_form" value="{{.key_form}}">
+</form>
+{{end}}
+

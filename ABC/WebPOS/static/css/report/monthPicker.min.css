@@ -1,0 +1,105 @@
+.month-picker {
+    display: inline-block;
+    position: absolute;
+    z-index: 9999;
+    border-radius: 0px !important;
+}
+.month-picker table {
+    border-collapse: separate;
+    border-spacing: 0px!important;
+    border-radius: 0px !important;
+}
+.month-picker td {
+    padding: 0}
+.month-picker .ui-button-text {
+    height: 1.8em !important;
+    padding: .2em 0;
+    border-radius: 0px !important;
+}
+.month-picker-header {
+    margin: 3px 3px 0;
+    border-radius: 0px !important;
+}
+.month-picker-year-table {
+    width: 100%;
+    -ms-user-select: none;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    border-radius: 0px !important;
+}
+.month-picker-year-table a {
+    border: 0px solid transparent}
+.month-picker-year-table .ui-button {
+    font-size: 1.1em;
+    width: 1.5em;
+    height: 1.5em;
+    cursor: default;
+    margin: 0;
+    border-radius: 0px !important;
+}
+.month-picker-year-table .month-picker-title {
+    text-align: center}
+.month-picker-year-table .month-picker-title .ui-button {
+    font-size: 1em;
+    padding: .1em 0;
+    width: 100%;
+    font-weight: 700}
+.month-picker-month-table td {
+    /*height: 35px;*/
+    text-align: center}
+.month-picker-month-table .ui-button {
+    width: 4.2em;
+    margin: .2em;
+    border-radius: 0px !important;
+}
+.month-picker-open-button {
+    height: 20px;
+    width: 20px;
+    vertical-align: bottom;
+    border-radius: 0px !important;
+}
+.month-picker-invalid-message {
+    display: none;
+    background-color: #ff0}
+.month-picker-disabled {
+    background-color: #e1e1e1}
+.month-picker-year-table tbody td {
+    border: none !important;
+}
+.month-picker-month-table tbody td span.ui-button-text{
+    border: 1px!important;
+    border-radius: 0px !important;
+}
+.ui-state-hover span.ui-button-text{
+    opacity: 1;
+    /*padding:0!important;*/
+    /*display: none!important;*/
+}
+div#ui-datepicker-div .ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl{
+    border-radius: 0px !important;
+}
+
+.month-picker-year-table tbody tr {
+    height: 30px!important;
+    border-radius: 0px !important;
+}
+.month-picker-year-table .ui-button-text:hover{
+    /*background-color: #0086cd !important;*/
+    background: none;
+    color: white !important;
+}
+td.month-picker-title > .ui-button-text-only:hover{
+    background-color: #0086cd !important;
+}
+td.month-picker-title > .ui-button-text-only{
+    background-color: #72a7cf !important;
+    padding: 0px !important;
+}
+td.month-picker-title > .ui-button-text-only > span{
+    padding: 0px !important;
+}
+.month-picker-year-table .ui-button-text {
+    color: white!important;
+}

@@ -1,0 +1,94 @@
+{{fill "main"}}
+<span class="page-header">{{.MenuName}}</span>
+<form class="change_pass" method="post" action="{{.link_action}}">
+    {{ .csrfField }}
+    <table class="info form-table">
+        <tr>
+            <td>新規パスワード</td>
+            <td>
+                <input type="password" name="pwd_new" style="width: 100%" autofocus/>
+            </td>
+        </tr>
+        <tr>
+            <td>確認入力</td>
+            <td>
+                <input type="password" name="pwd_renew" style="width: 100%"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: right;">
+                <button type="submit" class="btn btn-primary btn-search right-20 ">確定</button>
+                <button type="button" class="btn btn-back-no-save btn-me right-20  btn-warning back-top-dashboard"> 戻る </button>
+            </td>
+        </tr>
+    </table>
+    <br/>
+    <span id="span_alert" style="color: red;"></span>
+</form>
+<div style="display: none;">
+    <div style="display: block;" class="subpage-confirm-update modal fade in">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">パスワード変更</h4>
+                </div>
+                <div class="modal-body">
+                    <p>変更されました。</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning subpage-close">閉じる</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}
+
+{{append "css"}}
+<link rel="stylesheet" href="/static/css/maintenance/user/maintenance-user.css"/>
+<link rel="stylesheet" href="/static/lib/subpage/subpage.css"/>
+<link rel="stylesheet" href="/static/lib/subpage/spinners.css"/>
+{{end}}
+
+{{append "script"}}
+<script src="/static/lib/subpage/subpage.js"></script>
+<script>
+    $( "form" ).submit(function( event ) {
+        event.stopPropagation();
+        event.preventDefault();
+
+        $("#span_alert").text("");
+		if ( $("input[name=pwd_new]").val() == ''){
+            $("#span_alert").text("パスワードを入力してください。");
+            return false;
+        }
+        if ( $("input[name=pwd_new]").val() !=  $("input[name=pwd_renew]").val()) {
+            $("#span_alert").text("「新規パスワード」と「確認入力」は同じ内容を入力してください。");
+            return false;
+        }
+
+        var $form = $(this);
+        $.ajax({
+            type: $form.attr('method'),
+            url: $form.attr('action') ,
+            data: $form.serialize(),
+            dataType: 'json',
+            success: function(data) {
+                if (data.is_success === "true" || data.is_success == true) {
+                    $(".subpage-confirm-update").subpage({
+                        onClose: function () {
+                            $(".back-top-dashboard").click();
+                        }
+                    });
+                } else {
+                    $("#span_alert").text(data.message_err);
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                $("#span_alert").text(errorThrown);
+            }
+        });
+        return false;
+	});
+</script>
+{{end}}

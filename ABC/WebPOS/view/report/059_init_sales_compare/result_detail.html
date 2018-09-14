@@ -1,0 +1,41 @@
+{{$DATA := .data}}
+{{$control_type := .control_type}}
+<div>
+    <table class="query-result query-result-3 tablesorter" id="tbl_report_result_detail" _fixedhead ="rows:1; cols:5" style="margin-top: 20px;">
+        <thead>
+        <tr class="col">
+            {{range $i,$item :=$DATA.HeaderCols}}
+            <th class="row-name" id="{{$i}}">{{$item}}</th>
+            {{end}}
+        </tr>
+        </thead>
+        <tbody>
+        {{range $i,$v := $DATA.Rows}}
+        <tr>
+            {{range $j,$item := $v}}
+                <td
+                {{if and (ne $j 0) (ne $j 4)}}
+                class="number"
+                {{else if eq $j 0}}
+                class="row-name"
+                {{end}}
+                >
+                    {{if and (ne $j 0) (ne $j 4)}}
+                    {{$item|sum_format}}
+                    {{else}}
+                    {{$item}}
+                    {{end}}
+                </td>
+            {{end}}
+        </tr>
+        {{end}}
+        </tbody>
+    </table>
+</div>
+<script>
+    setTimeout(function () {
+        $("#tbl_report_result_detail").tablesorter();
+        FixedMidashi.create();
+        window.scrollTo( 0,$("#tbl_report_result_detail").offset().top-101);
+    },100);
+</script>

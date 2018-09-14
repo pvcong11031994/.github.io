@@ -1,0 +1,80 @@
+{{$DATA := .data}}
+{{$control_type := .control_type}}
+{{$date_to := .date_to}}
+<div>
+    <p><b>集計結果</b>&emsp;<b>全{{.total_count}}件</b></p>
+    <p class="info_vj_charging">ただいまの検索料金は<br> &yen;{{.data.VJCharging | sum_format}}になります。</p>
+    {{if gt $DATA.PageCount 1}}
+        <div id="pagination">
+            <span><b>ページ</b></span>
+            <label id="page_prev" class="btn-support-form">前へ</label>
+            <select id="page_select">
+                {{range $i, $v := arr 1 $DATA.PageCount}}
+                <option value="{{$v}}" {{if eq $v $DATA.ThisPage}}selected{{end}}>{{$v}}</option>
+                {{end}}
+            </select>
+            <label id="page_next" class="btn-support-form">次へ</label>
+        </div>
+    {{end}}
+    <table class="query-result query-result-3 tablesorter" id="tbl_report_result" _fixedhead ="rows:{{.column_number}}; cols:3" >
+        <thead>
+        <tr class="col">
+            <th class="row-name">順位</th>
+            <th class="row-name">ＪＡＮ</th>
+            <th class="row-name" id="resize-col" style="width: 200px">品名</th>
+            {{if eq $control_type "1"}}<th class="row-name header-writer-name">著者</th>
+            {{else if eq $control_type "2"}}<th class="row-name ">雑誌コード+月号</th> {{end}}
+            <th class="row-name">出版社名</th>
+            <th class="row-name">発売日</th>
+            <th class="row-name">本体価格</th>
+            <th class="row-name">入荷累計</th>
+            <th class="row-name">売上累計</th>
+            <th class="row-name">在庫数</th>
+            <th class="row-name">初売上日</th>
+            <th class="row-name">期間売上合計</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{range $i,$v := $DATA.Rows}}
+        <tr>
+            {{range $j,$item := $v}}
+            {{if lt $j 12}}
+            <td class=" {{if eq $j 1}}click_for_single_item_transition{{else if eq $j 2}}cells-goods-name click_for_single_item_transition link_data
+            {{else if eq $j 3}}cells-writer-name{{else if eq $j 11}} sum-col number {{else if and (gt $j 5) (ne $j 10)}}number{{end}}"
+                {{if and (eq $control_type "2") (eq $j 3)}}
+                    title="{{code_format $item}}"
+                {{else if or (eq $j 2) (eq $j 3)}}
+                    title="{{$item}}"
+                {{end}}>
+                {{if and (eq $control_type "2") (eq $j 3)}}
+                    {{code_format $item}}
+                {{else if or (eq $j 6) (eq $j 7) (eq $j 8) (eq $j 9) (eq $j 11)}}
+                    {{$item|sum_format}}
+                {{else}}
+                    {{$item}}
+                {{end}}
+            </td>
+            {{end}}
+            {{end}}
+        </tr>
+        {{end}}
+        </tbody>
+    </table>
+<input type="hidden" value="{{.rand_string}}" name="rand_string_select">
+</div>
+<script>
+    //resize col 品名
+    $("#resize-col").resizable({
+        minWidth: 10
+    });
+
+    $(".ui-resizable-s").remove();
+    $(".ui-resizable-se").remove();
+</script>
+<style>
+    .click_for_single_item_transition {
+        color:blue;
+        text-decoration: underline;
+    }
+
+</style>

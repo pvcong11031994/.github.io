@@ -1,0 +1,238 @@
+{{fill "css"}}
+<link rel="stylesheet" href="/static/css/report/report.css"/>
+<link rel="stylesheet" href="/static/css/report/monthPicker.min.css"/>
+<link rel="stylesheet" href="/static/css/report/handle.common.css"/>
+<link rel="stylesheet" href="/static/css/report/button_report.css"/>
+<link rel="stylesheet" href="/static/lib/jquery.tablesorter/theme.blue/style.css"/>
+{{end}}
+
+{{fill "script"}}
+<script src="/static/js/multiselect.js"></script>
+<script src="/static/js/input_date.js"></script>
+<script src="/static/js/input.array.js"></script>
+<script src="/static/js/input.number.js"></script>
+<script src="/static/js/input.form-name.js"></script>
+<script src="/static/js/input.select.date.js"></script>
+<script src="/static/js/monthPicker.min.js"></script>
+<script src="/static/js/layout.item.col-row-sum.js"></script>
+<script src="/static/js/layout.save.js"></script>
+<script src="/static/js/report.media.group.select.js"></script>
+<script src="/static/js/report.search.handle.js"></script>
+<script src="/static/js/report.download.handle.js"></script>
+<script src="/static/js/report.date.handle.js"></script>
+<script src="/static/lib/jquery.tablesorter/jquery.tablesorter.js"></script>
+<script src='/static/js/fixed_midashi_src.js'></script>
+<script src="/static/js/report.submit.search.js"></script>
+<script>
+    var gLayoutSelectedCols = "{{.layout_item_col_selected}}";
+    var gLayoutSelectedRows = "{{.layout_item_row_selected}}";
+    var gLayoutSelectedSums = "{{.layout_item_sum_selected}}";
+
+    function GetIEVersion() {
+        var sAgent = window.navigator.userAgent;
+        var Idx = sAgent.indexOf("MSIE");
+
+        // If IE, return version number.
+        if (Idx > 0)
+            return parseInt(sAgent.substring(Idx+ 5, sAgent.indexOf(".", Idx)));
+
+        // If IE 11 then look for Updated user agent string.
+        else if (!!navigator.userAgent.match(/Trident\/7\./))
+            return 11;
+
+        else
+            return 0; //It is not IE
+    }
+</script>
+{{end}}
+
+{{fill "main"}}
+<span class="page-header main-report">{{.MenuName}}</span>
+<table class="table_search noborder" >
+    <tr>
+        <td style="vertical-align: top;">
+            <div id="search_condition_area" style="vertical-align: top; ">
+                <form id="form_search">
+                    {{ .csrfField }}
+                    <input type="hidden" name="page" value="1"/>
+                    <input type="hidden" name="layout_cols"/>
+                    <input type="hidden" name="layout_rows"/>
+                    <input type="hidden" name="layout_sums"/>
+                    <input type="hidden" name="search_handle_type"/>
+                    <table class="search-condition-table">
+                        <!--表示-->
+                        <tr>
+                            <th>表示</th>
+                            <td>
+                                <label class="radio_label" for="type_day">
+                                    <input type="radio" name="group_type" id="type_day" value="0" checked>
+                                    <span>日別</span>
+                                </label>
+                                <label class="radio_label" for="type_week">
+                                    <input type="radio" name="group_type" id="type_week" value="1">
+                                    <span>週別</span>
+                                </label>
+                                <label class="radio_label" for="type_month">
+                                    <input type="radio" name="group_type" id="type_month" value="2" >
+                                    <span>月別</span>
+                                </label>
+                            </td>
+                        </tr>
+                        <!-- 期間 -->
+                        <tr class="select_date">
+                            <th>期間</th>
+                            <td>
+                                <input data-name="日付(前)" id="date_from" size="10" name="date_from" type="text" class="input_date " placeholder="YYYY/MM/DD" value="{{.date_from}}"/>
+                                <label for="date_from" class="demeter-date btn-selected-date-form">日付</label>
+                                <span class="demeter-date">～</span>
+                                <input data-name="日付(後)" id="date_to" size="10" name="date_to" type="text" class="input_date" placeholder="YYYY/MM/DD" value="{{.date_to}}"/>
+                                <label for="date_to" class="demeter-date btn-selected-date-form">日付</label>
+                            </td>
+                        </tr>
+                        <tr class="select_week" style="display: none">
+                            <th>期間</th>
+                            <td>
+                                <input id="week_from" style="width: 140px;" name="week_from" type="text" class="input_week " placeholder="YYYY/MM/DD～MM/DD" readonly/>
+                                <label for="week_from" class="demeter-date btn-selected-date-form">週</label>
+                                <span class="demeter-week">～</span>
+                                <input id="week_to" style="width: 140px; " name="week_to" type="text" class="input_week " placeholder="YYYY/MM/DD～MM/DD" readonly/>
+                                <label for="week_to" class="demeter-date btn-selected-date-form">週</label>
+                            </td>
+                        </tr>
+                        <tr class="select_month" style="display: none">
+                            <th>期間</th>
+                            <td>
+                                <input id="month_from" size="10" name="month_from" type="text" class="input_month " placeholder="YYYY/MM"/>
+                                <label for="month_from" class="demeter-date btn-selected-date-form">年月</label>
+                                <span class="demeter-month">～</span>
+                                <input id="month_to" size="10" name="month_to" type="text" class="input_month" placeholder="YYYY/MM"/>
+                                <label for="month_to" class="demeter-date btn-selected-date-form">年月</label>
+                            </td>
+                        </tr>
+                        <!-- 店舗-->
+                        <tr>
+                            <th style="width: 100px !important;">店舗</th>
+                            <td>
+                                {{if eq (len .list_shop) 1}}
+                                {{$shop := (index .list_shop 0)}}
+                                <input name="shop_cd" value="{{$shop.ServerName}}|{{$shop.ShopCD}}" type="hidden"/>
+                                {{$shop.SharedBookStoreCode}} ({{$shop.ShopCD}}) {{$shop.ShopName}}
+                                {{else}}
+                                <select style="width: 380px;" name="shop_cd">
+                                    {{range $key, $shop := .list_shop}}
+                                    <option value="{{$shop.ServerName}}|{{$shop.ShopCD}}|{{$shop.ShopName}}">{{$shop.SharedBookStoreCode}} ({{$shop.ShopCD}}) {{$shop.ShopName}}</option>
+                                    {{end}}
+                                </select>
+                                {{end}}
+                            </td>
+                        </tr>
+                        <!-- ジャンルー-->
+                        <tr>
+                            <th style="vertical-align: top;padding-top: 10px !important;">ジャンル</th>
+                            <td>
+                                {{if gt (len .list_media) 0}}
+                                <!-- 共通大分類ー-->
+                                <select id="media_group1_cd" style="width: 155px; display:none;" name="media_group1_cd" class="multiselect" multiple="multiple">
+                                    {{range $key, $m := .list_media}}
+                                    {{if eq $m.Type "1"}}
+                                    <option value="{{$m.CD}}">{{$m.CD}} {{$m.Name}}</option>
+                                    {{end}}
+                                    {{end}}
+                                </select>
+                                <!-- 共通中分類-->
+                                <select id="media_group2_cd" style="width: 155px; display:none;" name="media_group2_cd" class="multiselect" multiple="multiple">
+                                    {{range $key, $m := .list_media}}
+                                    {{if eq $m.Type "2"}}
+                                    <option value="{{$m.CD}}">{{$m.CD}} {{$m.Name}}</option>
+                                    {{end}}
+                                    {{end}}
+                                </select>
+                                <!-- 共通中小分類ー-->
+                                <select id="media_group3_cd" style="width: 155px; display:none;" name="media_group3_cd" class="multiselect" multiple="multiple">
+                                    {{range $key, $m := .list_media}}
+                                    {{if eq $m.Type "3"}}
+                                    <option value="{{$m.CD}}">{{$m.CD}} {{$m.Name}}</option>
+                                    {{end}}
+                                    {{end}}
+                                </select>
+                                {{end}}
+                            </td>
+                        </tr>
+                        <!-- メーカー-->
+                        <tr>
+                            <th style="vertical-align: top; padding-top: 10px !important;">出版社</th>
+                            <td>
+                                <input maxlength="50" class="input-jan input-array" data-form-name="maker_cd" type="text"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align: center">
+                                <label id="btn_search" class="report-search-button">集計実行</label>
+                                <label id="btn_download_csv" class="report-search-button">CSV</label>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </td>
+        <td style="padding-left: 10px;vertical-align: top;">
+            <div id="selectable_items" class="disable-text-select" hidden>
+                <p>選択可能項目一覧</p>
+                <div class="selectable-area drop-area" id="selectable_col_items" data-drop-prefix="col_">
+                    <p>カラム</p>
+                    {{range $key, $name := .layout_item_col}}
+                    <label class="layout_item" id="col_{{$key}}" data-item-id="{{$key}}">{{$name}}</label>
+                    {{end}}
+                </div>
+                <div class="selectable-area drop-area" id="selectable_row_items" data-drop-prefix="row_">
+                    <p>行</p>
+                    {{range $key, $name := .layout_item_row}}
+                    <label class="layout_item" id="row_{{$key}}" data-item-id="{{$key}}">{{$name}}</label>
+                    {{end}}
+                </div>
+                <div class="selectable-area drop-area" id="selectable_sum_items" data-drop-prefix="sum_">
+                    <p>集計</p>
+                    {{range $key, $name := .layout_item_sum}}
+                    <label class="layout_item" id="sum_{{$key}}" data-item-id="{{$key}}">{{$name}}</label>
+                    {{end}}
+                </div>
+            </div>
+
+            <div id="layout_area" class="disable-text-select" style="display: none">
+                <span>レイアウト</span>
+                <form id="form_save_report_layout">
+                    {{ .csrfField }}
+                    <label id="btn_save_menu_report">条件でメニューを追加</label>
+                    <input type="hidden" name="layout_cols"/>
+                    <input type="hidden" name="layout_rows"/>
+                    <input type="hidden" name="layout_sums"/>
+                    <input type="hidden" name="report_name"/>
+                </form>
+                <table class="noborder" width="100%" height="100%" style="padding-bottom: 25px;">
+                    <tr>
+                        <td colspan="2">
+                            <div id="layout_area_col" class="drop-area" data-drop-prefix="col_">
+                                <p>カラム</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="layout_area_row" class="drop-area" data-drop-prefix="row_">
+                                <p>行</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div id="layout_area_sum" class="drop-area" data-drop-prefix="sum_">
+                                <p>集計</p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
+<div id="query_result" class="current_report">
+</div>
+{{end}}

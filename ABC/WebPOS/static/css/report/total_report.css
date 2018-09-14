@@ -1,0 +1,43 @@
+
+.DataTables_sort_icon {
+    display: none;
+}
+
+/*  Data table override */
+table.dataTable.no-footer {
+    border-bottom: 1px solid #BBB !important;
+}
+
+.top {
+    margin-bottom: 10px;
+}
+
+.dataTables_paginate {
+    width: 100%;
+    text-align: center !important;
+}
+
+table.dataTable {
+    margin-left: 0px;
+}
+
+table.result-label th {
+    background: #d1d1d1;
+}
+
+.result-area {
+    margin-bottom: 20px;
+    border: 1px solid #89825f;
+    background-color: #f3f3f3;
+    padding: 2px;
+}
+
+table.result-table th {
+    text-align: center;
+}
+
+.no-wrap {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}

@@ -1,0 +1,585 @@
+{{fill "css"}}
+<link rel="stylesheet" href="/static/css/report/report.css"/>
+<link rel="stylesheet" href="/static/css/report/monthPicker.min.css"/>
+<link rel="stylesheet" href="/static/css/report/handle.common.css"/>
+<link rel="stylesheet" href="/static/css/report/button_report.css"/>
+<link rel="stylesheet" href="/static/lib/jquery.tablesorter/theme.blue/style.css"/>
+<link rel="stylesheet" href="/static/css/common/defined-tab.css"/>
+<link rel="stylesheet" href="/static/css/report/checkbox_report.css"/>
+<link rel="stylesheet" href="/static/lib/jquery-ui/jquery.multiselect.filter.css"/>
+<style>
+    .download_type {
+        margin-left: 2px;
+    }
+    .control--checkbox {
+        margin-left: 2px;
+    }
+    #btn_search {
+        margin-left: 2px;
+    }
+    @media print {
+        header{
+            position: absolute;
+        }
+        a[href]:after {
+            content: none !important;
+        }
+        thead {
+            display:table-header-group;
+        }
+        tbody {
+            display:table-row-group;
+        }
+        table.floatThead-table{
+            display: none !important;
+        }
+        html {
+            zoom: 95%;
+            -ms-transform: scale(0.95);
+        }
+    }
+    input[data-form-name=maker_code]:nth-child(1),
+    input[data-form-name=jan_maker_code]:nth-child(1),
+    input[data-form-name=magazine_cd]:nth-child(1) {
+        margin-right: 3px !important;
+    }
+
+</style>
+{{end}}
+
+{{fill "script"}}
+<script src="/static/js/report.single.goods.js"></script>
+<script src='/static/js/fixed_midashi_src.js'></script>
+<script src="/static/js/multiselect.js"></script>
+<script src="/static/js/input_date.js"></script>
+<script src="/static/js/input.array.js"></script>
+<script src="/static/js/input.number.js"></script>
+<script src="/static/js/input.form-name.js"></script>
+<script src="/static/js/input.select.date.js"></script>
+<script src="/static/js/monthPicker.min.js"></script>
+<script src="/static/lib/jquery-ui/jquery.multiselect.filter.js"></script>
+<script src="/static/js/jquery.floatThead.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script>
+    var gLayoutSelectedCols = "{{.layout_item_col_selected}}";
+    var gLayoutSelectedRows = "{{.layout_item_row_selected}}";
+    var gLayoutSelectedSums = "{{.layout_item_sum_selected}}";
+    function doDrawFinal( domItem ) {
+        $(domItem).find("svg text").first()
+            .attr("x", (($(domItem).find("svg").width() - $(domItem).find("svg text").first().width()) / 2).toFixed(0));
+        $(domItem).find("svg text").each(function () {
+            if($(this).text() == "販"){
+                $(this).attr("x",50);
+                $(this).attr("y",160)
+                $(this).attr("transform","rotate(0 70 175)");
+            }
+            if($(this).text() == "売"){
+                $(this).attr("x",50);
+                $(this).attr("y",175);
+                $(this).attr("transform","rotate(0 70 175)");
+            }
+            if($(this).text() == "数"){
+                $(this).attr("x",50);
+                $(this).attr("y",190);
+                $(this).attr("transform","rotate(0 70 175)");
+            }
+        });
+    }
+
+    var arrGenre = {{.list_media2 | json}};
+</script>
+<script src="/static/js/layout.item.col-row-sum.js"></script>
+<script src="/static/js/layout.save.js"></script>
+<script src="/static/js/report.media.group.select.3.js"></script>
+<script src="/static/js/report.search.handle.js"></script>
+<script src="/static/js/report.download.handle.js"></script>
+<script src="/static/js/report.date.handle.js"></script>
+<script src="/static/lib/jquery.tablesorter/jquery.tablesorter.js"></script>
+<script src="/static/js/report.submit.search.js"></script>
+
+<script>
+    $(function () {
+        history.pushState(null, null, location.pathname);
+        window.addEventListener('popstate', function () {
+            var flag = $("input[name=flag_single_item]").val();
+            if (flag != "") {
+                history.pushState(null, null, location.pathname);
+                $("#close_view").trigger("click");
+            } else {
+                history.back();
+            }
+        });
+    });
+</script>
+
+<script>
+    function OpenTab(evt, tabName, control_type) {
+        var i, tabcontent, tablinks;
+        tabcontent = $(".tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = $(".tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        $("#" +tabName).css("display","block")
+
+        if (control_type == "1"){
+            $("#book").addClass("active");
+        } else {
+            $("#magazine").addClass("active");
+        }
+
+        $('input[name=control_type]').val(control_type);
+
+        if (tabName == "abook_control") {
+            $(".current_magazine").hide();
+            $(".current_abook").show();
+
+        } else {
+            $(".current_magazine").show();
+            $(".current_abook").hide();
+        }
+
+        var $form = $("#form_search");
+        $form.wrap('<form>').closest('form').get(0).reset();
+        $form.unwrap();
+        $(':input[id="date_from"]').prop('disabled', false);
+        $(':input[id="date_to"]').prop('disabled', false);
+        $("tr.select_date").css("display","table-row");
+        $("tr.select_week").css("display","none");
+        $("tr.select_month").css("display","none");
+        $("input[name=date_from]").val();
+        $("input[type=search]").val("");
+        $(':input[id="date_from"]').val({{.default_from}});
+        $(':input[id="date_to"]').val({{.default_to}});
+
+        $("input[id=limit-100]").prop('checked', true);
+        $("select[name=download_type]").val("0");
+        $("#query_result").html('');
+
+        $(".input-array").val("");
+        $(".input-array").trigger("input");
+        $(".input-array").blur();
+        $("input[id=magazine_code_1]").prop('checked', true);
+        $("input[id=magazine_code_2]").prop('checked', false);
+        $("input[id=magazine_code_3]").prop('checked', false);
+
+
+
+        set_MG1_tab(control_type);
+        //$("input[name=flag]").val("");
+    }
+
+    //filter
+    $(".multiselect").multiselect({
+        open: function () {
+            $("input[type='search']").focus();
+        }
+    }).multiselectfilter();
+    $("button[id='tbl_report_result']:first");
+
+    {{if eq .form.ControlType "1"}}
+    setTimeout(function () {
+        $("#book").trigger("click");
+        if($("input[name=flag]").val() != "") {
+            //単位 - 期間
+            {{if eq .form.GroupType "0"}}
+            $("input[id=type_day]").prop('checked', true);
+            $("tr.select_date").css("display","table-row");
+            $("tr.select_week").css("display","none");
+            $("tr.select_month").css("display","none");
+            $("input[name=date_from]").val({{.form.DateFrom}});
+            $("input[name=date_to]").val({{.form.DateTo}});
+            {{else if eq .form.GroupType "1"}}
+            $("input[id=type_week]").prop('checked', true);
+            $("tr.select_date").css("display","none");
+            $("tr.select_week").css("display","table-row");
+            $("tr.select_month").css("display","none");
+            $("input[name=week_from]").val({{.form.WeekFrom}});
+            $("input[name=week_to]").val({{.form.WeekTo}});
+            {{else}}
+            $("input[id=type_month]").prop('checked', true);
+            $("tr.select_date").css("display","none");
+            $("tr.select_week").css("display","none");
+            $("tr.select_month").css("display","table-row");
+            $("input[name=month_from]").val({{.form.MonthFrom}});
+            $("input[name=month_to]").val({{.form.MonthTo}});
+            {{end}}
+            //店舗
+            {{if ne (len .list_shop) 1}}
+            $("select[name=shop_cd]").multiselect("uncheckAll");
+            {{range $key,$shop := .form.ShopCd}}
+            //$('select[name=shop_cd] option[value="'+ {{$shop}} +'"]').attr("selected",1);
+            $('select[name=shop_cd] option[value="{{$shop}}"]').prop("selected", true);
+            {{end}}
+
+            $("select[name=shop_cd]").multiselect("refresh");
+            {{end}}
+            //ジャンル
+            {{if ne (len .form.MediaGroup1Cd) 0}}
+            var m1 = {{.form.MediaGroup1Cd}};
+            setBackMG("1" , m1);
+            {{end}}
+            {{if ne (len .form.MediaGroup2Cd) 0}}
+            var m2 = {{.form.MediaGroup2Cd}};
+            setBackMG("2" , m2);
+            {{end}}
+            {{if ne (len .form.MediaGroup3Cd) 0}}
+            var m3 = {{.form.MediaGroup3Cd}};
+            setBackMG("3" , m3);
+            {{end}}
+            {{if ne (len .form.MediaGroup4Cd) 0}}
+            var m4 = {{.form.MediaGroup4Cd}};
+            setBackMG("4" , m4);
+            {{end}}
+            //出版社コード
+            {{if ne (len  .form.MakerCd) 0}}
+            {{range $key,$make := .form.MakerCd}}
+            $("input[data-form-name=maker_code]:nth-child({{plus $key 1}})").val({{$make}});
+            $("input[data-form-name=maker_code]").trigger("input");
+            $("input[data-form-name]").trigger("change");
+            {{end}}
+            {{end}}
+            //出版者記号
+            {{if ne (len  .form.JanMakerCode) 0}}
+            {{range $key,$janmake := .form.JanMakerCode}}
+            $("input[data-form-name=jan_maker_code]:nth-child({{plus $key 1}})").val({{$janmake}});
+            $("input[data-form-name=jan_maker_code]").trigger("input");
+            $("input[data-form-name]").trigger("change");
+            {{end}}
+            {{end}}
+            //表示件数
+            $("input[id=limit-{{.form.Limit}}]").prop('checked', true);
+        }
+
+        {{if ne .form.JAN ""}}
+        $("#btn_search").trigger("click");
+        {{end}}
+
+    },100);
+    {{else}}
+    setTimeout(function () {
+        $("#magazine").trigger("click");
+        if($("input[name=flag]").val() != "") {
+            //単位 - 期間
+            {{if eq .form.GroupType "0"}}
+            $("input[id=type_day]").prop('checked', true);
+            $("tr.select_date").css("display","table-row");
+            $("tr.select_week").css("display","none");
+            $("tr.select_month").css("display","none");
+            $("input[name=date_from]").val({{.form.DateFrom}});
+            $("input[name=date_to]").val({{.form.DateTo}});
+            {{else if eq .form.GroupType "1"}}
+            $("input[id=type_week]").prop('checked', true);
+            $("tr.select_date").css("display","none");
+            $("tr.select_week").css("display","table-row");
+            $("tr.select_month").css("display","none");
+            $("input[name=week_from]").val({{.form.WeekFrom}});
+            $("input[name=week_to]").val({{.form.WeekTo}});
+            {{else}}
+            $("input[id=type_month]").prop('checked', true);
+            $("tr.select_date").css("display","none");
+            $("tr.select_week").css("display","none");
+            $("tr.select_month").css("display","table-row");
+            $("input[name=month_from]").val({{.form.MonthFrom}});
+            $("input[name=month_to]").val({{.form.MonthTo}});
+            {{end}}
+            //店舗
+            {{if ne (len .list_shop) 1}}
+            $("select[name=shop_cd]").multiselect("uncheckAll");
+            {{range $key,$shop := .form.ShopCd}}
+            //$('select[name=shop_cd] option[value="'+ {{$shop}} +'"]').attr("selected",1);
+            $('select[name=shop_cd] option[value="{{$shop}}"]').prop("selected", true);
+            {{end}}
+
+            $("select[name=shop_cd]").multiselect("refresh");
+            {{end}}
+            //ジャンル
+            {{if ne (len .form.MediaGroup1Cd) 0}}
+            var m1 = {{.form.MediaGroup1Cd}};
+            setBackMG("1" , m1);
+            {{end}}
+            {{if ne (len .form.MediaGroup2Cd) 0}}
+            var m2 = {{.form.MediaGroup2Cd}};
+            setBackMG("2" , m2);
+            {{end}}
+            {{if ne (len .form.MediaGroup3Cd) 0}}
+            var m3 = {{.form.MediaGroup3Cd}};
+            setBackMG("3" , m3);
+            {{end}}
+            {{if ne (len .form.MediaGroup4Cd) 0}}
+            var m4 = {{.form.MediaGroup4Cd}};
+            setBackMG("4" , m4);
+            {{end}}
+            //出版社コード
+            {{if ne (len  .form.MakerCd) 0}}
+            {{range $key,$make := .form.MakerCd}}
+            $("input[data-form-name=maker_code]:nth-child({{plus $key 1}})").val({{$make}});
+            $("input[data-form-name=maker_code]").trigger("input");
+            $("input[data-form-name]").trigger("change");
+            {{end}}
+            {{end}}
+            //雑誌コード
+            {{if ne (len  .form.MagazineCd) 0}}
+            {{range $key,$magezine := .form.MagazineCd}}
+            $("input[data-form-name=magazine_cd]:nth-child({{plus $key 1}})").val({{$magezine}});
+            $("input[data-form-name=magazine_cd]").trigger("input");
+            $("input[data-form-name]").trigger("change");
+            {{end}}
+            {{end}}
+            //商品区分
+            $("input[id=magazine_code_1]").prop('checked', false);
+            $("input[id=magazine_code_2]").prop('checked', false);
+            $("input[id=magazine_code_3]").prop('checked', false);
+            {{if eq .form.MagazineCodeWeek "1"}}
+            $("input[id=magazine_code_1]").prop('checked', true);
+            {{end}}
+            {{if eq .form.MagazineCodeMonth "2"}}
+            $("input[id=magazine_code_2]").prop('checked', true);
+            {{end}}
+            {{if eq .form.MagazineCodeQuarter "3"}}
+            $("input[id=magazine_code_3]").prop('checked', true);
+            {{end}}
+            //表示件数
+            $("input[id=limit-{{.form.Limit}}]").prop('checked', true);
+        }
+        {{if ne .form.JAN ""}}
+        $("#btn_search").trigger("click");
+        {{end}}
+
+    },100);
+    {{end}}
+</script>
+
+{{end}}
+
+{{fill "tab-table"}}
+<table class="table_search noborder" >
+    <tr>
+        <td style="vertical-align: top;">
+            <div id="search_condition_area" style="vertical-align: top; ">
+                <form id="form_search">
+                    {{ .csrfField }}
+                    <input type="hidden" name="page" value="{{.form.Page}}" />
+                    <input type="hidden" name="flag" value="{{if ne .form.JAN ""}}{{.form.Page}}{{end}}" />
+                    <input type="hidden" name="layout_cols"/>
+                    <input type="hidden" name="layout_rows"/>
+                    <input type="hidden" name="layout_sums"/>
+                    <input type="hidden" name="search_handle_type"/>
+                    <input type="hidden" name="control_type" value="1"/>
+                    <input type="hidden" name="jan_code" value=""/>
+                    <input type="hidden" name="link_revert" value="{{.link_revert}}"/>
+                    <input type="hidden" data-form-name="flag_single_item" name="flag_single_item" value="">
+                    <table class="search-condition-table">
+
+                        <!--単位-->
+                        <tr class="current_report">
+                            <th>単位</th>
+                            <td>
+                                <label class="radio_label" for="type_day">
+                                    <input type="radio" name="group_type" id="type_day" value="0" checked>
+                                    <span>日別</span>
+                                </label>
+                                <label class="radio_label" for="type_week">
+                                    <input type="radio" name="group_type" id="type_week" value="1" >
+                                    <span>週別</span>
+                                </label>
+                                <label class="radio_label" for="type_month">
+                                    <input type="radio" name="group_type" id="type_month" value="2" >
+                                    <span>月別</span>
+                                </label>
+                            </td>
+                        </tr>
+                        <!-- 期間 -->
+                        <tr class="select_date" >
+                            <th>期間</th>
+                            <td>
+                                <input data-name="日付(前)" id="date_from" size="10" name="date_from" type="text" class="input_date " placeholder="YYYY/MM/DD" value=""/>
+                                <label for="date_from" class="demeter-date btn-selected-date-form">日付</label>
+                                <span class="demeter-date">～</span>
+                                <input data-name="日付(後)" id="date_to" size="10" name="date_to" type="text" class="input_date" placeholder="YYYY/MM/DD" value=""/>
+                                <label for="date_to" class="demeter-date btn-selected-date-form">日付</label>
+                            </td>
+                        </tr>
+                        <tr class="select_week" style="display: none">
+                            <th>期間</th>
+                            <td>
+                                <input id="week_from" style="width: 140px;" name="week_from" type="text" class="input_week " placeholder="YYYY/MM/DD～MM/DD" readonly value=""/>
+                                <label for="week_from" class="demeter-date btn-selected-date-form">週</label>
+                                <span class="demeter-week">～</span>
+                                <input id="week_to" style="width: 140px; " name="week_to" type="text" class="input_week " placeholder="YYYY/MM/DD～MM/DD" readonly value=""/>
+                                <label for="week_to" class="demeter-date btn-selected-date-form">週</label>
+                            </td>
+                        </tr>
+
+                        <tr class="select_month" style="display: none">
+
+                            <th>期間</th>
+                            <td>
+                                <input id="month_from" size="10" name="month_from" type="text" class="input_month " placeholder="YYYY/MM" value=""/>
+                                <label for="month_from" class="demeter-date btn-selected-date-form">年月</label>
+                                <span class="demeter-month">～</span>
+                                <input id="month_to" size="10" name="month_to" type="text" class="input_month" placeholder="YYYY/MM" value=""/>
+                                <label for="month_to" class="demeter-date btn-selected-date-form">年月</label>
+                            </td>
+                        </tr>
+
+                        <!-- 店舗-->
+                        <tr>
+                            <th style="width: 100px !important;">店舗</th>
+                            <td>
+                                {{if eq (len .list_shop) 1}}
+                                {{$shop := (index .list_shop 0)}}
+                                <input name="shop_cd" value="{{$shop.ShopCD}}" type="hidden"/>
+                                {{$shop.SharedBookStoreCode}} ({{$shop.ShopCD}}) {{$shop.ShopName}}
+                                {{else}}
+                                {{$ListShopForm := .form.ShopCd}}
+                                <select  id="shop_cd" name="shop_cd" class="multiselect" multiple="multiple">
+                                    {{range $key, $shop := .list_shop}}
+                                    <option value="{{$shop.ShopCD}}" selected>{{$shop.SharedBookStoreCode}} ({{$shop.ShopCD}}) {{$shop.ShopName}}</option>
+                                    {{end}}
+                                </select>
+                                {{end}}
+                            </td>
+                        </tr>
+
+                        <!-- ジャンルー-->
+                        <tr class="current_report">
+                            <th style="vertical-align: top;padding-top: 10px !important;">ジャンル</th>
+                            <td class="media_group_cd_type">
+                                {{if gt (len .list_media2) 0}}
+                                <!-- 特大分類 -->
+                                <select id="media_group1_cd" style="width: 155px; display:none;" name="media_group1_cd" class="multiselect" multiple="multiple">
+                                    {{range $key, $genre := .list_media2}}
+                                    <option value="{{$genre.MediaGroup1Cd}}">{{$genre.MediaGroup1Cd}} {{$genre.MediaGroup1Name}}</option>
+                                    {{end}}
+                                </select>
+                                <!-- 大分類-->
+                                <select id="media_group2_cd" style="width: 155px; display:none;" name="media_group2_cd" class="multiselect" multiple="multiple">
+                                </select>
+                                <!-- 中分類-->
+                                <select id="media_group3_cd" style="width: 155px; display:none;" name="media_group3_cd" class="multiselect" multiple="multiple">
+                                </select>
+                                <!-- 小分類 -->
+                                <select id="media_group4_cd" style="width: 155px; display:none;" name="media_group4_cd" class="multiselect" multiple="multiple">
+                                </select>
+                                {{end}}
+                            </td>
+                        </tr>
+
+                        <!-- 出版社コード-->
+                        <tr class="current_report current_all">
+                            <th style="vertical-align: top; padding-top: 10px !important;">出版社コード</th>
+                            <td><input maxlength="50" class="input-jan input-array input-number" data-form-name="maker_code" type="text"/></td>
+                        </tr>
+
+                        <!-- 出版者記号-->
+                        <tr class="current_report current_abook current_all">
+                            <th style="vertical-align: top; padding-top: 10px !important;">出版者記号</th>
+                            <td><input maxlength="50" class="input-jan input-array" data-form-name="jan_maker_code" type="text"/></td>
+                        </tr>
+
+                        <!-- 雑誌コード-->
+                        <tr class="current_report current_magazine current_all" style="display: none">
+                            <th style="vertical-align: top; padding-top: 10px !important;">雑誌コード</th>
+                            <td><input maxlength="50" class="input-jan input-array" data-form-name="magazine_cd" type="text"/></td>
+                        </tr>
+
+                        <tr class=" current_report current_magazine current_all" style="display: none;">
+                            <th class="top-category">商品区分</th>
+                            <td>
+                                <label class="control control--checkbox" for="magazine_code_1">雑誌（月刊誌）
+                                    <input type="checkbox" name="magazine_code_week" id="magazine_code_1" value="1" class="" checked>
+                                    <div class="control__indicator"></div>
+                                </label>
+                                <label class="control control--checkbox" for="magazine_code_2">雑誌（週刊誌）
+                                    <input type="checkbox" name="magazine_code_month" id="magazine_code_2" value="2">
+                                    <div class="control__indicator"></div>
+                                </label>
+                                <label class="control control--checkbox" for="magazine_code_3">雑誌（季刊誌）
+                                    <input type="checkbox" name="magazine_code_quarter" id="magazine_code_3" value="3">
+                                    <div class="control__indicator"></div>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr class="current_report current_all">
+                            <th>表示件数</th>
+                            <td>
+                                <label class="radio_label" for="limit-100">
+                                    <input type="radio" name="limit" id="limit-100" value="100" checked}/>
+                                    <span>100件</span>
+                                </label>
+                                <label class="radio_label" for="limit-300">
+                                    <input type="radio" name="limit" id="limit-300" value="300" />
+                                    <span>300件</span>
+                                </label>
+                                <label class="radio_label" for="limit-500">
+                                    <input type="radio" name="limit" id="limit-500" value="500" />
+                                    <span>500件</span>
+                                </label>
+                                <label class="radio_label" for="limit-1000">
+                                    <input type="radio" name="limit" id="limit-1000" value="1000" />
+                                    <span>1000件</span>
+                                </label>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr class="current_report current_all">
+                            <!-- フォーマット -->
+                            <th>フォーマット</th>
+                            <td>
+                                <select name="download_type" class="download_type">
+                                    <option value="0" id="type_0" {{if eq .form.DownloadType "0"}} selected{{end}}>
+                                        集計結果
+                                    </option>
+                                    <option value="1" id="type_1" {{if eq .form.DownloadType "1"}} selected{{end}}>
+                                        集計結果+推移
+                                    </option>
+                                    <option value="2" id="type_2" {{if eq .form.DownloadType "2"}} selected{{end}}>
+                                    集計結果+店舗
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="current_report">
+                            <td></td>
+                            <td style="text-align: left">
+                                <label id="btn_search" class="report-search-button">集計実行</label>
+                                <label id="btn_download_csv" class="report-search-button btn-image-download-report-csv">ダウンロード</label>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </td>
+    </tr>
+</table>
+{{end}}
+
+{{fill "main"}}
+<span class="page-header main-report">{{.MenuName}}<span id="sub_report_name">{{if .sub_report_name}} - {{.sub_report_name}}{{end}}</span></span>
+
+<!-- タブ -->
+<div>
+    <ul class="tab tab-control">
+        <!-- 書籍 -->
+        <li><a href="javascript:void(0)" id="book" class="tablinks active" onclick="OpenTab(event, 'abook_control','1')" >書籍</a></li>
+        <!-- 雑誌 -->
+        <li><a href="javascript:void(0)" id="magazine" class="tablinks" onclick="OpenTab(event, 'magazine_control','2')">雑誌</a></li>
+        <li style="border-bottom: 1px #3baae3 solid;width: 65%;height: 30px;" ></li>
+    </ul>
+
+    <div id="abook_control" class="tabcontent" style="display: block;">
+    </div>
+
+    <div id="magazine_control" class="tabcontent" style="display: none">
+    </div>
+</div>
+{{block "tab-table"}}
+<div id="query_result" class="current_report">
+</div>
+
+{{end}}

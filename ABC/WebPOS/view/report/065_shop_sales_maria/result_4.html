@@ -1,0 +1,123 @@
+{{$DATA := .data}}
+{{if gt $DATA.PageCount 1}}
+<div id="pagination" style="padding-top: 20px;">
+    <span><b>ページ</b></span>
+    <label id="page_prev" class="btn-support-form">前へ</label>
+    <select id="page_select">
+        {{range $i, $v := arr 1 $DATA.PageCount}}
+        <option value="{{$v}}" {{if eq $v $DATA.ThisPage}}selected{{end}}>{{$v}}</option>
+        {{end}}
+    </select>
+    <label id="page_next" class="btn-support-form">次へ</label>
+</div>
+{{end}}
+{{range $key,$row := $DATA.Rows}}
+<div class="shop_item">
+    <div class="info">
+        <table class="shop_info noborder">
+            <tr>
+                <td colspan="2">{{$row.ShmSharedBookStoreCode}} ({{$row.ShmShopCode}}) <span style="font-size: 14px">{{$row.ShmShopName}}</span> </td>
+            </tr>
+            <tr>
+                <td>電話番号：{{$row.ShmTelNo}}</td>
+                <td>営業時間：{{$row.ShmBizStartTime}}～{{$row.ShmBizEndTime}}　　{{$row.ShmAddress}}</td>
+            </tr>
+            <tr>
+                <td>検索結果：{{$row.DataCount}}件</td>
+            </tr>
+        </table>
+    </div>
+    <table class="query-result query-result-3 tablesorter" id="tbl_report_result_{{$key}}" _fixedhead ="rows:1; cols:3" style="width: max-content; display: -ms-grid; -ms-grid-columns: max-content;">
+        <thead>
+        <tr class="col">
+            {{range $k,$v := $DATA.HeaderCols}}
+                <th class="row-name {{if eq $v "品名"}}resize-col{{end}}">{{$v}}</th>
+            {{end}}
+        </tr>
+        </thead>
+        <tbody>
+        {{range $i,$v := $row.Data}}
+            <tr>
+                {{range $j,$item := $v}}
+                    <td class="
+                        {{if eq $j 2}}
+                            click_for_single_item_transition
+                        {{else if eq $j 3}}
+                            cells-goods-name link_data
+                        {{else if eq $j 4}}
+                            cells-writer-name
+                        {{else if eq $j 12}}
+                            sum-col number
+                        {{else if and (ge $j 7) (le $j 10)}}
+                            number
+                        {{end}}
+                    "
+                        {{if or (eq $j 3) (eq $j 4)}}
+                        title="{{$item}}"
+                        {{end}}
+                    >
+                        {{if eq $j 12}}
+                            {{$item|sum_format}}
+                        {{else if and (ge $j 7) (le $j 10)}}
+                            {{$item|sum_format}}
+                        {{else}}
+                            {{$item}}
+                        {{end}}
+
+                    </td>
+                {{end}}
+            </tr>
+        {{end}}
+        </tbody>
+    </table>
+</div>
+{{end}}
+<script>
+    //resize col 品名
+    $(".resize-col").resizable({
+        minWidth: 10
+    });
+
+    $(".ui-resizable-s").remove();
+    $(".ui-resizable-se").remove();
+    $(".resize-col").resize(function() {
+        FixedMidashi.create();
+
+        //Fix resize IE
+        var  versionIE = GetIEVersion();
+        if (versionIE === 9 || versionIE === 11) {
+            var defaultBorder = "2px";
+            $(".resize-col").css("border-right-width", defaultBorder);
+        }
+    });
+
+    setTimeout(function () {
+        {{range $key,$row := $DATA.Rows}}
+            $("#tbl_report_result_{{$key}}").tablesorter();
+            initRedirectJan($("#tbl_report_result_{{$key}}"));
+            initRedirectGood($("#tbl_report_result_{{$key}}"));
+        {{end}}
+        FixedMidashi.create();
+        var versionIE = GetIEVersion();
+        if (versionIE === 9 || versionIE === 11) {
+            var defaultBorder = "2px";
+            var defaultTopBottom = "1.75px";
+            $(".resize-col").css("border-left-width", defaultBorder);
+            $(".resize-col").css("border-top-width", defaultTopBottom);
+            $(".resize-col").css("border-bottom-width", defaultTopBottom);
+        }
+    },100);
+
+</script>
+<style>
+    .click_for_single_item_transition {
+        color:blue;
+        text-decoration: underline;
+    }
+    div.shop_item{
+        padding-top: 40px;
+    }
+    .shop_info td{
+        padding-right: 30px !important;
+    }
+</style>

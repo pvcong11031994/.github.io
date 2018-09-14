@@ -1,0 +1,57 @@
+        #StandardSQL
+        WITH
+        bqsl_condition AS (
+                SELECT *
+                FROM `ba.bq_sales_*` bqsl
+                WHERE
+                        SUBSTR(_TABLE_SUFFIX,-14,6) BETWEEN '201711' AND '201712'
+                        AND bqsl.shop_code IN ('70029')
+                        AND bqsl.jan_code = '9784403671777'
+                        AND SUBSTR(REPLACE(REPLACE(sales_datetime, '-', ''),'/',''),0,8) >= '20171127'
+                        AND SUBSTR(REPLACE(REPLACE(sales_datetime, '-', ''),'/',''),0,8) <= '20171227'
+        )
+        ,mc AS (
+                SELECT
+                        mc_yyyymmdd
+                        ,mc_yyyy
+                        ,mc_mm
+                        ,mc_dd
+                        ,mc_weekdate
+                        ,mc_weeknum
+                FROM
+                        ba.master_calendar mc
+                WHERE
+                        CONCAT(mc_yyyy , mc_mm , mc_dd) >= '20171127'  AND  CONCAT(mc_yyyy , mc_mm , mc_dd) <= '20171227'
+        )
+        , sm  AS (
+                SELECT
+                        shm_shop_cd
+                        , shm_shop_name
+                        , shm_shop_seq_number
+                FROM
+                        ba.shop_master sm
+        )
+        SELECT
+                bqsl.shop_code AS shop_code,
+                bqsl.jan_code AS jan_code,
+                SUM(IF(bookstore_biz_category = '40', SAFE_CAST((IFNULL(sales_body_quantity,0)) AS INT64), 0)) sales_body_quantity,
+                SUM(IF(bookstore_biz_category = '30', SAFE_CAST((IFNULL(sales_body_quantity,0)) AS INT64), 0)) receiving_body_quantity,
+                sm.shm_shop_name AS shop_name,
+                sm.shm_shop_seq_number AS shop_seq_number
+        FROM bqsl_condition bqsl
+
+        JOIN mc
+                ON mc.mc_yyyymmdd = SUBSTR(REPLACE(REPLACE(REPLACE(bqsl.sales_datetime, '-', ''),'/',''),' ',''),0,8)
+                AND mc.mc_yyyy = SUBSTR(SUBSTR(REPLACE(REPLACE(REPLACE(bqsl.sales_datetime, '-', ''),'/',''),' ',''),0,8),1,4)
+                AND mc.mc_mm = SUBSTR(SUBSTR(REPLACE(REPLACE(REPLACE(bqsl.sales_datetime, '-', ''),'/',''),' ',''),0,8),5,2)
+                AND mc.mc_dd = SUBSTR(SUBSTR(REPLACE(REPLACE(REPLACE(bqsl.sales_datetime, '-', ''),'/',''),' ',''),0,8),7,2)
+
+        JOIN sm
+                ON sm.shm_shop_cd = bqsl.shop_code
+
+        GROUP BY
+                shop_code,
+                jan_code,
+                shop_name,
+                shop_seq_number
+        ORDER BY shop_seq_number

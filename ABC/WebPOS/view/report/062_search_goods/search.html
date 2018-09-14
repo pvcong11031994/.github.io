@@ -1,0 +1,209 @@
+{{fill "css"}}
+<link rel="stylesheet" href="/static/css/report/report.css"/>
+<link rel="stylesheet" href="/static/css/report/monthPicker.min.css"/>
+<link rel="stylesheet" href="/static/css/report/handle.common.css"/>
+<link rel="stylesheet" href="/static/css/report/button_report.css"/>
+<link rel="stylesheet" href="/static/lib/jquery.tablesorter/theme.blue/style.css"/>
+<link rel="stylesheet" href="/static/lib/jquery-ui/jquery.multiselect.filter.css"/>
+<link rel="stylesheet" href="/static/css/report/checkbox_report.css"/>
+<style>
+    table.search-condition-table th {
+        width: 120px; !important;
+    }
+    textarea {
+        padding: 5px !important;
+        resize: none !important; /* Remove this if you want the user to resize the textarea */
+    }
+    @media print{
+        header {
+            position: absolute;
+        }
+
+        a[href]:after {
+            content: none !important;
+        }
+
+        thead {
+            display: table-header-group;
+        }
+
+        tbody {
+            display: table-row-group;
+        }
+
+        table.floatThead-table {
+            display: none !important;
+        }
+
+        html {
+            zoom: 80%;
+            -ms-transform: scale(0.83);
+        }
+    }
+    @media print and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        body{
+            margin-left: -100px;
+        }
+    }
+
+</style>
+{{end}}
+
+{{fill "script"}}
+<script src='/static/js/fixed_midashi_src.js'></script>
+<script src="/static/js/multiselect.js"></script>
+<script src="/static/js/input_date.js"></script>
+<script src="/static/js/input.array.js"></script>
+<script src="/static/js/input.number.js"></script>
+<script src="/static/js/input.form-name.js"></script>
+<script src="/static/js/input.select.date.js"></script>
+<script src="/static/js/monthPicker.min.js"></script>
+<script src="/static/js/report.search.handle.js"></script>
+<script src="/static/js/report.download.handle.js"></script>
+<script src="/static/js/report.date.handle.js"></script>
+<script src="/static/js/report.single.goods.js"></script>
+<script src="/static/lib/jquery.tablesorter/jquery.tablesorter.js"></script>
+<script src="/static/lib/jquery-ui/jquery.multiselect.filter.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="/static/js/report.submit.search.js"></script>
+<script>
+    function GetIEVersion() {
+        var sAgent = window.navigator.userAgent;
+        var Idx = sAgent.indexOf("MSIE");
+
+        // If IE, return version number.
+        if (Idx > 0)
+            return parseInt(sAgent.substring(Idx+ 5, sAgent.indexOf(".", Idx)));
+
+        // If IE 11 then look for Updated user agent string.
+        else if (!!navigator.userAgent.match(/Trident\/7\./))
+            return 11;
+
+        else
+            return 0; //It is not IE
+    }
+</script>
+<script>
+    setTimeout(function () {
+        if($("input[name=flag]").val() != "") {
+
+            //キーワード
+            {{if ne (len .form.KeyWord) 0}}
+            $("input[name=key_word]").val({{.form.KeyWord}})
+            {{end}}
+
+            //アイテム
+            $("input[id=bqgm_goods_type_1]").prop("checked", true);
+            $("input[id=bqgm_goods_type_2]").prop("checked", true);
+            {{if eq (value .form.GoodsType) "1"}}
+            $("input[id=bqgm_goods_type_2]").prop("checked", false);
+            {{end}}
+            {{if eq (value .form.GoodsType) "2"}}
+            $("input[id=bqgm_goods_type_1]").prop("checked", false);
+            {{end}}
+
+            //並び順
+            $("select[name=sort]").val({{.form.Sort}});
+            $("#btn_search").trigger("click");
+        } else {
+            $("#btn_search").click(function () {
+                $("input[name=page]").val("1");
+            })
+        }
+    }, 100);
+    $('#form_search').on('keyup keypress', function(e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
+</script>
+{{end}}
+
+{{fill "main"}}
+<span class="page-header main-report">{{.MenuName}}</span>
+<table class="table_search noborder" >
+    <tr>
+        <td style="vertical-align: top;">
+            <div id="search_condition_area" style="vertical-align: top; ">
+                <form id="form_search">
+                    {{ .csrfField }}
+                    <input type="hidden" name="page" value="{{.form.Page}}" />
+                    <input type="hidden" name="search_handle_type"/>
+                    <input type="hidden" name="type_query" value="1" class="type_query"/>
+                    <input type="hidden" name="flag" value="{{if ne .form.JAN ""}}1{{end}}" />
+                    <input type="hidden" name="link_revert" value="{{.link_revert}}"/>
+                    <input type="hidden" name="jan_code" value=""/>
+                    <input type="hidden" name="key_search" value="{{.form.KeySearch}}"/>
+                    <textarea style="display: none" name="jan_cd_array" data-form-name="jan_cd_array" cols="12" rows="6"></textarea>
+                    <!-- Save info favorite  START-->
+                    <input type="hidden" name="jan_code_list" value=""/>
+                    <input type="hidden" name="product_name_list" value=""/>
+                    <input type="hidden" name="author_name_list" value=""/>
+                    <input type="hidden" name="publisher_name_list" value=""/>
+                    <input type="hidden" name="usual_price_list" value=""/>
+                    <input type="hidden" name="release_date_list" value=""/>
+                    <input type="hidden" name="length_list_selected" value=""/>
+                    <!-- END -->
+                    <!--default date -->
+                    <input type="hidden" name="date_from" value="{{.default_date_from}}"/>
+                    <input type="hidden" name="date_to" value="{{.default_date_to}}"/>
+                    <input type="hidden" name="group_type" id="type_day" value="0" checked>
+                    <table class="search-condition-table">
+                        <!-- キーワード-->
+                        <tr>
+                            <th>
+                                キーワード
+                            </th>
+                            <td>
+                                <input class="input-jan" name="key_word" id = "key_word" type="text" style="vertical-align: middle; width: 300px;" value="">
+                            </td>
+                        </tr>
+
+                        <!-- アイテム -->
+                        <tr>
+                            <th class="top-category">アイテム</th>
+                            <td>
+                                <label class="control control--checkbox" for="bqgm_goods_type_1">和書
+                                    <input type="checkbox" name="goods_type" id="bqgm_goods_type_1" value="1" class="" checked>
+                                    <div class="control__indicator"></div>
+                                </label>
+                                <label class="control control--checkbox" for="bqgm_goods_type_2">雑誌
+                                    <input type="checkbox" name="goods_type" id="bqgm_goods_type_2" value="2" class="" checked>
+                                    <div class="control__indicator"></div>
+                                </label>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>
+                                並び順
+                            </th>
+                            <td>
+                                <select name="sort">
+                                    <option value="agreement">一致度順</option>
+                                    <option value="price">価格の安い順</option>
+                                    <option value="-price">価格の高い順</option>
+                                    <option value="title">タイトル昇順</option>
+                                    <option value="-title">タイトル降順</option>
+                                    <option value="-daterank">発売日新しい順</option>
+                                    <option value="daterank">発売日古い順</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="single-item">
+                            <td></td>
+                            <td colspan="2" style="text-align: left">
+                                <label id="btn_search" class="report-search-button">検索</label>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </td>
+    </tr>
+</table>
+<div id="query_result" class="current_report"></div>
+{{end}}
+

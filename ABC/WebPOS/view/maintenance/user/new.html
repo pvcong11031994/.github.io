@@ -1,0 +1,330 @@
+{{fill "title"}}ユーザメンテナンス{{end}}
+
+{{append "css"}}
+<link rel="stylesheet" href="/static/css/maintenance/user/maintenance-user-list.css"/>
+<link rel="stylesheet" href="/static/lib/subpage/subpage.css"/>
+<link rel="stylesheet" href="/static/lib/subpage/spinners.css"/>
+<link rel="stylesheet" href="/static/css/common/defined-selected.css"/>
+<style>
+    select {
+        background: none;
+    }
+</style>
+{{end}}
+
+{{fill "main"}}
+<span class="page-header">ユーザ一覧</span>
+
+<form class="maintenance-user-list" name="maintenance-user-list" method="post" action="{{.link_result_confirm}}" style="position:relative">
+    {{ .csrfField }}
+    <input type="hidden" name="flg_update" value="0"/>
+    <div class="div-button">
+        <button type="button" class="btn btn-info right-20 maintenance-user-list-btn-add  btn-add">追加</button>
+        <button type="button" class="btn btn-warning back-top-dashboard">戻る</button>
+
+    </div>
+    <span id="span_alert" style="color: red;"></span>
+    <div class="div-button-table">
+        <button type="button" class="btn btn-me maintenance-user-list-btn-add-new  btn-add-new">行を新規追加する</button>
+    </div>
+    <table class="table_list compact" style="display:none">
+        <thead>
+            <tr>
+                <th>ユーザID</th>
+                <th>ユーザ名</th>
+                <th style="width: 200px !important;">店舗名</th>
+                <th style="width: 200px !important;">権限</th>
+                <th>フランチャイズコード</th>
+                <th>メニューグループ</th>
+                <th style="width: 200px !important;">企業名</th>
+                <th>部署コード</th>
+                <th>所属部署名</th>
+                <th>メール</th>
+                <th>電話</th>
+                <th>FAX</th>
+                <th>パスワード</th>
+                <th>&nbsp;利用不可&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <div class="div-button-table">
+        <button type="button" class="btn btn-me maintenance-user-list-btn-add-new  btn-add-new">行を新規追加する</button>
+    </div>
+</form>
+<div style="display: none;">
+    <div style="display: block;" class="confirm-add modal fade in">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">ユーザ追加</h4>
+                </div>
+                <div class="modal-body">
+                    データを登録します。よろしいですか？
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger subpage-yes">はい</button>
+                    <button type="button" class="btn btn-success subpage-no">いいえ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}
+
+{{append "script"}}
+<script src="/static/lib/subpage/subpage.js"></script>
+<script src="/static/lib/DataTables/datatables.min.js"></script>
+<script src="/static/lib/select2/select2.js"></script>
+<script>
+    $(document).ready(function(){
+
+        Add_fist_row();
+        $('.table_list').show();
+        $('.table_list').DataTable({
+            paging          :   false,
+            searching       :   false,
+            info            :   false,
+            ordering        :   false,
+            sDom            :   'rt',
+        });
+
+
+        $(".btn-back-top").on("click",function(){
+            location.href = "{{.link_search}}";
+        });
+
+        $(".btn-add-new").on("click",function(){
+            var lineno = $('.table_list tr').length -1;
+            var trow =   Write_row(lineno,".table_list");
+
+            $('select[name="shop_cd"]').select2();
+            $('select[name="flg_auth"]').select2();
+            $('select[name="franchise_cd"]').select2();
+            $('select[name="flg_menu_group"]').select2();
+            $('select[name="corp"]').select2();
+            $('#user_id_' + lineno ).focus();
+        });
+        $('#user_id_0').focus();
+    });
+
+    $(document).on("click", ".flg_user_check", function(event){
+        $(this).parents('td').find('.flg_user').val($(this).is(":checked") ? 1 : 0);
+    });
+
+    $(document).on("change", ".shop_cd", function(event){
+        if($(this).val().trim() == '-1') {
+            $(this).parents('tr').find(".franchise_cd").removeAttr('disabled');
+        } else {
+            $(this).parents('tr').find(".franchise_cd").attr('disabled', 'disabled');
+        }
+
+    });
+    function Add_fist_row() {
+        Write_row(0,".table_list tbody");
+
+        Write_row(1,".table_list");
+        $('select[name="shop_cd"]').select2();
+        $('select[name="flg_auth"]').select2();
+        $('select[name="franchise_cd"]').select2();
+        $('select[name="flg_menu_group"]').select2();
+        $('select[name="corp"]').select2();
+    }
+
+    function Write_row( lineno,table_field ) {
+        var write_row =         "<tr>" +
+        "<td><input type='hidden' name='flg_exec' id='flg_exec_"+ lineno +"' value='1'/>" +
+        "<input type='text' class='text-column input_text' name='user_id' id='user_id_"+ lineno +"' maxlength='50'/></td>" +
+        "<td><input type='text' class='text-column' name='user_name' id='user_name_"+ lineno +"' maxlength='20'/></td>" +
+        "<td>" +
+        "<select style='width: 200px;max-height: 25px;' name='shop_cd' id='shop_cd_"+ lineno +"' class='shop_cd ' data-default='-1'>" +
+        "<option value='-1'></option>" +
+        "<option value='99999999'>本部</option>" +
+        "</select>" +
+        "</td>" +
+        "<td>" +
+        "<select style='width: 100px;max-height: 25px;' name='flg_auth' id='flg_auth_"+ lineno +" '>" +
+        "<option value='0'>店舗</option>" +
+        "<option value='1'>本部</option>" +
+        "</select>" +
+        "</td>" +
+        "<td>" +
+        "<select style='width: 100%;max-height: 25px;' name='franchise_cd' id='franchise_cd_"+ lineno +"' class='franchise_cd' data-default='-1'>" +
+        "<option value='-1'></option>" +
+         "</select>" +
+         "</td>" +
+         "<td>" +
+         "<select style='width: 100%;max-height: 25px;' name='flg_menu_group' id='flg_menu_group_"+ lineno +"' class='flg_menu_group'>" +
+        "</select>" +
+        "</td>" +
+        "<td>" +
+        "<select style='width: 100px;max-height: 25px;' name='corp' id='corp_"+ lineno +"' class='corp' >" +
+            "<option value=''></option>" +
+        "</select>" +
+        "</td>" +
+        "<td><input type='text' class='text-column input_text' name='dept_cd' id='dept_cd_"+ lineno +"'maxlength='10'/></td>" +
+        "<td><input type='text' class='text-column input_text' name='dept_name' id='dept_name_"+ lineno +"' maxlength='20'/></td>" +
+        "<td><input type='text' class='text-column input_text' name='user_mail' id='user_mail_"+ lineno +"' maxlength='50'/></td>" +
+        "<td><input type='text' class='text-column input_text' name='user_phone' id='user_phone_"+ lineno +"' maxlength='15'/></td>" +
+        "<td><input type='text' class='text-column input_text' name='user_xerox' id='user_xerox_"+ lineno +"' maxlength='15'/></td>" +
+        "<td style='width: 100px'><input type='password' class='text-column input_text' name='user_pass'  id='user_pass_"+ lineno +"' maxlength='50'/></td>" +
+        "<td class='text-center'>"+
+            " <label class='check_label' for='flg_user_check_"+ lineno +"' >"+
+        "<input type='hidden' name='flg_user' value='0' id='flg_user_"+ lineno +"' class='flg_user'/>" +
+        "<input type='checkbox' id='flg_user_check_"+ lineno +"' class='flg_user_check'/></td>" +
+            "</label>"
+        "</tr>";
+
+        $(table_field).append(write_row);
+        addOptionShopCd(lineno);
+        addOptionFranchiseCd(lineno);
+        addOptionMenuGroup(lineno);
+        addOptionCorpCd(lineno);
+    }
+
+    function addOptionShopCd(lineno) {
+        var shopId= "shop_cd_"+ lineno;
+        {{range $key, $shop := .shops}}
+        $("select[id="+shopId+"]").append("<option value='" + {{$shop.ShopCD}} + "'>" + '{{$shop.ShopName}}' + "</option>");
+        {{end}}
+    }
+
+    function addOptionFranchiseCd(lineno) {
+        var franchiseCd= "franchise_cd_"+ lineno;
+        {{range $key,$franchises := .listFranchiseCd}}
+        $("select[id="+franchiseCd+"]").append("<option value='" + {{$franchises.FranchiseCd}} + "'>" + '{{$franchises.FranchiseCd}}' + "</option>");
+        {{end}}
+    }
+
+    function addOptionCorpCd(lineno) {
+        var corpCd= "corp_"+ lineno;
+        {{range $key,$corp := .corps}}
+            $("select[id="+corpCd+"]").append("<option value='" + {{$corp.CorpCd}} + "'>" + '{{$corp.CorpName}}' + "</option>");
+        {{end}}
+    }
+
+    function addOptionMenuGroup(lineno) {
+        var menuGroup= "flg_menu_group_"+ lineno;
+        {{range $key,$menus := .menugroups}}
+        $("select[id="+menuGroup+"]").append("<option value='" + {{$menus.Menu_Group}} + "'>" + '{{$menus.Menu_Group}}' + "</option>");
+        {{end}}
+    }
+
+    var check_user_id = /^[A-Za-z0-9_]{1,20}$/;
+
+    $(".btn-add").on("click",function(){
+        var lineno = $('.table_list tr').length - 1;
+        var count = 0;
+
+        for(var i = 0;i < lineno;i++){
+            var user_id = $('#user_id_'+ i);
+            if(user_id.val().trim() == ''){
+                count ++;
+            } else {
+
+                var user_name = $('#user_name_'+ i);
+                var shop_cd = $('#shop_cd_'+ i);
+                var franchise_cd = $('#franchise_cd_'+ i);
+                var flg_menu_group = $('#flg_menu_group_'+ i);
+                var user_pass = $('#user_pass_'+ i);
+                var user_id_tmp = user_id.val().replace(' ','');
+                if (user_id.val().length != user_id_tmp.length){
+                    $( "#span_alert" ).text( "スペースなしでユーザIDを入力してください。" ).show().fadeOut( 5000 );
+                    user_id.focus();
+                    return false;
+                }
+
+                if (!check_user_id.test(user_id.val())){
+                    $( "#span_alert" ).text( "「A-Za-z0-9_」でユーザIDを入力してください。" ).show().fadeOut( 5000 );
+                    user_id.focus();
+                    return false;
+                }
+
+                for (var j=i+1;j< lineno;j++){
+                    var user_id_temp_2 = $('#user_id_'+ j);
+                    if (user_id.val().trim() == user_id_temp_2.val().trim() ){
+                        $( "#span_alert" ).text( "別のユーザIDを入力してください。" ).show().fadeOut( 5000 );
+                        user_id_temp_2.focus();
+                        return false;
+                    }
+                }
+                if(user_name.val() == ''){
+                    $( "#span_alert" ).text( "ユーザ名を入力してください。" ).show().fadeOut( 5000 );
+                    user_name.focus();
+                    return false;
+                }
+                if(shop_cd.val().trim() == '-1' && franchise_cd.val().trim() == '-1'){
+                    $( "#span_alert" ).text( "店舗コードまたはフランチャイズグループコードを入力してください。" ).show().fadeOut( 5000 );
+                    shop_cd.focus();
+                    return false;
+                }
+                if(flg_menu_group.val() == ''){
+                    $( "#span_alert" ).text( "メニューグループを入力してください。" ).show().fadeOut( 5000 );
+                    flg_menu_group.focus();
+                    return false;
+                }
+                if(user_pass.val() == ''){
+                    $( "#span_alert" ).text( "パスワードを入力してください。" ).show().fadeOut( 5000 );
+                    user_pass.focus();
+                    return false;
+                }
+            }
+        }
+        if (count == lineno){
+            $( "#span_alert" ).text( "ユーザIDを入力してください。" ).show().fadeOut( 5000 );
+            $('#user_id_0').focus();
+            return false;
+        }
+        $(".franchise_cd").removeAttr('disabled');
+        CheckUserID();
+        //$('form[name=maintenance-user-list]').submit();
+    });
+
+    function CheckUserID() {
+        var lineno = $('.table_list tr').length - 1;
+        var user_arr = "";
+        for(var i = 0;i < lineno;i++) {
+            var user_id = $('#user_id_' + i).val();
+            user_arr = user_arr + user_id.trim() + ",";
+            $('#user_id_' + i).css("background","white");
+        }
+        $.ajax({
+            type: "POST",
+            url: "{{.link_insert_check}}",
+            data: {"{{.csrfKey}}": "{{.csrfToken}}",user_id: user_arr},
+            success: function(data) {
+                if (data.is_success === "true" || data.is_success == true) {
+                    $(".confirm-add").subpage({
+                        onYes : submitFrom
+                    });
+
+                } else {
+                    //Error
+                    for(var i = 0;i< data.list_id.length;i++ ){
+                        $('#user_id_' + data.list_id[i]).css("background","#F5A9BC");
+                    }
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                hideWaiting(true);
+                showError("インターナルサーバエラー");
+
+                console.log(XMLHttpRequest);
+                console.log(textStatus);
+                console.log(errorThrown);
+            },
+            complete: function(xhr, status, error) {
+                hideWaiting();
+            },
+        });
+    }
+
+    function submitFrom() {
+        $('form[name=maintenance-user-list]').submit();
+    }
+
+
+</script>
+{{end}}

@@ -1,0 +1,152 @@
+{{fill "css"}}
+<link rel="stylesheet" href="/static/css/report/report.css"/>
+<link rel="stylesheet" href="/static/css/report/handle.common.css"/>
+<link rel="stylesheet" href="/static/css/report/checkbox_report.css"/>
+<link rel="stylesheet" href="/static/css/report/button_report.css"/>
+<link rel="stylesheet" href="/static/lib/jquery-ui/jquery.multiselect.filter.css"/>
+{{end}}
+
+{{fill "script"}}
+<script src="/static/js/multiselect.js"></script>
+<script src="/static/lib/subpage/subpage.js"></script>
+<script src="/static/js/input_date.js"></script>
+<script src="/static/js/input.array.js"></script>
+<script src="/static/js/input.number.js"></script>
+<script src="/static/js/input.form-name.js"></script>
+<script src="/static/js/input.form-name.js"></script>
+<script src="/static/js/input.select.date.js"></script>
+<script src="/static/js/report.search.handle.js"></script>
+<script src="/static/js/report.download.handle.js"></script>
+<script src="/static/js/report.date.handle.js"></script>
+<script src="/static/lib/jquery-ui/jquery.multiselect.filter.js"></script>
+<script src="/static/js/report.submit.search.js"></script>
+{{end}}
+
+{{fill "main"}}
+<span class="page-header main-report">{{.MenuName}}</span>
+<table class="table_search noborder" >
+    <tr>
+        <td style="vertical-align: top;">
+            <div id="search_condition_area" style="vertical-align: top; min-width: 80px !important;">
+                <form id="form_search">
+                    {{ .csrfField }}
+                    <input type="hidden" name="layout_cols"/>
+                    <input type="hidden" name="layout_rows"/>
+                    <input type="hidden" name="layout_sums"/>
+                    <input type="hidden" name="search_handle_type"/>
+                    <input type="hidden" class="report-search-button" id="btn_search"/>
+
+                    <table class="search-condition-table">
+                        <!-- 店舗-->
+                        <tr class="current_report">
+                            <th>店舗</th>
+                            <td>
+                                {{if eq (len .list_shop) 1}}
+                                {{$shop := (index .list_shop 0)}}
+                                <input name="shop_cd" value="{{$shop.ServerName}}|{{$shop.ShopCD}}" type="hidden"/>
+                                {{$shop.SharedBookStoreCode}} ({{$shop.ShopCD}}) {{$shop.ShopName}}
+                                {{else}}
+                                <select style="width: 270px; display:none;" name="shop_cd" class="multiselect" multiple="multiple">
+                                    {{range $key, $shop := .list_shop}}
+                                    <option value="{{$shop.ShopCD}}" selected>{{$shop.SharedBookStoreCode}} ({{$shop.ShopCD}}) {{$shop.ShopName}}</option>
+                                    {{end}}
+                                </select>
+                                {{end}}
+                            </td>
+                        </tr>
+                        <!-- 期間 -->
+                        <tr>
+                            <th>期間</th>
+                            <td>
+                                <input data-name="日付(前)" id="date_from" size="10" name="date_from" type="text" class="input_date input-range required" placeholder="YYYY/MM/DD" value="{{.date}}"/>
+                                <label for="date_from" class="demeter-date btn-selected-date-form">日付</label>
+                                <span class="demeter-date">～</span>
+                                <input data-name="日付(後)" id="date_to" size="10" name="date_to" type="text" class="input_date input-range required" placeholder="YYYY/MM/DD" value="{{.date}}"/>
+                                <label for="date_to" class="demeter-date btn-selected-date-form">日付</label>
+                            </td>
+                        </tr>
+                        <!-- JAN-->
+                        <tr>
+                            <th>JANコード</th>
+                            <td>
+                                <div style="display:table">
+                                    <div style="display: table-cell;">
+                                        <input maxlength="13" class="input-jan jan-item" name="jan_cd" type="text" style="vertical-align: middle;" value="9784">
+                                    </div>
+                                    <div style="display: table-cell;padding-left: 15px;">
+                                        <span>※JANコードの前方一致検索を行います。</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!-- フォーマット -->
+                            <th>フォーマット</th>
+                            <td>
+                               <select name="data_mode">
+                                   <option value="{{.type_search_sales_value}}" id="type_sale">
+                                       {{.type_search_sales}}
+                                   </option>
+                                   <option value="{{.type_search_stock_value}}" id="type_stock">
+                                       {{.type_search_stock}}
+                                   </option>
+                                   <option value="{{.type_search_sales_and_receiving_value}}" id="type_sales_and_receiving">
+                                       {{.type_search_sales_and_receiving}}
+                                   </option>
+                                   {{if eq .option_flag_return "1"}}
+                                   <option value="{{.type_search_sales_and_return_value}}" id="type_sale_return">
+                                       {{.type_search_sales_and_return}}
+                                   </option>
+                                   {{end}}
+                               </select>
+                            </td>
+                        </tr>
+                        <!-- 実施ボタン -->
+                        <tr class="current_report">
+                            <td>
+                            </td>
+                            <td colspan="2">
+                                <lable class="report-search-button btn-image-download-report-csv" id="btn_download_csv">ダウンロード</lable>
+                                <lable class="report-search-button" id="btn-clear">クリア</lable>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </td>
+    </tr>
+</table>
+<div id="query_result" class="current_report">
+</div>
+<div style="display: none;">
+    <div style="display: block;" class="err-msg model fade in">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body" style="text-align: center; color: red">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning subpage-close">閉じる</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}
+
+{{append "script"}}
+<script>
+    $("#btn-clear").click(function () {
+        $("#form_search")[0].reset()
+        $("#query_result").hide()
+    });
+    $(".multiselect").multiselect({
+        open: function () {
+            $("input[type='search']:first").focus();
+        }
+        }).multiselectfilter();
+</script>
+{{end}}

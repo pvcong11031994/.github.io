@@ -1,0 +1,550 @@
+{{$DATA := .data}}
+{{$ListRank := .list_rank}}
+{{$control_type := .control_type}}
+{{$len := len $DATA.GraphSymbol}}
+<script>
+    $(document).ready(function() {
+        //Fix resize and freeze header IE
+        var  versionIE = GetIEVersion();
+        if (versionIE === 9 || versionIE === 11) {
+            var defaultBorder = "2px";
+            var defaultTopBottom = "1.75px";
+            $("th[id=resize-col]").css("border-left-width", defaultBorder);
+            $("th[id=resize-col]").css("border-top-width", defaultTopBottom);
+            $("th[id=resize-col]").css("border-bottom-width", defaultTopBottom);
+        }
+    });
+</script>
+<table class="table_search noborder" >
+    <tr>
+        <td>
+            <div style="position: absolute; z-index: 20; margin-left: 45px; margin-top: 20px">
+                <label style="color: #333333">最大値</label>
+                <input type="text" id="input_max_value" class="input-number" style="width: 50px; padding-top: 2px; padding-bottom: 0px; height: 23px"/>
+                <button style="margin-top: -1px; margin-bottom: 0px; width: 45px; padding-top: 0px; height: 25px" type="button" class="btn-selected-date-form" id="change_size" onclick="changeSize()">変更</button>
+            </div>
+            <div id="graph_area" class="graph_area" style="width: 1150px;max-height: 600px;min-height: 350px;"></div>
+        </td>
+    </tr>
+</table>
+<div>
+    <p class="info_vj_charging">ただいまの検索料金は<br> &yen;{{.data.VJCharging | sum_format}}になります。</p>
+    <!--{{if eq $control_type "2"}}-->
+    <!--<table class="query-result" style="margin:0px 0px 20px 0px">-->
+        <!--<tr>-->
+            <!--<th class="row-name">雑誌名</th>-->
+            <!--<td>{{$DATA.MagazineName}}</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<th class="row-name">出版社名</th>-->
+            <!--<td>{{$DATA.MakerName}}</td>-->
+        <!--</tr>-->
+    <!--</table>-->
+    <!--{{end}}-->
+    <table class="query-result query-result-3 tablesorter" id="tbl_report_result" _fixedhead ="rows:1; cols:6" style="width: max-content; display: -ms-grid; -ms-grid-columns: max-content;">
+        <thead>
+        <tr class="col">
+            {{range $i,$item :=$DATA.HeaderCols}}
+            <th  class="row-name"{{if eq $item "品名"}}id="resize-col"{{else}}class="row-name"{{end}} >{{$item}}</th>
+            {{end}}
+            <th data-sorter="false" style="background-color: #FFF !important;" >&nbsp;&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{range $i,$v := $DATA.Rows}}
+        <tr>
+            {{if lt $i 15}}
+            <td class="symbol_click link_data" id="value_{{$i}}">{{index $ListRank $i}}</td>
+            {{else}}
+            <td class="symbol_click link_data" id="value_{{$i}}">{{index $ListRank 15}}</td>
+            {{end}}
+            {{range $j,$item := $v}}
+            {{$control_type_1 := "1"}}
+            <td class="
+                {{if eq $control_type $control_type_1}}
+                    {{if (eq $j 0)}}
+                        click_for_single_item_transition
+                    {{else if eq $j 1}}
+                        cells-goods-name link_data
+                    {{else if eq $j 2}}
+                        cells-writer-name
+                    {{else if and (gt $j 3) (and (ne $j 6) (ne $j 9)) }}
+                        number
+                    {{end}}
+                {{else}}
+                    {{if eq $j 0}}
+                        click_for_single_item_transition
+                    {{else if and (gt $j 1) (and (ne $j 3) (ne $j 6) (ne $j 10)) }}
+                        number
+                    {{end}}
+                {{end}}
+                ">
+                {{if eq $control_type $control_type_1}}
+                    {{if and (gt $j 3) (and (ne $j 6) (ne $j 9)) }}
+                        {{$item|sum_format}}
+                    {{else}}
+                        {{$item}}
+                    {{end}}
+                {{else}}
+                    {{if eq $j 2}}
+                        {{code_format $item}}
+                    {{else}}
+                        {{if and (gt $j 1) (and (ne $j 3) (ne $j 6) (ne $j 10)) }}
+                            {{$item|sum_format}}
+                        {{else}}
+                            {{$item}}
+                        {{end}}
+                    {{end}}
+                {{end}}
+            </td>
+            {{end}}
+        </tr>
+        {{end}}
+        </tbody>
+    </table>
+</div>
+<form id="search-condition">
+    {{ .csrfField }}
+    {{if gt (len .form.JanArrays) 0 }}
+    {{range $k,$v := .form.JanArrays}}
+    <input type="hidden" name="jan_cd" value="{{$v}}">
+    {{end}}
+    {{end}}
+    {{if gt (len .form.MagazineCdSingle) 0 }}
+    <input type="hidden" value="{{.form.MagazineCdSingle}}" name="magazine_cd_single">
+    {{end}}
+    <input type="hidden" name="control_type" value="{{.form.ControlType}}">
+    {{range $k,$v := .form.ShopCd}}
+    <input type="hidden" name="shop_cd" value="{{$v}}">
+    {{end}}
+    <input type="hidden" name="group_type_date" value="{{.form.SearchDateType}}">
+    <input type="hidden" name="jan_key">
+</form>
+<style>
+    .google-visualization-tooltip {
+        /*background-color: blue!important;*/
+        width: auto!important;
+        /* top: 60px!important;
+         right: 95px!important;
+         border: none !important;
+         box-shadow: none!important;
+         left: inherit!important;*/
+    }
+</style>
+<script>
+
+    //resize col 品名
+    $("#resize-col").resizable({
+        minWidth: 10
+    });
+    $(".ui-resizable-s").remove();
+    $(".ui-resizable-se").remove();
+    $("#resize-col").resize(function() {
+        FixedMidashi.create();
+
+        //Fix resize IE
+        var  versionIE = GetIEVersion();
+        if (versionIE === 9 || versionIE === 11) {
+            var defaultBorder = "2px";
+            $("th[id=resize-col]").css("border-right-width", defaultBorder);
+        }
+    });
+
+</script>
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    //Enter
+    $(document).on("keydown", "input[type=text]", function (e) {
+        if (13 == e.keyCode ) {
+            changeSize();
+        }});
+    //Draw when change max value
+    function changeSize() {
+        var valueInputMax = parseInt($("#input_max_value").val());
+        //Call draw chart
+        if ($("#input_max_value").val() === "" || $("#input_max_value").val() === null) {
+            return false
+        } else {
+            drawChart(valueInputMax);
+        }
+    };
+
+    function drawChart($maxValue) {
+
+        // ASO-5679 [BA]mBAWEB-v11a 初速比較：グラフの色の変更 - ADD START
+        var arrColorDefault = ["rgb(0,134,205)", "rgb(35,133,181)","rgb(70,132,157)", "rgb(105,131,133)", "rgb(140,130,109)",
+            "rgb(175,129,85)", "rgb(210,128,61)", "rgb(245,128,35)", "rgb(224,136,37)", "rgb(203,144,39)",
+            "rgb(182,152,41)", "rgb(161,160,43)", "rgb(140,168,45)", "rgb(119,176,47)", "rgb(100,187,48)" ];
+
+        var arrColorDefaultTemp = new Array();
+        if ({{$len}} >= 2) {
+            for (i = 0; i < {{$len}}; i++ ) {
+                var iColorTemp = 1 + Math.floor(14/({{$len}} - 1)) * i;
+                arrColorDefaultTemp[i] = arrColorDefault[iColorTemp - 1];
+            }
+        } else {
+            arrColorDefaultTemp[0] = arrColorDefault[0];
+        }
+        // ASO-5679 [BA]mBAWEB-v11a 初速比較：グラフの色の変更 - ADD END
+
+        if ($maxValue === null || $maxValue === undefined) {
+            $maxValue = {{$DATA.MaxValue}}
+        }
+        var data = new google.visualization.DataTable();
+        //add tick
+        if ($maxValue > 4) {
+            if (($maxValue % 4) !== 0) {
+                $maxValue = $maxValue + (4 - $maxValue % 4)
+            }
+        } else {
+            $maxValue = 4
+        }
+        var tickstep = $maxValue/4;
+        var ticks = [];
+        for(var t= 0 ;t <= $maxValue;t+=tickstep) {
+            ticks.push(t);
+        }
+        data.addColumn('number', 'Day');
+        {{range $k,$v:= $DATA.GraphSymbol}}
+        data.addColumn('number', {{$v}});
+        data.addColumn({type: 'string', role: 'tooltip'});
+        {{end}}
+        data.addRows([
+            {{range $k,$value := (loop .form.SearchDateType 1)}}
+        [
+            {{range $j, $v := (index $DATA.GraphData $value)}}
+        {{if eq $j 0}}
+        {{$v}}
+        {{else}}
+    ,{{$v}}
+        {{end}}
+        {{end}}
+    ],
+        {{end}}
+    ]);
+
+        var hLine = {{.form.SearchDateType}}
+        if (hLine == 40) {
+            hLine = 20
+        }
+        var options = {
+            title: '販売数推移',
+            tooltip:{
+                isHtml:true,
+            },
+            height:570,
+            colors:arrColorDefaultTemp,
+            vAxis:{
+                title:'販\n売\n数',
+                format:'#,###',
+                viewWindow:{
+                    min:0,
+                    max:$maxValue,
+                },
+                ticks: ticks,
+            },
+            hAxis:{
+                format:'decimal',
+                gridlines: {
+                    count: hLine,
+                    color:"white"
+                },
+            },
+            pointSize:7,
+            series: {
+                0: { pointShape: { type: 'circle' } },
+                1: { pointShape: { type: 'triangle' } },
+                2: { pointShape: { type: 'triangle', rotation: 90 } },
+                3: { pointShape: { type: 'triangle', rotation: 180 } },
+                4: { pointShape: { type: 'triangle', rotation: 270 } },
+                5: { pointShape: { type: 'square' } },
+                6: { pointShape: { type: 'diamond' } },
+                7: { pointShape: { type: 'star', sides: 3, dent: 0.2 } },
+                8: { pointShape: { type: 'star', sides: 3, dent: 0.2, rotation: 180 } },
+                9: { pointShape: { type: 'star', sides: 4, dent: 0.5 } },
+                10: { pointShape: { type: 'star', sides: 5, dent: 0.5 } },
+                11: { pointShape: { type: 'star', sides: 5, dent: 0.5, rotation: 180 } },
+                12: { pointShape: { type: 'star', sides: 6, dent: 0.5 } },
+                13: { pointShape: { type: 'polygon' } },
+                14: { pointShape: { type: 'polygon', rotation: 180 } },
+            }
+        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('graph_area'));
+        chart.draw(data, options);
+        doDrawFinal(document.getElementById('graph_area'));
+
+        //Add event select  START
+        google.visualization.events.addListener(chart, 'select', selectInGraph);
+        function selectInGraph() {
+            var selection = chart.getSelection();
+            for (var i = 0; i < selection.length; i++) {
+                var item = selection[i];
+                if (item.row != null && item.column != null) {
+                    //When click line into graph
+                    drawAgainChart(item);
+                } else if (item.row != null) {
+                    return;
+                } else if (item.column != null) {
+                    drawAgainChart(item);
+                }
+            }
+        }
+
+        function drawAgainChart(item) {
+
+            //When click graph annotation
+            //Draw color
+            //Array Color default
+            var arrColorDefault = ["rgb(0,134,205)", "rgb(35,133,181)","rgb(70,132,157)", "rgb(105,131,133)", "rgb(140,130,109)",
+                "rgb(175,129,85)", "rgb(210,128,61)", "rgb(245,128,35)", "rgb(224,136,37)", "rgb(203,144,39)",
+                "rgb(182,152,41)", "rgb(161,160,43)", "rgb(140,168,45)", "rgb(119,176,47)", "rgb(100,187,48)" ];
+            var colorChange = 'rgb(242,83,113)';
+            var arrLineDefault = [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29];
+
+            // ASO-5679 [BA]mBAWEB-v11a 初速比較：グラフの色の変更 - ADD START
+            var arrColorDefaultTemp = new Array();
+            if ({{$len}} >= 2) {
+                for (i = 0; i < {{$len}}; i++ ) {
+                    var iColorTemp = 1 + Math.floor(14/({{$len}} - 1)) * i;
+                    arrColorDefaultTemp[i] = arrColorDefault[iColorTemp - 1];
+                }
+            } else {
+                arrColorDefaultTemp[0] = arrColorDefault[0];
+            }
+            // ASO-5679 [BA]mBAWEB-v11a 初速比較：グラフの色の変更 - ADD END
+
+            //Arr Color Result
+            // ASO-5679 [BA]mBAWEB-v11a 初速比較：グラフの色の変更 - EDIT START
+            //var arrColor = arrColorDefault.slice(0, {{$len}});
+            var arrColor = arrColorDefaultTemp.slice(0, {{$len}});
+            // ASO-5679 [BA]mBAWEB-v11a 初速比較：グラフの色の変更 - EDIT END
+            var arrLine = arrLineDefault.slice(0, {{$len}});
+            var flagClick = false;
+            arrColor.push(colorChange);
+
+            for (i = 0; i < arrLine.length; i++ ) {
+                if (item.column === arrLine[i]) {
+                    arrColor[i] = colorChange;
+                    flagClick = true;
+                }
+            }
+            if (flagClick === false) {
+                return;
+            } else {
+                var arrValueTemp = [];
+                var arrToolTipTemp = [];
+                {{range $k,$value := (loop .form.SearchDateType 1)}}
+                {{range $j, $v := (index $DATA.GraphData $value)}}
+                for (i = 0; i < arrLine.length ; i++) {
+                    if (item.column === arrLine[i]){
+                        if ({{$j}} === arrLine[i]) {
+                            arrValueTemp.push({{$v}});
+                        } else if ({{$j}} === arrLine[i] + 1) {
+                            arrToolTipTemp.push({{$v}});
+                        }
+                    }
+                }
+                {{end}}
+                {{end}}
+
+                //Draw new DATA
+                var dataTableNew = new google.visualization.DataTable();
+                dataTableNew.addColumn('number', 'Day');
+                {{range $k,$v:= $DATA.GraphSymbol}}
+                dataTableNew.addColumn('number', {{$v}});
+                dataTableNew.addColumn({type: 'string', role: 'tooltip'});
+                {{end}}
+                dataTableNew.addColumn('number', 'TMP');
+                dataTableNew.addColumn({type: 'string', role: 'tooltip'});
+                dataTableNew.addRows([
+                    {{range $k,$value := (loop .form.SearchDateType 1)}}
+                [
+                    {{range $j, $v := (index $DATA.GraphData $value)}}
+                {{if eq $j 0}}
+                {{$v}}
+                {{else}}
+            ,{{$v}}
+                {{end}}
+                {{end}}
+            ,arrValueTemp[{{$k}}],arrToolTipTemp[{{$k}}]
+            ],
+                {{end}}
+            ]);
+
+                var hLine = {{.form.SearchDateType}}
+                if (hLine == 40) {
+                    hLine = 20
+                }
+
+                var options = {
+                    series:{
+                        0: { pointShape: { type: 'circle' } },
+                        1: { pointShape: { type: 'triangle' } },
+                        2: { pointShape: { type: 'triangle', rotation: 90 } },
+                        3: { pointShape: { type: 'triangle', rotation: 180 } },
+                        4: { pointShape: { type: 'triangle', rotation: 270 } },
+                        5: { pointShape: { type: 'square' } },
+                        6: { pointShape: { type: 'diamond' } },
+                        7: { pointShape: { type: 'star', sides: 3, dent: 0.2 } },
+                        8: { pointShape: { type: 'star', sides: 3, dent: 0.2, rotation: 180 } },
+                        9: { pointShape: { type: 'star', sides: 4, dent: 0.5 } },
+                        10: { pointShape: { type: 'star', sides: 5, dent: 0.5 } },
+                        11: { pointShape: { type: 'star', sides: 5, dent: 0.5, rotation: 180 } },
+                        12: { pointShape: { type: 'star', sides: 6, dent: 0.5 } },
+                        13: { pointShape: { type: 'polygon' } },
+                        14: { pointShape: { type: 'polygon', rotation: 180 } },
+                {{$len}}:{ visibleInLegend : false }
+            },
+                title: '販売数推移',
+                        tooltip:{
+                    isHtml:true,
+                },
+                height:570,
+                        colors:arrColor,
+                        vAxis:{
+                    title:'販\n売\n数',
+                            format:'#,###',
+                            viewWindow:{
+                        min:0,
+                                max:$maxValue,
+                    },
+                    ticks: ticks,
+                },
+                hAxis:{
+                    format:'decimal',
+                            gridlines: {
+                        count: hLine,
+                                color:"white"
+                    },
+                },
+                pointSize:7,
+            };
+                chart.draw(dataTableNew, options);
+                doDrawFinal(document.getElementById('graph_area'));
+            }
+        }
+
+
+    }
+
+
+    function doDrawFinal( domItem ) {
+        $(domItem).find("svg text").first().attr("x", (($(domItem).find("svg").width() - $(domItem).find("svg text").first().width()) / 2).toFixed(0));
+        $(domItem).find("svg text").each(function () {
+            switch ($(this).text()){
+                case "販":
+                    $(this).attr("x",60);
+                    $(this).attr("y",255)
+                    $(this).attr("transform","rotate(0 70 175)");
+                    break;
+                case "売":
+                    $(this).attr("x",60);
+                    $(this).attr("y",270);
+                    $(this).attr("transform","rotate(0 70 175)");
+                    break;
+                case "数":
+                    $(this).attr("x",60);
+                    $(this).attr("y",285);
+                    $(this).attr("transform","rotate(0 70 175)");
+                    break;
+            }
+        });
+    }
+
+    var $flag = false;
+    $(function () {
+//        $(document).on("click", "table#tbl_report_result_detail th.row-name.header", function () {
+//            sortTable(this.id, 'tbl_report_result_detail');
+//            FixedMidashi.create();
+//        });
+//        $(document).on("click", "table#tbl_report_result th.row-name.header", function () {
+//            sortTable(this.id,'tbl_report_result');
+//            FixedMidashi.create();
+//        })
+        $(document).on("click", ".symbol_click", getDetailData)
+        function getDetailData() {
+            if ($flag) {
+                return;
+            }
+            $flag = true;
+            $("input[name='jan_key']").val($(this).next().html().trim());
+            $("div[id='query_result_detail']").html("");
+            $(".symbol_click").css("color","blue");
+
+            var $id = this.id;
+            $( "table" ).find( "td[id="+$id+"]" ).css( "color", "red" );
+
+            $.ajax({
+                url: location.pathname + "/query_detail_ajax",
+                type: "POST",
+                cache:false,
+                data: $("form[id='search-condition']").serialize(),
+                success: function (responeHtml) {
+                    $("div[id='query_result_detail']").html(responeHtml);
+                    $("div[id='query_result_detail']").css("display","block");
+                },
+                complete:function () {
+                    $flag = false;
+                },
+            })
+
+        }
+    });
+
+//    function sortTable(index,tableId) {
+//        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+//        table = document.getElementById(tableId);
+//        switching = true;
+//        //Set the sorting direction to ascending:
+//        dir = "asc";
+//        /*Make a loop that will continue until
+//         no switching has been done:*/
+//        while (switching) {
+//            //start by saying: no switching is done:
+//            switching = false;
+//            rows = table.getElementsByTagName("TR");
+//            /*Loop through all table rows (except the
+//             first, which contains table headers):*/
+//            for (i = 1; i < (rows.length - 1); i++) {
+//                //start by saying there should be no switching:
+//                shouldSwitch = false;
+//                /*Get the two elements you want to compare,
+//                 one from current row and one from the next:*/
+//                x = rows[i].getElementsByTagName("TD")[index];
+//                y = rows[i + 1].getElementsByTagName("TD")[index];
+//                /*check if the two rows should switch place,
+//                 based on the direction, asc or desc:*/
+//                if (dir == "asc") {
+//                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+//                        //if so, mark as a switch and break the loop:
+//                        shouldSwitch= true;
+//                        break;
+//                    }
+//                } else if (dir == "desc") {
+//                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+//                        //if so, mark as a switch and break the loop:
+//                        shouldSwitch= true;
+//                        break;
+//                    }
+//                }
+//            }
+//            if (shouldSwitch) {
+//                /*If a switch has been marked, make the switch
+//                 and mark that a switch has been done:*/
+//                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+//                switching = true;
+//                //Each time a switch is done, increase this count by 1:
+//                switchcount ++;
+//            } else {
+//                /*If no switching has been done AND the direction is "asc",
+//                 set the direction to "desc" and run the while loop again.*/
+//                if (switchcount == 0 && dir == "asc") {
+//                    dir = "desc";
+//                    switching = true;
+//                }
+//            }
+//        }
+//    }
+</script>

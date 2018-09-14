@@ -1,0 +1,163 @@
+
+header .right-area .logout {
+    /*font-size: 13px;*/
+    /*padding: 3px 5px;*/
+    /*margin-top: 3px;*/
+    /*!*color: #00aeeb;*!*/
+    /*color: #ffffff;*/
+    /*float: right;*/
+    /*text-decoration: underline;*/
+}
+
+header .right-btn.logout {
+    display: none;
+}
+
+.container {
+    display: table;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+}
+
+.helper {
+    #position: absolute;
+    #top: 50%;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.content {
+    #position: relative;
+    #top: -50%;
+    margin: 0 auto;
+    /*width: 100%;*/
+    z-index: 9999;
+}
+
+.service-name {
+    color: #00aeeb;
+    /*color: #000;*/
+    font-size: 22px;
+    display: inline-table;
+    margin: 0px 10px;
+    position: relative;
+    bottom: -10px;
+}
+
+nav {
+    display: table;
+    width: 100%;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    z-index: 9999999 !important;
+}
+
+nav > ul ul {
+    opacity: 0;
+    position: absolute;
+    top: 160%;
+    visibility: hidden;
+    width: auto;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.3);
+}
+
+nav > ul ul li:hover > ul {
+    top: 0%;
+    left: 100%;
+    opacity: 1;
+    visibility: visible;
+}
+
+nav ul li:hover > ul {
+    opacity: 1;
+    top: 100%;
+    visibility: visible;
+}
+
+nav ul li {
+    float: left;
+    position: relative;
+}
+
+nav ul li, nav li a {
+    height: 45.56px;
+}
+
+nav ul ul li {
+    float: none;
+}
+
+nav ul li {
+    cursor: pointer;
+}
+
+nav ul li:hover {
+    background-color: rgba(0, 94, 255, 0.71);
+}
+
+nav a {
+    text-decoration: none !important;
+    display: block;
+    padding: 14px 16px;
+    width: 100%;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.expand {
+    display: block;
+    text-decoration: none;
+    color: #555;
+    cursor: pointer;
+}
+
+li.expand {
+    background-image: url(/static/img/menu/rightArrow.png);
+    background-position: right center;
+    background-repeat: no-repeat;
+    padding-right: 15px;
+}
+
+nav > ul > li.expand {
+    background-image: none;
+}
+
+.expand h2 {
+    width: 85%;
+    float: left;
+}
+
+.btn-delete-menu {
+    width: 20px;
+    height: 20px;
+    border: rgba(56, 67, 49, 0.71) solid 1px;
+    border-radius: 2px;
+    display: inline-block;
+    float: right;
+    text-align: center;
+    position: absolute;
+    top: 11px;
+    right: 10px;
+    background-image: url(/static/img/icon/cross.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.custom-report-menu {
+    white-space: nowrap;
+    padding-right: 35px;
+}
+
+.custom-report-menu > a {
+    padding-right: 10px;
+}
+
+.btn-delete-menu:hover {
+    background-color: rgb(255, 162, 0);
+}

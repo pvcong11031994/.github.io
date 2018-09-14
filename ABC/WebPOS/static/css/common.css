@@ -1,0 +1,110 @@
+#sale_detail_outer {
+    width: 100%;
+}
+
+.DataTables_sort_icon {
+    display: none;
+}
+
+.sorting {
+    padding: 4px 4px 4px 4px !important;
+}
+
+.sorting.ui-state-default {
+    cursor: default !important;
+}
+
+#saleconfirm_list_tmp th {
+    padding: 4px !important;
+    height: 20px !important;
+}
+
+#saleconfirm_list_tmp .hidden-sort th {
+    border: none !important;
+    background: transparent;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+    padding-left: 8px !important;
+}
+
+.text-right {
+    text-align: right;
+    padding-right: 8px !important;
+}
+
+.left-20 {
+    margin-left: 20px !important;
+}
+
+.right-20 {
+    margin-right: 20px !important;
+}
+
+.no-view {
+    display: none !important;
+}
+
+.no-show {
+    width: 0px !important;
+    height: 0px !important;
+}
+
+.padding-lr-25 {
+    padding: 0 25px !important;
+}
+
+.overflow-multi-line {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+/*.btn {*/
+/*border-radius: 0px !important;*/
+/*border: 1px #96C5EF solid !important;*/
+/*font-size: 14px;*/
+/*color: #444;*/
+/*height: 40px;*/
+/*}*/
+
+/*.btn:hover {*/
+/*background-color: #2E6DA4;*/
+/*color: #fff;*/
+/*}*/
+
+.select2-search {
+    display: none !important;
+}
+
+.table-center {
+    margin: auto;
+}
+
+.ui-datepicker-title select {
+    height: 24px;
+}
+
+th.sorting.ui-state-default {
+    outline: none;
+}
+
+.select2-drop-mask {
+    max-width: 100% !important;
+    max-height: 100% !important;
+}

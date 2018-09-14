@@ -1,0 +1,22 @@
+@media print {
+    header, #btn_search, #btn-clear {
+        display: none;
+    }
+
+    body {
+        padding-top: 0px;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .no-print {
+        display: none;
+    }
+
+    .invisible-print {
+        opacity: 0;
+    }
+
+    a[href]:after {
+        content: none !important;
+    }
+}

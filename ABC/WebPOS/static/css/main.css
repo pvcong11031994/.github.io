@@ -1,0 +1,560 @@
+html, body {
+    position: relative;
+    min-width: 100%;
+    width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    height: 100%;
+    max-height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    -ms-overflow-style: scrollbar;
+}
+
+body {
+    color: #73879C;
+    background: #fff;
+    font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.471;
+    padding-top: 100px;
+}
+
+.dashboard {
+    color: #000000 !important;
+}
+
+/* Let's get this party started */
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: transparent;
+    border-left: 1px solid #ccc;
+}
+
+::-webkit-scrollbar-track-piece {
+    background: rgb(255, 255, 256);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgba(187, 187, 187, 0.8);
+    -webkit-box-shadow: inset 0 0 6px rgba(187, 187, 187, 0.5);
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(187, 187, 187, 0.4);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #aaa;
+}
+
+/** header **/
+header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 99;
+    background-color: #f3f1e4;
+}
+
+/* logo */
+header .logo-area {
+    margin: 0;
+    max-height: 55px;
+    height: 55px;
+    max-width: 100%;
+    position: relative;
+    transition: all .4s ease;
+    -webkit-transition: all .4s ease;
+    border-bottom: 1px solid #00aeeb;
+}
+
+header .logo-area img {
+    background-color: whitesmoke;
+    height: 100%;
+    padding: 8px;
+}
+
+header .logo img {
+    cursor: pointer;
+}
+
+/* logo */
+
+header .left-btn, header .menu-btn {
+    display: none;
+    cursor: context-menu;
+    position: absolute;
+    top: 0;
+    left: 10px;
+    color: #00aeeb;
+    height: 100%;
+    z-index: 99;
+}
+
+header .right-btn {
+    cursor: context-menu;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    z-index: 99;
+    padding-right: 10px;
+    /*color: #00aeeb;*/
+    color: #ffffff;
+}
+
+header ul.right-area {
+    text-align: left;
+    font-size: 93%;
+    clear: right;
+    overflow: hidden;
+    padding: 20px 10px 0px;
+    border-radius: 3px;
+    float: right;
+    list-style: none;
+    color: #ffffff !important;
+}
+
+header ul.right-area li a {
+    color: #0086cd !important;
+    /*font-size:13px;*/
+
+}
+
+header ul.right-area li a:hover {
+    /*text-decoration: underline;*/
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    /*padding-bottom: 0px;*/
+}
+
+header ul.right-area li {
+    float: left;
+    border-right: 1px solid #0086cd;
+    cursor: pointer;
+    padding: 3px 10px;
+    margin-top: 3px;
+    color: #ffffff;
+}
+
+header ul.right-area li:last-child {
+    border-right: none;
+}
+
+.expanded {
+    display: block;
+}
+
+/** main **/
+main {
+    padding: 10px;
+}
+
+/** /main **/
+
+/** menu **/
+nav, ul, li, a {
+    margin: 0;
+    padding: 0;
+    float: none;
+}
+
+nav {
+    display: table;
+    width: 100%;
+    height: 45px;
+    background-color: #0086cd!important;
+    display: table;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    /*z-index: 9999999 !important;*/
+}
+
+nav {
+    /*background-color: #3c82f5;*/
+    background-color: #0086cd!important;
+}
+
+nav ul {
+    background-color: #0086cd!important;
+}
+
+nav ul ul {
+    background-color: #0086cd!important;
+}
+
+nav ul ul ul {
+    background-color: #0086cd!important;
+}
+
+
+
+nav ul li a {
+    color: white !important;
+}
+
+/** /menu **/
+
+/** item init **/
+textarea {
+    resize: vertical !important;
+}
+
+/** /item init **/
+
+.x_panel, .content-view {
+    border-color: #a5a0a0;
+    min-height: 150px;
+    height: 150px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align: left;
+}
+
+.content-view a {
+    color: #3c82f5;
+    text-decoration: underline;
+}
+
+/** Define table view info  style**/
+table tbody {
+    border: 1px solid #BBBBBB;
+}
+
+.no-border {
+    border: none !important;
+}
+
+table th, table td {
+    border: solid #BBBBBB;
+    border-width: 0 1.33px 1.33px 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: 12px;
+    white-space: inherit;
+    font-weight: normal;
+    text-align: left;
+    padding: 4px;
+    color: #333;
+}
+
+table .align-top {
+    vertical-align: top !important;
+}
+
+/** For table view info only*/
+table.info>tr>td:first-child:not([colspan]),
+table.info>tbody>tr>td:first-child:not([colspan]),
+table.info>thead>tr>td:first-child:not([colspan]) {
+    background-color: #d1d1d1;
+    font-weight: bold;
+    white-space: nowrap !important;
+}
+
+/** /For table view info only*/
+
+/** /Define table style**/
+/** Multi select**/
+.ui-datepicker {
+    font-size: 14px;
+}
+
+.ui-multiselect-header {
+    padding-right: 5px;
+}
+
+.ui-multiselect-header, .ui-multiselect, .ui-multiselect-menu, .ui-multiselect-checkboxes label {
+    border-radius: 0;
+}
+
+.ui-multiselect-checkboxes label {
+    padding-left: 5px;
+}
+
+.ui-multiselect-checkboxes span {
+    padding-left: 5px;
+}
+
+/** /Multi select**/
+
+td span {
+    line-height: normal;
+}
+
+button {
+    margin: 0;
+}
+
+button > span.ui-icon.ui-icon-triangle-1-s {
+    margin-top: 2px;
+    margin-right: 1px;
+}
+
+main .page-header {
+    margin: 10px 0 20px;
+    color: #0b0b0b;
+    display: block;
+    font-size: 1.5em;
+}
+
+.table-name {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+.ui-datepicker-title {
+    display: flex !important;
+}
+
+.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
+    width: 50% !important;
+}
+
+.ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next,
+.ui-datepicker .ui-datepicker-prev:hover, .ui-datepicker .ui-datepicker-next:hover {
+    top: 4px;
+    cursor: pointer;
+}
+
+.ui-datepicker .ui-datepicker-next, .ui-datepicker .ui-datepicker-next:hover {
+    right: 4px;
+}
+
+.ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-prev:hover {
+    left: 4px;
+}
+
+.ui-multiselect-menu {
+    z-index: 9999 !important;
+}
+
+table.table_list tr:nth-child(even) {
+    background: #f3f1e4
+}
+
+table.table_list tr:nth-child(odd) {
+    background: #FFFFFF
+}
+
+table.table_list {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px #BBBBBB solid;
+}
+
+table.table_list th,
+table.table_list td {
+    border-width: 1px 1px 0px 0px;
+    border-style: solid;
+    border-color: #BBBBBB;
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: 12px;
+    white-space: nowrap;
+    font-weight: normal;
+    padding: 0px 0px !important;
+    min-height: 30px;
+    height: 30px;
+}
+
+table.table_list th {
+    border-width: 1px 1px 1px 0px;
+    background: #0086cd;
+    color: white!important;
+    text-align: center;
+    height: 30px;
+    padding-right: 5px !important;
+    padding-left: 5px !important;
+}
+
+td.header-cell {
+    border-width: 1px 1px 1px 0px;
+    background: #d7ebf9 url("/static/lib/jquery-ui/images/ui-bg_glass_80_d7ebf9_1x400.png") 50% 50% repeat-x;
+    text-align: center;
+}
+
+table.table_list td {
+    padding-right: 5px !important;
+    padding-left: 5px !important;
+    text-align: left;
+}
+
+/*table.table_list tbody tr td {*/
+/*padding:0px !important;*/
+/*}*/
+
+table.table_list tbody tr input[type="text"] {
+    border: #BBBBBB 0px solid !important;
+    max-height: 33px !important;
+    min-height: 33px !important;
+    height: 33px !important;
+    background-color: transparent;
+}
+
+table.table_list tbody tr input[type="password"] {
+    border: #BBBBBB 0px solid !important;
+    max-height: 33px !important;
+    min-height: 33px !important;
+    height: 33px !important;
+    background-color: transparent;
+}
+
+table.table_list tbody tr select {
+    border: #BBBBBB 0px solid !important;
+    max-height: 33px !important;
+    min-height: 33px !important;
+    height: 33px !important;
+    background-color: transparent;
+}
+
+/*table.table_list tbody tr:nth-child(1) td {*/
+/*background-color: #d4fbd4 !important;*/
+/*}*/
+table.table_list tbody tr .select2-choice {
+    background-color: transparent !important;
+    border: none !important;
+    height: 33px;
+}
+
+table.table_list tbody tr .select2-arrow {
+    background-color: transparent !important;
+    border: 1px solid #cccccc;
+    height: 33px;
+}
+
+.input_text {
+    max-height: 26px !important;
+    min-height: 26px !important;
+    height: 26px !important;
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    position: relative;
+    width: 200px;
+    max-width: 200px;
+    min-width: 200px;
+}
+
+.input_date .input_month .input_week {
+    max-height: 26px !important;
+    min-height: 26px !important;
+    height: 26px !important;
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    position: relative;
+    width: 120px !important;
+    max-width: 120px !important;
+    min-width: 120px !important;
+}
+
+.radio_label {
+    padding: 3px 5px 3px 5px;
+    border: 1px solid transparent;
+    margin-bottom: 0px;
+    align-content: center;
+}
+
+.check_label {
+    padding: 1px 5px 1px 5px;
+    margin-bottom: 0px;
+    border: 1px solid transparent;
+    width: 100%;
+    text-align: center;
+}
+
+.radio_label:HOVER{
+    padding: 3px 5px 3px 5px;
+    border: 1px solid #74b2e2;
+    background: #e4f1fb;
+    font-weight: bold;
+    color: #0070a3;
+}
+
+.check_label:HOVER {
+    border: 1px solid #74b2e2;
+    background: #e4f1fb;
+    font-weight: bold;
+    color: #0070a3;
+}
+
+.radio_label input {
+    position: absolute;
+    margin-top: 2px!important;
+}
+.radio_label span {
+    padding-left: 17px;
+}
+
+table.dataTable.no-footer {
+    border-bottom: 0px !important;
+}
+
+.select2-drop-mask {
+    max-width: 100% !important;
+    max-height: 100% !important;
+}
+
+select {
+    min-height: 26px !important;
+    max-height: 26px !important;
+    height: 26px !important;
+    padding-left: 2px !important;
+    padding-right: 2px !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+}
+
+.info_vj_charging {
+    float: right;
+    display: none;
+}
+
+#ui-datepicker-div {
+    z-index: 100 !important;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 8px 16px 0px;
+}
+
+.ui-multiselect-menu.ui-widget.ui-widget-content.ui-corner-all {
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 8px 16px 0px;
+}
+
+.fix-all-location {
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.center-column {
+    text-align: center !important;
+}
+table.noborder, table.noborder tbody, table.noborder td, table.noborder th, table.noborder tr {
+    border: none;
+    border-spacing: 0px;
+    padding: 0px;
+    margin: 0px;
+}

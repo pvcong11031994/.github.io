@@ -1,0 +1,109 @@
+table th, table td {
+    border-width: 1px 1px 0px 0px;
+    border-style: solid;
+    border-color: #BBBBBB;
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: 12px;
+    white-space: nowrap;
+    font-weight: normal;
+    min-height: 45px;
+    height: 45px;
+}
+
+table input[type="text"] {
+    max-height: 32px !important;
+    min-height: 32px !important;
+    height: 32px !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    width: 100%;
+}
+
+/*.btn-back {*/
+/*background: #CFA724;*/
+/*border-color: #FFE699;*/
+/*}*/
+
+/*.btn-delete {*/
+/*background: #a1412a;*/
+/*border-color: #FFE699;*/
+/*}*/
+
+/*.btn-update {*/
+/*background: #a1c7ea;*/
+/*border-color: #FFE699;*/
+/*}*/
+table.table_list tr:nth-child(even) {
+    background: #DEEBF6
+}
+
+table.table_list tr:nth-child(odd) {
+    background: #FFFFFF
+}
+
+table.table_list {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px #BBBBBB solid;
+}
+
+table.table_list th,
+table.table_list td {
+    border-width: 1px 1px 0px 0px;
+    border-style: solid;
+    border-color: #BBBBBB;
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: 12px;
+    white-space: nowrap;
+    font-weight: normal;
+    padding: 0px 0px !important;
+    min-height: 30px;
+    height: 30px;
+}
+
+table.table_list th {
+    border-width: 1px 1px 1px 0px;
+    background: #d7ebf9 url("/static/lib/jquery-ui/images/ui-bg_glass_80_d7ebf9_1x400.png") 50% 50% repeat-x;
+    text-align: center;
+    height: 30px;
+    padding-right: 5px !important;
+    padding-left: 5px !important;
+}
+
+table.table_list td {
+    padding-right: 5px !important;
+    padding-left: 5px !important;
+    text-align: left;
+}
+
+table.table_list tbody tr td {
+    padding: 0px !important;
+}
+
+table.table_list tbody tr input[type="text"] {
+    border: #BBBBBB 0px solid !important;
+    max-height: 33px !important;
+    min-height: 33px !important;
+    height: 33px !important;
+    background-color: transparent;
+}
+
+table.table_list tbody tr:nth-child(1) td {
+    background-color: #d4fbd4 !important;
+}
+
+table.table_list tbody tr .select2-choice {
+    background-color: transparent !important;
+    border: none !important;
+    height: 33px;
+}
+
+table.table_list tbody tr .select2-arrow {
+    background-color: transparent !important;
+    border: 1px solid #cccccc;
+    height: 33px;
+}
+
+

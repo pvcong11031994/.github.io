@@ -1,0 +1,131 @@
+{{fill "title"}}ユーザメンテナンス{{end}}
+
+{{fill "main"}}
+<span class="page-header">ユーザマスタアップロード</span>
+
+<form class="csv_upload csv_upload_data" method="post" action="{{.link_action}}" enctype="multipart/form-data">
+    {{ .csrfField }}
+    <table class="info form-table">
+        <span class="table-name">ユーザ初期設定</span>
+        <tr>
+            <td>登録データ</td>
+            <td>
+                <input type="text" class="upload-file" style="width:250px" value="" readonly/>
+                <input type="file" class="file-input no-view" name="upload-file-data" accept=".csv"/>
+                <button type="button" class="btn btn-primary btn-info btn-me get-file-input " style="height: 32px;vertical-align: top !important;margin-right: 0 !important;">参照</button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: right;">
+                <button type="submit" class="btn btn-success btn-search " style="margin-right: 1px !important;">登録</button>
+                <button type="button" class="btn  btn-warning back-top-dashboard" style="margin-right: 0 !important;">戻る</button>
+            </td>
+        </tr>
+    </table>
+    <br/>
+    <span id="span_alert" style="color: red;"></span>
+</form>
+<div class="csv_upload csv_upload_result" style="display:none">
+    <table class="info form-table result-register">
+        <caption>ユーザ取込結果ー一覧</caption>
+        <tr>
+            <th colspan="2" style="width: 100px">正常取込</th>
+            <td style="padding-left: 15px">件数　　<span class="totalSuccess">0</span>　件 </td>
+        </tr>
+        <tr class="header-error">
+            <th>No.</th>
+            <th>行番号</th>
+            <th>エラー内容表示</th>
+        </tr>
+        <tr class="bottom-error">
+            <td colspan="3" style="text-align: right;">
+                <button type="button" class="btn btn-back-no-save btn-me  btn-warning close-list-error">戻る</button>
+            </td>
+        </tr>
+    </table>
+</div>
+{{end}}
+
+{{append "css"}}
+<link rel="stylesheet" href="/static/css/dashboard.css"/>
+<link rel="stylesheet" href="/static/css/common.css"/>
+<link rel="stylesheet" href="/static/css/maintenance/user/maintenance-user.css"/>
+<link rel="stylesheet" href="/static/lib/subpage/spinners.css"/>
+<link rel="stylesheet" href="/static/css/common/defined-selected.css"/>
+{{end}}
+
+{{append "script"}}
+<script>
+    var $files;
+    $(document).on("click", ".get-file-input" , function(){
+        $("input[name='upload-file-data']").click();
+    });
+    $(document).on("change", "input[name='upload-file-data']" , function(event){
+        $files = null;
+        $(".upload-file").val(null);
+        if (event.target.files.length > 0) {
+            $files = event.target.files;
+            $(".upload-file").val($files[0].name);
+        }
+    });
+
+    $('form').on('submit', function(event) {
+
+        event.stopPropagation();
+        event.preventDefault();
+
+        $("#span_alert").text("");
+        if ($files == null || $files == undefined) {
+            $("#span_alert").text("登録データファイルを選択してください。");
+            return;
+        }
+
+        var data = new FormData();
+        data.append("upload-file-data", $files[0]);
+        data.append("{{.csrfKey}}", "{{.csrfToken}}");
+
+        var $form = $(this);
+        $.ajax({
+            type: $form.attr('method'),
+            url: $form.attr('action') ,
+            data: data,
+            cache: false,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function(data, textStatus, jqXHR){
+                if (data.is_success === "true" || data.is_success == true) {
+                    $(".csv_upload_data").hide();
+                    $(".csv_upload_result").show();
+                    $("span.totalSuccess").html(data.info.totalRecordSuccess);
+                    $('.item-error').remove();
+                    var $index = 1;
+                    $.each(data.listError, function($key, $value){
+                        var $tr = $("<tr class='item-error'></tr>")
+                        $tr.append("<td style='text-align: right'>" + $index + "</td>");
+                        $tr.append("<td style='text-align: right'>" + $key + "</td>");
+                        $tr.append("<td>" + $value + "</td>");
+                        $tr.insertBefore($(".bottom-error"));
+                        $index++;
+                    });
+                } else {
+                    $("#span_alert").text(data.message_err);
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                $("#span_alert").text(errorThrown);
+            }
+        });
+    });
+
+
+    $(".close-list-error").click(function(){
+        $("span.totalSuccess").html(0);
+        $('.item-error').remove();
+        $(".csv_upload_data").show();
+        $(".csv_upload_result").hide();
+        $files = null;
+        $('.csv_upload_data')[0].reset();
+    });
+</script>
+{{end}}

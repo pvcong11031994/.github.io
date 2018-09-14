@@ -1,0 +1,160 @@
+{{fill "title"}}ユーザメンテナンス{{end}}
+
+{{append "css"}}
+<link rel="stylesheet" href="/static/css/maintenance/user/maintenance-user-list.css"/>
+<link rel="stylesheet" href="/static/lib/subpage/subpage.css"/>
+<link rel="stylesheet" href="/static/lib/subpage/spinners.css"/>
+<style>
+    table.table_list {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border: 1px #BBBBBB solid;
+    }
+    table.table_list th,
+    table.table_list td {
+        border-width: 1px 1px 0px 0px;
+        border-style: solid;
+        border-color: #BBBBBB;
+        border-spacing: 0;
+        border-collapse: collapse;
+        font-size: 12px;
+        white-space: nowrap;
+        font-weight: normal;
+        padding: 0px 0px !important;
+        min-height: 30px;
+        height: 30px;
+    }
+    table.table_list th {
+        border-width: 1px 1px 1px 1px;
+        background: #d7ebf9 url("/static/lib/jquery-ui/images/ui-bg_glass_80_d7ebf9_1x400.png") 50% 50% repeat-x;
+        text-align: center;
+        height: 30px;
+        padding-right: 5px !important;
+        padding-left: 5px !important;
+    }
+    table.table_list td {
+        padding-right: 5px !important;
+        padding-left: 5px !important;
+        text-align: left;
+    }
+    .column-confirm {
+        min-width: 100px !important;
+    }
+</style>
+{{end}}
+{{append "script"}}
+<script src="/static/lib/DataTables/datatables.min.js"></script>
+<script src="/static/lib/subpage/subpage.js"></script>
+<script>
+
+    $(document).ready(function(){
+        $('.maintenance-user-detail').DataTable({
+            paging          :   false,
+            searching       :   false,
+            info            :   false,
+            ordering        :   false,
+            sDom            :   'rt',
+            initComplete    :   function(settings, json) {
+            }
+        });
+
+        $(".btn-back-top").on("click",function(){
+            {{if eq .flg_update "1"}}
+            location.href = "{{.link_update}}";
+            {{else}}
+            location.href = "{{.link_insert}}";
+            {{end}}
+        });
+    });
+
+
+
+</script>
+{{end}}
+
+{{fill "main"}}
+<span class="page-header">ユーザ一覧</span>
+
+<form class="maintenance-user-list" style=" position:relative">
+    <div class="div-button">
+        <button type="button" class="btn btn-warning btn-me btn-back-top">戻る</button>
+    </div>
+
+    <table class="table_list compact">
+        <thead>
+        <tr>
+            <th class="column-confirm">ユーザID</th>
+            <th class="column-confirm">ユーザ名</th>
+            <th class="column-confirm">店舗名</th>
+            <th>権限</th>
+            <th class="column-confirm">フランチャイズコード</th>
+            <th class="column-confirm">サーバー名</th>
+            <th class="column-confirm">メニューグループ</th>
+            <th class="column-confirm">企業名</th>
+            <th class="column-confirm">部署コード</th>
+            <th class="column-confirm">所属部署名</th>
+            <th class="column-confirm">メール</th>
+            <th class="column-confirm">電話</th>
+            <th class="column-confirm">FAX</th>
+            <th class="column-confirm">パスワード</th>
+            <th class="column-confirm">利用不可</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{range $key,$user := .listUser}}
+        <tr>
+            <td class="column-confirm">
+                {{$user.Um_User_ID}}
+            </td>
+            <td class="column-confirm">
+                {{$user.Um_User_Name}}
+            </td>
+            <td class="column-confirm">
+                {{$user.Um_Shop_Name}}
+            <td class="text-center">
+                {{if eq $user.Um_Flg_Auth "0"}}
+                店舗
+                {{else}}
+                本部
+                {{end}}
+            </td>
+            <td class="column-confirm">
+                {{$user.Um_Franchise_Cd}}
+            </td>
+            <td class="column-confirm">
+                {{$user.Um_Server_Name}}
+            </td>
+            <td class="column-confirm">
+                {{$user.Um_Flg_Menu_Group}}
+            </td>
+            <td class="column-confirm">
+                {{$user.Um_Corp_Name}}
+            </td>
+            <td class="column-confirm">
+                {{$user.Um_Dept_Cd}}
+            </td>
+            <td class="column-confirm">
+                {{$user.Um_Dept_Name}}
+            </td>
+            <td class="column-confirm">
+                {{$user.Um_User_Mail}}
+            </td>
+            <td class="column-confirm">
+                {{$user.Um_User_Phone}}
+            </td>
+            <td class="column-confirm">
+                {{$user.Um_User_Xerox}}
+            </td>
+            <td class="text-center column-confirm">
+                ●●●●●●
+            <td class="text-center">
+                {{if eq $user.Um_Flg_Use "1"}}
+                ●
+                {{end}}
+            </td>
+        </tr>
+        {{end}}
+        </tbody>
+    </table>
+</form>
+{{end}}

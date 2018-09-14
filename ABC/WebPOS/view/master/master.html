@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="icon" href="/static/favicon.ico"/>
+
+    <title>{{.WEBSITE_TITLE}}{{.TitlePageMenu}}</title>
+
+    <link rel="stylesheet" href="/static/lib/bootstrap/css/bootstrap.min.css"/>
+
+    <link rel="stylesheet" href="/static/lib/jquery-ui/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="/static/lib/jquery-ui/jquery.multiselect.css"/>
+
+    <link rel="stylesheet" href="/static/css/custom.css"/>
+    <link rel="stylesheet" href="/static/css/main.css"/>
+
+    <link rel="stylesheet" href="/static/css/menu/desktop.css"/>
+
+    <link rel="stylesheet" href="/static/lib/subpage/spinners.css"/>
+    <link rel="stylesheet" href="/static/lib/subpage/subpage.css"/>
+    <link rel="stylesheet" href="/static/lib/toast/jquery.toast.css"/>
+    {{block "css"}}
+</head>
+
+<body onload="hideWaiting(true);" {{block "body-class"}}>
+
+<div class="backgroundSubpage" style="z-index:99999">
+    <ul id="spinners">
+        <li class="circle-spinner selected">
+            <div class="spinner-container container1">
+                <div class="circle1"></div>
+                <div class="circle2"></div>
+                <div class="circle3"></div>
+                <div class="circle4"></div>
+            </div>
+            <div class="spinner-container container2">
+                <div class="circle1"></div>
+                <div class="circle2"></div>
+                <div class="circle3"></div>
+                <div class="circle4"></div>
+            </div>
+            <div class="spinner-container container3">
+                <div class="circle1"></div>
+                <div class="circle2"></div>
+                <div class="circle3"></div>
+                <div class="circle4"></div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<header>
+    <div class="logo-area">
+        <!-- LOGO -->
+        <a href="/">
+            <img {{if .HeaderColor}}style="background-color: {{.HeaderColor}}"{{end}} alt="{{.WEBSITE_TITLE}}"
+                 src="/static/img/logo/{{if .Logo }}{{.Logo}}{{else}}default_logo.png{{end}}"
+                 align="middle" title="{{.WEBSITE_TITLE}}"/>
+        </a>
+
+        <!-- RIGHT AREA-->
+        <ul class="right-area">
+            <li><a>{{.UserName}}</a></li>
+            <li><a class="logout" href="/account/logout">ログアウト</a></li>
+        </ul>
+    </div>
+
+    <nav {{if .MenuColor}}style="background-color: {{.MenuColor}}"{{end}}>
+        {{.MENU}}
+    </nav>
+</header>
+
+<main>
+    {{block "main"}}
+</main>
+
+{{block "body"}}
+<form style="display: none;" id="form_common">
+    {{ .csrfField }}
+</form>
+<script src="/static/lib/js/jquery.min.js"></script>
+<script src="/static/js/menubar.js"></script>
+<script src="/static/lib/subpage/subpage.js"></script>
+<script src="/static/lib/jquery-ui/jquery-ui.min.js"></script>
+<script src="/static/lib/jquery-ui/jquery.multiselect.js"></script>
+<script src="/static/js/layout.report.menu.js"></script>
+<script src="/static/lib/toast/jquery.toast.js"></script>
+{{if .user_report_menu}}
+<script>
+    (function () {
+        var userReportMenu = {{ .user_report_menu | json }};
+        insertReportMenu(userReportMenu);
+    })();
+</script>
+{{end}}
+{{block "script"}}
+<script>
+    $(document).ready(function() {
+        initWaitingOnAjax();
+        $(".content-view").each(function () {
+            $(this).append($(this).data("content"));
+        });
+        $(".back-top-dashboard").on("click", function () {
+            location.href = "/";
+        });
+        {{if .change_pass}}
+        if (location.pathname != "/maintenance/user/pass") {
+            location.href = "/maintenance/user/pass";
+        }
+        {{end}}
+    });
+</script>
+{{block "ready"}}
+</body>
+</html>
