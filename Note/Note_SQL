@@ -1,0 +1,4 @@
+1. PARTITION: Phân nhóm để tính toán
+---------------------------------------------
+1. PERCENT_RANK  = (STT_Row - 1)/(TotalRow - 1)
+2. CUME_DIST  = (STT_Row)/(TotalRow)

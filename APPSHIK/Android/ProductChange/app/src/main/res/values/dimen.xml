@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_horizontal_padding">20dp</dimen>
+    <dimen name="activity_vertical_padding">20dp</dimen>
+    <dimen name="size10dp">10sp</dimen>
+    <dimen name="size5dp">5sp</dimen>
+    <dimen name="size8dp">8sp</dimen>
+    <dimen name="size28dp">28sp</dimen>
+    <dimen name="size26dp">26sp</dimen>
+    <dimen name="size20dp">20sp</dimen>
+    <dimen name="size18dp">18sp</dimen>
+    <dimen name="size16dp">16sp</dimen>
+    <dimen name="size10sp">10sp</dimen>
+    <dimen name="size38sp">38sp</dimen>
+    <dimen name="size52sp">52sp</dimen>
+    <dimen name="size53sp">53sp</dimen>
+    <dimen name="size1sp">1sp</dimen>
+    <dimen name="buttonback">150sp</dimen>
+    <dimen name="fab_margin">16sp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
+    <dimen name="sizeTextDetail">17sp</dimen>
+    <dimen name="paddingFragmentSetting">6dp</dimen>
+    <dimen name="sizeTextFragmentSetting">25sp</dimen>
+</resources>

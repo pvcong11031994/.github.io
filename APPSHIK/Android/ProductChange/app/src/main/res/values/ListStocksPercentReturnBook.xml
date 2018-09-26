@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="stocks_percent">
+        <item>５％</item>
+        <item>１０％</item>
+        <item>１５％</item>
+        <item>２０％</item>
+        <item>２５％</item>
+        <item>３０％</item>
+        <item>３５％</item>
+        <item>４０％</item>
+        <item>４５％</item>
+        <item>５０％</item>
+        <item>５５％</item>
+        <item>６０％</item>
+        <item>６５％</item>
+        <item>７０％</item>
+        <item>７５％</item>
+        <item>８０％</item>
+        <item>８５％</item>
+        <item>９０％</item>
+        <item>９５％</item>
+        <item>１００％</item>
+    </string-array>
+</resources>

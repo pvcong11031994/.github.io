@@ -1,0 +1,139 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:2:1-43:12
+	package
+		ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:3:11-46
+		INJECTED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml
+		INJECTED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml
+		INJECTED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:2:11-69
+	android:versionCode
+		INJECTED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml
+		INJECTED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml
+uses-permission#android.permission.INTERNET
+ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:5:5-66
+	android:name
+		ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:5:22-64
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:6:5-78
+	android:name
+		ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:6:22-76
+uses-permission#android.permission.READ_LOGS
+ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:8:5-67
+	android:name
+		ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:8:22-65
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:9:5-80
+	android:name
+		ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:9:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:10:5-79
+	android:name
+		ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:10:22-77
+application
+ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:12:5-41:19
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\cong-pv\.android\build-cache\ac70a2a20538b69be254d5497a82ac2d391c4829\output\AndroidManifest.xml:9:5-20
+MERGED from [com.android.support:design:25.3.1] C:\Users\cong-pv\.android\build-cache\7a40096fc45c05540ae2ee5a627ab7b4b7843b33\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\cong-pv\.android\build-cache\ab483ba8953d5cc63a6797369f681865ff7fd859\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\cong-pv\.android\build-cache\06c2aa8575e56cd162a1a5bdecbcb9c1b4a69d73\output\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\cong-pv\.android\build-cache\72f3777e757a9015fcb68b8df9151237c0298453\output\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:transition:25.3.1] C:\Users\cong-pv\.android\build-cache\2d41205df8a07b5ac09625a242f7892a84744a49\output\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\cong-pv\.android\build-cache\742fe7150b4e1421f266ec05368b474008837bc5\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\cong-pv\.android\build-cache\a4dec0c2a66f1d6fd7694db6c73b68556a899942\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\cong-pv\.android\build-cache\65bb610b2884dc3d065be36eaac7d12d3e745086\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\cong-pv\.android\build-cache\65960af1be1e37ca68ca9358b48a18dc691e0cd1\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\cong-pv\.android\build-cache\b8caa7e9daefc54cf9de41d3b1697d9602dd5758\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\cong-pv\.android\build-cache\08522784c164e32fe54567820cad672515e7d9c3\output\AndroidManifest.xml:29:5-20
+MERGED from [com.facebook.stetho:stetho:1.5.0] C:\Users\cong-pv\.android\build-cache\ed10ead3bab21952fe89de2b7cce93303dabf517\output\AndroidManifest.xml:11:5-20
+	android:label
+		ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:15:9-41
+	android:supportsRtl
+		ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:17:9-35
+	android:roundIcon
+		ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:16:9-41
+	android:allowBackup
+		ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:13:9-35
+	android:icon
+		ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:14:9-36
+	android:theme
+		ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:18:9-65
+activity#com.android.productchange.activities.MainActivity
+ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:19:9-25:20
+	android:name
+		ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:19:19-58
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:20:13-24:29
+action#android.intent.action.MAIN
+ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:21:17-68
+	android:name
+		ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:21:25-66
+category#android.intent.category.LAUNCHER
+ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:23:17-76
+	android:name
+		ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:23:27-74
+activity#com.android.productchange.activities.LoginActivity
+ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:26:9-29:20
+	android:screenOrientation
+		ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:28:13-49
+	android:name
+		ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:27:13-53
+activity#com.android.productchange.activities.UnlockScreenActivity
+ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:30:9-31:20
+	android:name
+		ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:30:19-66
+activity#com.android.productchange.activities.ProductChangeMainActivity
+ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:32:9-35:20
+	android:screenOrientation
+		ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:34:13-49
+	android:name
+		ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:33:13-65
+activity#com.android.productchange.activities.ProductChangeListActivity
+ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:36:9-39:20
+	android:screenOrientation
+		ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:38:13-49
+	android:name
+		ADDED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml:37:13-65
+uses-sdk
+INJECTED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\cong-pv\.android\build-cache\ac70a2a20538b69be254d5497a82ac2d391c4829\output\AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support:design:25.3.1] C:\Users\cong-pv\.android\build-cache\7a40096fc45c05540ae2ee5a627ab7b4b7843b33\output\AndroidManifest.xml:21:5-23:62
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\cong-pv\.android\build-cache\ab483ba8953d5cc63a6797369f681865ff7fd859\output\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\cong-pv\.android\build-cache\06c2aa8575e56cd162a1a5bdecbcb9c1b4a69d73\output\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\cong-pv\.android\build-cache\72f3777e757a9015fcb68b8df9151237c0298453\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\cong-pv\.android\build-cache\5f1da5d04b17b17654e1f44c4d14d70572344f25\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:transition:25.3.1] C:\Users\cong-pv\.android\build-cache\2d41205df8a07b5ac09625a242f7892a84744a49\output\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\cong-pv\.android\build-cache\742fe7150b4e1421f266ec05368b474008837bc5\output\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\cong-pv\.android\build-cache\a4dec0c2a66f1d6fd7694db6c73b68556a899942\output\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\cong-pv\.android\build-cache\65bb610b2884dc3d065be36eaac7d12d3e745086\output\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\cong-pv\.android\build-cache\65960af1be1e37ca68ca9358b48a18dc691e0cd1\output\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\cong-pv\.android\build-cache\b8caa7e9daefc54cf9de41d3b1697d9602dd5758\output\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\cong-pv\.android\build-cache\08522784c164e32fe54567820cad672515e7d9c3\output\AndroidManifest.xml:21:5-23:58
+MERGED from [com.facebook.stetho:stetho:1.5.0] C:\Users\cong-pv\.android\build-cache\ed10ead3bab21952fe89de2b7cce93303dabf517\output\AndroidManifest.xml:7:5-9:41
+	tools:overrideLibrary
+		ADDED from [com.android.support:design:25.3.1] C:\Users\cong-pv\.android\build-cache\7a40096fc45c05540ae2ee5a627ab7b4b7843b33\output\AndroidManifest.xml:23:9-59
+	android:targetSdkVersion
+		INJECTED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml
+		INJECTED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml
+		INJECTED from D:\Project\shouhin_irekae\Android\ProductChange\app\src\main\AndroidManifest.xml
+meta-data#android.support.VERSION
+ADDED from [com.android.support:design:25.3.1] C:\Users\cong-pv\.android\build-cache\7a40096fc45c05540ae2ee5a627ab7b4b7843b33\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\cong-pv\.android\build-cache\ab483ba8953d5cc63a6797369f681865ff7fd859\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\cong-pv\.android\build-cache\06c2aa8575e56cd162a1a5bdecbcb9c1b4a69d73\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\cong-pv\.android\build-cache\72f3777e757a9015fcb68b8df9151237c0298453\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\cong-pv\.android\build-cache\5f1da5d04b17b17654e1f44c4d14d70572344f25\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:transition:25.3.1] C:\Users\cong-pv\.android\build-cache\2d41205df8a07b5ac09625a242f7892a84744a49\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\cong-pv\.android\build-cache\742fe7150b4e1421f266ec05368b474008837bc5\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\cong-pv\.android\build-cache\a4dec0c2a66f1d6fd7694db6c73b68556a899942\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\cong-pv\.android\build-cache\65bb610b2884dc3d065be36eaac7d12d3e745086\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\cong-pv\.android\build-cache\65960af1be1e37ca68ca9358b48a18dc691e0cd1\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\cong-pv\.android\build-cache\b8caa7e9daefc54cf9de41d3b1697d9602dd5758\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\cong-pv\.android\build-cache\08522784c164e32fe54567820cad672515e7d9c3\output\AndroidManifest.xml:25:5-27:34
+	android:value
+		ADDED from [com.android.support:design:25.3.1] C:\Users\cong-pv\.android\build-cache\7a40096fc45c05540ae2ee5a627ab7b4b7843b33\output\AndroidManifest.xml:27:9-31
+	android:name
+		ADDED from [com.android.support:design:25.3.1] C:\Users\cong-pv\.android\build-cache\7a40096fc45c05540ae2ee5a627ab7b4b7843b33\output\AndroidManifest.xml:26:9-47

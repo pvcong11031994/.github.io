@@ -1,0 +1,75 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x000000006f9e4147, pid=11072, tid=0x000000000000176c
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_131-b11) (build 1.8.0_131-b11)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.131-b11 mixed mode windows-amd64 compressed oops)
+# Problematic frame:
+# V  [jvm.dll+0x214147]
+#
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0000000055faa800):  JavaThread "Signal Dispatcher" daemon [_thread_in_vm, id=5996, stack(0x00000000563c0000,0x00000000564c0000)]
+
+siginfo: ExceptionCode=0xc0000005, writing address 0x00000000564baee0
+
+Registers:
+RAX=0x00000000564baee0, RBX=0x0000000000000005, RCX=0x0000000000004000, RDX=0x0000000000000006
+RSP=0x00000000564beee0, RBP=0x0000000000000000, RSI=0x00000000564beee0, RDI=0x0000000000000005
+R8 =0x0000000000000006, R9 =0x0000000054d071b0, R10=0x000000005435d590, R11=0x00000000563ca150
+R12=0x0000000054d071b0, R13=0x0000000055faa800, R14=0x00000000564befa8, R15=0x000000005435d590
+RIP=0x000000006f9e4147, EFLAGS=0x0000000000010202
+
+Top of Stack: (sp=0x00000000564beee0)
+0x00000000564beee0:   0000000000000000 0000000000000000
+0x00000000564beef0:   0000000055faa800 0000000054d071b0
+0x00000000564bef00:   00000000ffffffff 000000006f9e5077
+0x00000000564bef10:   00000000564bf010 000000005435d590
+0x00000000564bef20:   0000000055faa800 000000006f890a83
+0x00000000564bef30:   00000000564bef70 0000000055faa800
+0x00000000564bef40:   00000000564bf000 0000000055faa800
+0x00000000564bef50:   000000005435d590 0000000055faa800
+0x00000000564bef60:   00000000025931e0 0000000055faa800
+0x00000000564bef70:   000000005435d590 0000000055faa800
+0x00000000564bef80:   000000005435d590 0000000055faa800
+0x00000000564bef90:   0000000000000001 000000005435d590
+0x00000000564befa0:   0000000055faa800 0000000054d29da0
+0x00000000564befb0:   0000000055faa800 000000006f89212d
+0x00000000564befc0:   00000000564bf3d0 00000000143369a0
+0x00000000564befd0:   00000000143369a0 0000000055fae9c0 
+
+Instructions: (pc=0x000000006f9e4147)
+0x000000006f9e4127:   48 89 6c 24 30 33 ed 66 90 e8 cb 3a 08 00 ff c3
+0x000000006f9e4137:   48 63 c8 48 8b c6 48 0f af cf 48 ff c7 48 2b c1
+0x000000006f9e4147:   89 28 48 63 c3 48 3b 05 85 25 59 00 7e db 48 8b
+0x000000006f9e4157:   6c 24 30 48 8b 5c 24 38 48 8b 74 24 40 48 83 c4 
+
+
+Register to memory mapping:
+
+RAX=0x00000000564baee0 is pointing into the stack for thread: 0x0000000055faa800
+RBX=0x0000000000000005 is an unknown value
+RCX=0x0000000000004000 is an unknown value
+RDX=0x0000000000000006 is an unknown value
+RSP=0x00000000564beee0 is pointing into the stack for thread: 0x0000000055faa800
+RBP=0x0000000000000000 is an unknown value
+RSI=0x00000000564beee0 is pointing into the stack for thread: 0x0000000055faa800
+RDI=0x0000000000000005 is an unknown value
+R8 =0x0000000000000006 is an unknown value
+R9 =0x0000000054d071b0 is an unknown value
+R10={method} {0x000000005435d598} 'exit' '()V' in 'java/lang/Thread'
+R11=0x00000000563ca150 is pointing into the stack for thread: 0x0000000055faa800
+R12=0x0000000054d071b0 is an unknown value
+R13=0x0000000055faa800 is a thread
+R14=0x00000000564befa8 is pointing into the stack for thread: 0x0000000055faa800
+R15={method} {0x000000005435d598} 'exit' '()V' in 'java/lang/Thread'
+
+
+Stack: [0x00000000563c0000,0x00000000564c0000],  sp=0x00000000564beee0,  free space=1019k

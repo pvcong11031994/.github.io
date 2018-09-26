@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.ProductChangeListActivity">
+
+    <LinearLayout
+        android:id="@+id/ll_header_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:weightSum="5">
+
+        <FrameLayout
+            android:id="@+id/fl_close"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.4">
+
+            <ImageButton
+                android:id="@+id/imb_close"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_gravity="top|center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/transparent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/home01" />
+
+            <TextView
+                android:id="@+id/txv_shopId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="5dp"
+                android:text="shopId"
+                android:textColor="@color/colorWhite" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="2.6"
+            android:gravity="center"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/txv_selectionName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="ABC"
+                android:textColor="@color/colorWhite"
+                android:textSize="28dp" />
+
+            <LinearLayout
+                android:id="@+id/ll_selection"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/imv_icon"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@android:color/transparent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/book01" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingRight="2dp">
+
+                        <TextView
+                            android:id="@+id/txv_classifyName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorWhite" />
+
+                        <TextView
+                            android:id="@+id/txv_shopName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Text"
+                            android:textColor="@color/colorWhite"
+                            android:visibility="gone" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:background="@android:color/transparent">
+
+            <ImageButton
+                android:id="@+id/imb_select"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/select01" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_selection"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:background="@android:color/transparent">
+
+            <ImageButton
+                android:id="@+id/imb_rank"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/rank01" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorBlack" />
+
+    <HorizontalScrollView
+        android:id="@+id/hrv_zoom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:overScrollMode="always"
+        android:scrollbarSize="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="58dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/colorGrey84"
+                    android:orientation="horizontal"
+                    android:weightSum="8">
+
+                    <FrameLayout
+                        android:id="@+id/fl_location_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:id="@+id/txv_location_header"
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:paddingLeft="15sp"
+                            android:paddingRight="15sp"
+                            android:text="@string/location_id"
+                            android:textColor="@color/colorBlack" />
+
+                        <ImageView
+                            android:id="@+id/imv_location_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end|center"
+                            android:src="@drawable/ic_arrow_drop_down"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                    <!-- View Jan_cd START -->
+                    <View
+                        android:id="@+id/v_jan_cd_header"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorBlack" />
+
+                    <FrameLayout
+                        android:id="@+id/fl_jan_cd_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:id="@+id/txv_jan_cd_header"
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:paddingLeft="15sp"
+                            android:paddingRight="15sp"
+                            android:text="@string/jan_cd"
+                            android:textColor="@color/colorBlack" />
+
+                        <ImageView
+                            android:id="@+id/imv_jan_cd_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end|center"
+                            android:src="@drawable/ic_arrow_drop_down"
+                            android:visibility="gone" />
+                    </FrameLayout>
+                    <!-- View Jan_cd END -->
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorBlack" />
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:id="@+id/txv_name_header"
+                            android:layout_width="130dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:gravity="center"
+                            android:padding="@dimen/size5dp"
+                            android:text="@string/product_name"
+                            android:textColor="@color/colorBlack" />
+                        <ImageView
+                            android:id="@+id/imv_name_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end|center"
+                            android:src="@drawable/ic_arrow_drop_down"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                    <!-- View publisher name return START -->
+                    <View
+                        android:id="@+id/v_publisher_name_return_header"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorBlack" />
+
+                    <FrameLayout
+                        android:id="@+id/fl_publisher_name_return_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:id="@+id/txv_publisher_name_return_header"
+                            android:layout_width="100dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:paddingLeft="15sp"
+                            android:paddingRight="15sp"
+                            android:text="@string/publisher_name"
+                            android:textColor="@color/colorBlack" />
+
+                        <ImageView
+                            android:id="@+id/imv_publisher_name_return_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end|center"
+                            android:src="@drawable/ic_arrow_drop_down"
+                            android:visibility="gone" />
+                    </FrameLayout>
+                    <!-- View publisher name return END -->
+
+                    <!-- View group 1 name START -->
+                    <View
+                        android:id="@+id/v_group1_name_header"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorBlack" />
+
+                    <FrameLayout
+                        android:id="@+id/fl_group1_name_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:id="@+id/txv_group1_name_header"
+                            android:layout_width="100dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:paddingLeft="15sp"
+                            android:paddingRight="15sp"
+                            android:text="@string/group1_name"
+                            android:textColor="@color/colorBlack" />
+
+                        <ImageView
+                            android:id="@+id/imv_group1_name_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end|center"
+                            android:src="@drawable/ic_arrow_drop_down"
+                            android:visibility="gone" />
+                    </FrameLayout>
+                    <!-- View group 1 name END -->
+
+                    <!-- View group 2 name START -->
+                    <View
+                        android:id="@+id/v_group2_name_header"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorBlack" />
+
+                    <FrameLayout
+                        android:id="@+id/fl_group2_name_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:id="@+id/txv_group2_name_header"
+                            android:layout_width="100dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:paddingLeft="15sp"
+                            android:paddingRight="15sp"
+                            android:text="@string/group2_name"
+                            android:textColor="@color/colorBlack" />
+
+                        <ImageView
+                            android:id="@+id/imv_group2_name_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end|center"
+                            android:src="@drawable/ic_arrow_drop_down"
+                            android:visibility="gone" />
+                    </FrameLayout>
+                    <!-- View group 2 name END -->
+
+                    <View
+                        android:id="@+id/v_classify_header"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorBlack" />
+
+                    <FrameLayout
+                        android:id="@+id/fl_classify_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:id="@+id/txv_classify_header"
+                            android:layout_width="130dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/classify_name"
+                            android:textColor="@color/colorBlack" />
+
+                        <ImageView
+                            android:id="@+id/imv_classify_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end|center"
+                            android:src="@drawable/ic_arrow_drop_down"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                    <View
+                        android:id="@+id/v_publisher_header"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorBlack" />
+
+                    <FrameLayout
+                        android:id="@+id/fl_publisher_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:id="@+id/txv_publisher_header"
+                            android:layout_width="100dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:padding="@dimen/size5dp"
+                            android:text="@string/publisher_name"
+                            android:textColor="@color/colorBlack" />
+
+                        <ImageView
+                            android:id="@+id/imv_publisher_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end|center"
+                            android:src="@drawable/ic_arrow_drop_down"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorBlack" />
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:id="@+id/txv_publish_date_header"
+                            android:layout_width="100dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/publish_date"
+                            android:textColor="@color/colorBlack" />
+
+                        <ImageView
+                            android:id="@+id/imv_publish_date_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end|center"
+                            android:src="@drawable/ic_arrow_drop_down"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorBlack" />
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:id="@+id/txv_inventory_number_header"
+                            android:layout_width="100dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/inventory_number"
+                            android:textColor="@color/colorBlack" />
+
+                        <ImageView
+                            android:id="@+id/imv_inventory_number_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end|center"
+                            android:src="@drawable/ic_arrow_drop_down"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorBlack" />
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:id="@+id/txv_rank_header"
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/overall_rank"
+                            android:textColor="@color/colorBlack" />
+
+                        <ImageView
+                            android:id="@+id/imv_rank_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end|center"
+                            android:src="@drawable/ic_arrow_drop_down"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorBlack" />
+
+                <ListView
+                    android:id="@+id/lsv_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fastScrollAlwaysVisible="true" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </HorizontalScrollView>
+</TableLayout>

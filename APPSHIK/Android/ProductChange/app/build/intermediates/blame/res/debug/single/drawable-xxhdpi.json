@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\ic_today_white_24dp.png",
+        "source": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\src\\main\\res\\drawable-xxhdpi\\ic_today_white_24dp.png"
+    },
+    {
+        "merged": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\ic_keyboard_arrow_right_white_24dp.png",
+        "source": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\src\\main\\res\\drawable-xxhdpi\\ic_keyboard_arrow_right_white_24dp.png"
+    },
+    {
+        "merged": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\ic_keyboard_arrow_left_white_24dp.png",
+        "source": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\src\\main\\res\\drawable-xxhdpi\\ic_keyboard_arrow_left_white_24dp.png"
+    },
+    {
+        "merged": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\ic_date_range_white_24dp.png",
+        "source": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\src\\main\\res\\drawable-xxhdpi\\ic_date_range_white_24dp.png"
+    }
+]

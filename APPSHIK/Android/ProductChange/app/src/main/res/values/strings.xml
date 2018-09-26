@@ -1,0 +1,156 @@
+<resources>
+    <string name="app_name">商品入替</string>
+    <string name="userid">ユーザID</string>
+    <string name="password">パスワード</string>
+    <string name="webpos">WEBPOS</string>
+    <string name="smart_active">SMART ACTIVE</string>
+    <string name="login">ログイン</string>
+    <string name="logout">ログアウト</string>
+    <string name="unlock">ロック解除</string>
+    <string name="cancel_button">取消</string>
+    <string name="title">表示案件を変更します</string>
+    <string name="titleyear">発売日	指定</string>
+    <string name="location">ロケーション別</string>
+    <string name="classify">分類別</string>
+    <string name="publish">出版社別</string>
+    <string name="back">戻る</string>
+    <string name="product_change">抜取りリスト（棚差）</string>
+    <string name="number_sample">抜取数</string>
+    <string name="number_candidates">候補数</string>
+    <string name="ISBN">ISBN</string>
+    <string name="check">チェック</string>
+    <string name="name">書名</string>
+    <string name="location_id">ロケーションコード</string>
+    <string name="location_id_return">ロケーション</string>
+    <string name="jan_cd"> JANコード</string>
+    <string name="jan_cd_return"> JAN</string>
+    <string name="product_name">品名</string>
+    <string name="group1_name">大分類</string>
+    <string name="group2_name">中分類</string>
+    <string name="classify_name">分類（大／中）</string>
+    <string name="publisher_name">出版社</string>
+    <string name="publish_date">発売日</string>
+    <string name="inventory_number">在庫数</string>
+    <string name="overall_rank">総合ランク</string>
+    <string name="flag_10">10%</string>
+    <string name="flag_20">20%</string>
+    <string name="flag_30">30%</string>
+    <string name="distinguish">区分</string>
+    <string name="distinguish_return">返品</string>
+    <string name="logout_msg">ログアウトを行います。\nよろしいですか？</string>
+    <string name="cancel_msg">スキャンした商品の\n取消を行います。\nよろしいですか？</string>
+    <string name="logout_yes">はい</string>
+    <string name="logout_no">いいえ</string>
+    <string name="retry">リトライ</string>
+    <string name="cancel">キャンセル</string>
+
+    <string name="titleRank">品揃確認場所選択</string>
+    <string name="titleSelect">品揃商品抽出条件選択</string>
+    <string name="titleSelectDate">委託（期間）</string>
+
+    <string name="rank_arrival">入荷</string>
+    <string name="rank_platform1">平台新</string>
+    <string name="rank_platform2">平台既</string>
+    <string name="rank_surface">面陳</string>
+    <string name="rank_shelter">棚差</string>
+    <string name="rank_return">返品</string>
+    <string name="rank_period">委託</string>
+    <string name="rank_regular">常備</string>
+
+    <string name="calendar_prev_month">前</string>
+    <string name="calendar_this_month">当月</string>
+    <string name="calendar_next_month">翌</string>
+
+    <string name="select_cagtagory">分類別</string>
+    <string name="select_publisher">出版社別</string>
+    <string name="select_from">~</string>
+    <string name="select_button">決定</string>
+    <string name="select_all_year">すべて</string>
+    <string name="select_1_year_ago">発売日1年前</string>
+    <string name="select_2_year_ago">発売日2年前</string>
+    <string name="select_3_year_ago">発売日3年前</string>
+    <string name="select_4_year_ago">発売日4年前</string>
+    <string name="select_5_year_ago">発売日5年前</string>
+    <string name="select_null">発売日NULL</string>
+
+    <string name="scanner_fragment_activity">ZBar Barcode Scanner</string>
+    <string name="fragment_barcode">Barcode Scan</string>
+    <string name="toggle_flash">Flash</string>
+    <string name="flash_on">Flash [ON]</string>
+    <string name="flash_off">Flash [OFF]</string>
+    <string name="auto_focus_on">Auto Focus [ON]</string>
+    <string name="auto_focus_off">Auto Focus [OFF]</string>
+    <string name="formats">Formats</string>
+    <string name="choose_formats">Choose Formats</string>
+    <string name="select_camera">Select a Camera</string>
+    <string name="ok_button">OK</string>
+
+    <string name="january">1月</string>
+    <string name="february">2月</string>
+    <string name="march">3月</string>
+    <string name="april">4月</string>
+    <string name="may">5月</string>
+    <string name="june">6月</string>
+    <string name="july">7月</string>
+    <string name="august">8月</string>
+    <string name="september">9月</string>
+    <string name="october">10月</string>
+    <string name="november">11月</string>
+    <string name="december">12月</string>
+
+    <string name="sunday">日</string>
+    <string name="monday">月</string>
+    <string name="tuesday">火</string>
+    <string name="wednesday">水</string>
+    <string name="thursday">木</string>
+    <string name="friday">金</string>
+    <string name="saturday">土</string>
+
+    <string-array name="days_sunday_array">
+        <item>日</item>
+        <item>月</item>
+        <item>火</item>
+        <item>水</item>
+        <item>木</item>
+        <item>金</item>
+        <item>土</item>
+    </string-array>
+
+    <integer name="viewfinder_border_width">4</integer>
+    <integer name="viewfinder_border_length">60</integer>
+    <string name="jan_cd_2">JAN</string>
+
+    <string name="filter_nationwide_10">10%</string>
+    <string name="filter_nationwide_20">20%</string>
+
+    <string name="writer_name">著者</string>
+    <string name="price">単価</string>
+    <string name="first_supply_date">初回入荷日</string>
+    <string name="last_supply_date">最終入荷日</string>
+    <string name="last_sales_date">最終売上日</string>
+    <string name="last_order_date">最終発注日</string>
+    <string name="supply_terms_cd">常備奇託</string>
+    <string name="default_percent">30%</string>
+    <string name="inventory_number_2">在庫数</string>
+    <string name="year_rank">売上順位</string>
+    <string name="joubi">対象外</string>
+    <string name="trn_date">更新日</string>
+    <string name="total_sales">累計売上数</string>
+    <string name="total_supply">累計仕入数</string>
+    <string name="total_return">累計返品数</string>
+
+    <string name="select_all">すべて</string>
+    <string name="return_candidate_setting">返品候補設定</string>
+    <string name="button_decision">決定</string>
+    <string name="button_classification">分類</string>
+    <string name="button_publisher">出版社</string>
+    <string name="button_release_date">発売日</string>
+    <string name="button_undisturbed">未動期間</string>
+    <string name="button_number_of_stocks">在庫数</string>
+    <string name="button_stock_percent">在庫％</string>
+    <string name="button_not_covered">対象外</string>yyyy
+    <string name="button_number_of_candidates">候補数</string>
+    <string name="button_number_of_books">冊数</string>
+    <string name="yes_standing">常備</string>
+    <string name="no_standing">なし</string>
+</resources>

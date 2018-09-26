@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/txv_author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/buttonselect"
+                    android:paddingEnd="74.5dp"
+                    android:paddingStart="@dimen/size5dp"
+                    android:text="@string/jan_cd_return"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail" />
+
+                <TextView
+                    android:id="@+id/txv_jan_cd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonselect"
+                    android:paddingLeft="@dimen/size5dp"
+                    android:text="JAN"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/buttonselect"
+                    android:paddingEnd="56dp"
+                    android:paddingStart="@dimen/size5dp"
+                    android:text="@string/group1_name"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/txv_group1_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonselect"
+                    android:paddingLeft="@dimen/size5dp"
+                    android:text="Group1 Name"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/buttonselect"
+                    android:paddingEnd="56dp"
+                    android:paddingStart="@dimen/size5dp"
+                    android:text="@string/group2_name"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/txv_group2_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonselect"
+                    android:paddingLeft="@dimen/size5dp"
+                    android:text="Group2 Name"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/location_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/buttonselect"
+                    android:paddingEnd="5.5dp"
+                    android:paddingStart="@dimen/size5dp"
+                    android:text="@string/location_id_return"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/txv_location_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonselect"
+                    android:paddingLeft="@dimen/size5dp"
+                    android:text="Location"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail" />
+            </LinearLayout>
+        </TableRow>
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/buttonselect"
+                    android:paddingEnd="73dp"
+                    android:paddingStart="@dimen/size5dp"
+                    android:text="@string/product_name"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/txv_product_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonselect"
+                    android:paddingLeft="@dimen/size5dp"
+                    android:text="Product Name"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/buttonselect"
+                    android:paddingEnd="73dp"
+                    android:paddingStart="@dimen/size5dp"
+                    android:text="@string/writer_name"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/txv_writer_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.09"
+                    android:background="@drawable/buttonselect"
+                    android:paddingLeft="@dimen/size5dp"
+                    android:text="Writer Name"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/buttonselect"
+                    android:paddingEnd="56dp"
+                    android:paddingStart="@dimen/size5dp"
+                    android:text="@string/publisher_name"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/txv_publisher_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonselect"
+                    android:paddingLeft="@dimen/size5dp"
+                    android:text="Publisher Name"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/buttonselect"
+                    android:paddingEnd="56dp"
+                    android:paddingStart="@dimen/size5dp"
+                    android:text="@string/publish_date"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/txv_publish_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonselect"
+                    android:paddingLeft="@dimen/size5dp"
+                    android:text="Publish Date"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/buttonselect"
+                    android:paddingEnd="73dp"
+                    android:paddingStart="@dimen/size5dp"
+                    android:text="@string/price"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/txv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonselect"
+                    android:paddingLeft="@dimen/size5dp"
+                    android:text="Price"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/buttonselect"
+                    android:paddingEnd="56dp"
+                    android:paddingLeft="@dimen/size5dp"
+                    android:text="@string/inventory_number_2"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/txv_inventory_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonselect"
+                    android:paddingLeft="@dimen/size5dp"
+                    android:text="Inventory Number"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/buttonselect"
+                    android:paddingStart="@dimen/size5dp"
+                    android:paddingEnd="22dp"
+                    android:text="@string/first_supply_date"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/txv_first_supply_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonselect"
+                    android:paddingLeft="@dimen/size5dp"
+                    android:text="First Supply Date"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/buttonselect"
+                    android:paddingStart="@dimen/size5dp"
+                    android:paddingEnd="22dp"
+                    android:text="@string/last_order_date"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/txv_last_order_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonselect"
+                    android:paddingLeft="@dimen/size5dp"
+                    android:text="Last Order Date"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/buttonselect"
+                    android:paddingStart="@dimen/size5dp"
+                    android:paddingEnd="22dp"
+                    android:text="@string/last_supply_date"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/txv_last_supply_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonselect"
+                    android:paddingLeft="@dimen/size5dp"
+                    android:text="Last Supply Date"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/buttonselect"
+                    android:paddingStart="@dimen/size5dp"
+                    android:paddingEnd="22dp"
+                    android:text="@string/last_sales_date"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/txv_last_sales_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonselect"
+                    android:paddingLeft="@dimen/size5dp"
+                    android:text="Last Sales Date"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/buttonselect"
+                    android:paddingEnd="22dp"
+                    android:paddingStart="@dimen/size5dp"
+                    android:text="@string/total_supply"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/txv_total_supply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonselect"
+                    android:paddingLeft="@dimen/size5dp"
+                    android:text="Total Supply"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/buttonselect"
+                    android:paddingEnd="22dp"
+                    android:paddingStart="@dimen/size5dp"
+                    android:text="@string/total_sales"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/txv_total_sales"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonselect"
+                    android:paddingLeft="@dimen/size5dp"
+                    android:text="Total Sales"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/buttonselect"
+                    android:paddingEnd="22dp"
+                    android:paddingStart="@dimen/size5dp"
+                    android:text="@string/total_return"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/txv_total_return"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonselect"
+                    android:paddingLeft="@dimen/size5dp"
+                    android:text="Total Return"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail" />
+            </LinearLayout>
+        </TableRow>
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/buttonselect"
+                    android:paddingEnd="39dp"
+                    android:paddingStart="@dimen/size5dp"
+                    android:text="@string/year_rank"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/txv_year_rank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonselect"
+                    android:paddingLeft="@dimen/size5dp"
+                    android:text="Year Rank"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail" />
+            </LinearLayout>
+        </TableRow>
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/buttonselect"
+                    android:paddingEnd="56dp"
+                    android:paddingStart="@dimen/size5dp"
+                    android:text="@string/joubi"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/txv_joubi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonselect"
+                    android:paddingLeft="@dimen/size5dp"
+                    android:text="Joubi"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextDetail" />
+            </LinearLayout>
+        </TableRow>
+    </TableLayout>
+</TableLayout>

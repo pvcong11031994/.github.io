@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_icon_group.xml",
+        "source": "C:\\Users\\cong-pv\\.android\\build-cache\\ab483ba8953d5cc63a6797369f681865ff7fd859\\output\\res\\layout-v21\\notification_template_icon_group.xml"
+    },
+    {
+        "merged": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action_tombstone.xml",
+        "source": "C:\\Users\\cong-pv\\.android\\build-cache\\ab483ba8953d5cc63a6797369f681865ff7fd859\\output\\res\\layout-v21\\notification_action_tombstone.xml"
+    },
+    {
+        "merged": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action.xml",
+        "source": "C:\\Users\\cong-pv\\.android\\build-cache\\ab483ba8953d5cc63a6797369f681865ff7fd859\\output\\res\\layout-v21\\notification_action.xml"
+    },
+    {
+        "merged": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_custom_big.xml",
+        "source": "C:\\Users\\cong-pv\\.android\\build-cache\\ab483ba8953d5cc63a6797369f681865ff7fd859\\output\\res\\layout-v21\\notification_template_custom_big.xml"
+    }
+]

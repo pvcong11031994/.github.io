@@ -1,0 +1,58 @@
+[
+    {
+        "merged": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_fab_out.xml",
+        "source": "C:\\Users\\cong-pv\\.android\\build-cache\\7a40096fc45c05540ae2ee5a627ab7b4b7843b33\\output\\res\\anim\\design_fab_out.xml"
+    },
+    {
+        "merged": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_shrink_fade_out_from_bottom.xml",
+        "source": "C:\\Users\\cong-pv\\.android\\build-cache\\ab483ba8953d5cc63a6797369f681865ff7fd859\\output\\res\\anim\\abc_shrink_fade_out_from_bottom.xml"
+    },
+    {
+        "merged": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_fade_in.xml",
+        "source": "C:\\Users\\cong-pv\\.android\\build-cache\\ab483ba8953d5cc63a6797369f681865ff7fd859\\output\\res\\anim\\abc_fade_in.xml"
+    },
+    {
+        "merged": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_bottom.xml",
+        "source": "C:\\Users\\cong-pv\\.android\\build-cache\\ab483ba8953d5cc63a6797369f681865ff7fd859\\output\\res\\anim\\abc_slide_in_bottom.xml"
+    },
+    {
+        "merged": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_exit.xml",
+        "source": "C:\\Users\\cong-pv\\.android\\build-cache\\ab483ba8953d5cc63a6797369f681865ff7fd859\\output\\res\\anim\\abc_popup_exit.xml"
+    },
+    {
+        "merged": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_grow_fade_in_from_bottom.xml",
+        "source": "C:\\Users\\cong-pv\\.android\\build-cache\\ab483ba8953d5cc63a6797369f681865ff7fd859\\output\\res\\anim\\abc_grow_fade_in_from_bottom.xml"
+    },
+    {
+        "merged": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_top.xml",
+        "source": "C:\\Users\\cong-pv\\.android\\build-cache\\ab483ba8953d5cc63a6797369f681865ff7fd859\\output\\res\\anim\\abc_slide_out_top.xml"
+    },
+    {
+        "merged": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_snackbar_out.xml",
+        "source": "C:\\Users\\cong-pv\\.android\\build-cache\\7a40096fc45c05540ae2ee5a627ab7b4b7843b33\\output\\res\\anim\\design_snackbar_out.xml"
+    },
+    {
+        "merged": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_fade_out.xml",
+        "source": "C:\\Users\\cong-pv\\.android\\build-cache\\ab483ba8953d5cc63a6797369f681865ff7fd859\\output\\res\\anim\\abc_fade_out.xml"
+    },
+    {
+        "merged": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_fab_in.xml",
+        "source": "C:\\Users\\cong-pv\\.android\\build-cache\\7a40096fc45c05540ae2ee5a627ab7b4b7843b33\\output\\res\\anim\\design_fab_in.xml"
+    },
+    {
+        "merged": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_enter.xml",
+        "source": "C:\\Users\\cong-pv\\.android\\build-cache\\ab483ba8953d5cc63a6797369f681865ff7fd859\\output\\res\\anim\\abc_popup_enter.xml"
+    },
+    {
+        "merged": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_top.xml",
+        "source": "C:\\Users\\cong-pv\\.android\\build-cache\\ab483ba8953d5cc63a6797369f681865ff7fd859\\output\\res\\anim\\abc_slide_in_top.xml"
+    },
+    {
+        "merged": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_bottom.xml",
+        "source": "C:\\Users\\cong-pv\\.android\\build-cache\\ab483ba8953d5cc63a6797369f681865ff7fd859\\output\\res\\anim\\abc_slide_out_bottom.xml"
+    },
+    {
+        "merged": "D:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_snackbar_in.xml",
+        "source": "C:\\Users\\cong-pv\\.android\\build-cache\\7a40096fc45c05540ae2ee5a627ab7b4b7843b33\\output\\res\\anim\\design_snackbar_in.xml"
+    }
+]

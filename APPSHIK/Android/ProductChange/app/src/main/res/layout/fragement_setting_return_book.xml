@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_decision"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right|center"
+            android:layout_marginRight="20dp"
+            android:background="@color/colorButton"
+            android:text="@string/button_decision"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="303dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="15dp"
+            android:text="@string/return_candidate_setting"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sizeTextFragmentSetting" />
+
+        <ImageButton
+            android:id="@+id/imb_back"
+            android:layout_width="40dp"
+            android:layout_height="60dp"
+            android:background="@android:color/transparent"
+            android:padding="15dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/return01" />
+
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:weightSum="1">
+
+                    <Button
+                        android:id="@+id/btn_classification"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/buttonselect"
+                        android:padding="@dimen/paddingFragmentSetting"
+                        android:text="@string/button_classification"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/sizeTextFragmentSetting" />
+
+                    <TextView
+                        android:id="@+id/txv_classification"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/buttonselect"
+                        android:padding="@dimen/paddingFragmentSetting"
+                        android:text="@string/select_all"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/sizeTextFragmentSetting" />
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:weightSum="1">
+
+                    <Button
+                        android:id="@+id/btn_publisher"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/buttonselect"
+                        android:padding="@dimen/paddingFragmentSetting"
+                        android:text="@string/button_publisher"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/sizeTextFragmentSetting" />
+
+                    <TextView
+                        android:id="@+id/txv_publisher"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/buttonselect"
+                        android:padding="@dimen/paddingFragmentSetting"
+                        android:text="@string/select_all"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/sizeTextFragmentSetting" />
+
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:weightSum="1">
+
+                    <Button
+                        android:id="@+id/btn_release_date"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/buttonselect"
+                        android:padding="@dimen/paddingFragmentSetting"
+                        android:text="@string/button_release_date"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/sizeTextFragmentSetting" />
+
+                    <TextView
+                        android:id="@+id/txv_release_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/buttonselect"
+                        android:padding="@dimen/paddingFragmentSetting"
+                        android:text="@string/select_all"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/sizeTextFragmentSetting" />
+
+
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:weightSum="1">
+
+                    <Button
+                        android:id="@+id/btn_undisturbed"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/buttonselect"
+                        android:padding="@dimen/paddingFragmentSetting"
+                        android:text="@string/button_undisturbed"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/sizeTextFragmentSetting" />
+
+                    <TextView
+                        android:id="@+id/txv_undisturbed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/buttonselect"
+                        android:padding="@dimen/paddingFragmentSetting"
+                        android:text="@string/select_all"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/sizeTextFragmentSetting" />
+
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:weightSum="1">
+
+                    <Button
+                        android:id="@+id/btn_number_of_stocks"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/buttonselect"
+                        android:padding="@dimen/paddingFragmentSetting"
+                        android:text="@string/button_number_of_stocks"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/sizeTextFragmentSetting" />
+
+                    <TextView
+                        android:id="@+id/txv_number_of_stocks"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/buttonselect"
+                        android:padding="@dimen/paddingFragmentSetting"
+                        android:text="@string/select_all"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/sizeTextFragmentSetting" />
+
+
+                </LinearLayout>
+            </TableRow>
+
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:weightSum="1">
+
+                    <Button
+                        android:id="@+id/btn_stocks_percent"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/buttonselect"
+                        android:padding="@dimen/paddingFragmentSetting"
+                        android:text="@string/button_stock_percent"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/sizeTextFragmentSetting" />
+
+                    <TextView
+                        android:id="@+id/txv_stocks_percent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/buttonselect"
+                        android:padding="@dimen/paddingFragmentSetting"
+                        android:text="@string/select_all"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/sizeTextFragmentSetting" />
+
+
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:weightSum="1">
+
+                    <Button
+                        android:id="@+id/btn_not_covered"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/buttonselect"
+                        android:padding="@dimen/paddingFragmentSetting"
+                        android:text="@string/button_not_covered"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/sizeTextFragmentSetting" />
+
+                    <ToggleButton
+                        android:id="@+id/tb_not_covered"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_weight="1"
+                        android:background="@drawable/buttonselect"
+                        android:padding="@dimen/paddingFragmentSetting"
+                        android:text="@string/select_all"
+                        android:textColor="@color/colorWhite"
+                        android:textOff="@string/no_standing"
+                        android:textOn="@string/yes_standing"
+                        android:checked="true"
+                        android:textSize="@dimen/sizeTextFragmentSetting"
+                        android:textAlignment="viewStart"/>
+
+
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow android:paddingTop="20dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonselect"
+                    android:paddingLeft="15dp"
+                    android:text="@string/button_number_of_candidates"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextFragmentSetting" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonselect"
+                    android:paddingLeft="15dp"
+                    android:text="@string/button_number_of_books"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextFragmentSetting" />
+            </TableRow>
+
+            <TableRow android:paddingBottom="@dimen/size20dp">
+
+                <TextView
+                    android:id="@+id/txv_number_of_candidates"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonselect"
+                    android:paddingRight="15dp"
+                    android:text="0"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextFragmentSetting" />
+
+                <TextView
+                    android:id="@+id/txv_number_of_books"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonselect"
+                    android:paddingRight="15dp"
+                    android:text="0"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sizeTextFragmentSetting" />
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+</LinearLayout>

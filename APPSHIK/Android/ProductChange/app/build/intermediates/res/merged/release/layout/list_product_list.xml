@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txv_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/txv_location_id"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:padding="@dimen/size5dp"
+                android:text="@string/location_id"
+                android:textColor="@color/colorBlack" />
+        </FrameLayout>
+        <!-- View Jan_cd START -->
+        <View
+            android:id="@+id/v_jan_cd"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorBlack" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/txv_jan_cd"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="left"
+                android:padding="@dimen/size5dp"
+                android:text="@string/jan_cd"
+                android:textColor="@color/colorBlack" />
+        </FrameLayout>
+        <!-- View Jan_cd END -->
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorBlack" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/txv_name_header"
+                android:layout_width="130dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="left"
+                android:padding="@dimen/size5dp"
+                android:text="@string/product_name"
+                android:textColor="@color/colorBlack" />
+        </FrameLayout>
+
+        <!-- View publisher name return START -->
+        <View
+            android:id="@+id/v_publisher_name_return"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorBlack" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/txv_publisher_name_return"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="left"
+                android:padding="@dimen/size5dp"
+                android:text="@string/publisher_name"
+                android:textColor="@color/colorBlack" />
+        </FrameLayout>
+        <!-- View publisher name return  END -->
+
+        <!-- View group 1 name START -->
+        <View
+            android:id="@+id/v_group1_name"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorBlack" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/txv_group1_name"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="left"
+                android:padding="@dimen/size5dp"
+                android:text="@string/group1_name"
+                android:textColor="@color/colorBlack" />
+        </FrameLayout>
+        <!-- View group 1 name END -->
+
+        <!-- View group 2 name START -->
+        <View
+            android:id="@+id/v_group2_name"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorBlack" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/txv_group2_name"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="left"
+                android:padding="@dimen/size5dp"
+                android:text="@string/group2_name"
+                android:textColor="@color/colorBlack" />
+        </FrameLayout>
+        <!-- View group 2 name END -->
+
+        <View
+            android:id="@+id/v_classify_header"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorBlack" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/txv_classify_header"
+                android:layout_width="130dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:padding="@dimen/size5dp"
+                android:text="@string/classify_name"
+                android:textColor="@color/colorBlack" />
+        </FrameLayout>
+
+        <View
+            android:id="@+id/v_publisher_name"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorBlack" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/txv_publisher_name"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:padding="@dimen/size5dp"
+                android:text="@string/publisher_name"
+                android:textColor="@color/colorBlack" />
+        </FrameLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorBlack" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/txv_publish_date_header"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="@dimen/size5dp"
+                android:text="@string/publish_date"
+                android:textColor="@color/colorBlack" />
+        </FrameLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorBlack" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/txv_inventory_number_header"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="@dimen/size5dp"
+                android:text="@string/inventory_number"
+                android:textColor="@color/colorBlack" />
+        </FrameLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorBlack" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/txv_rank"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="@dimen/size5dp"
+                android:text="@string/overall_rank"
+                android:textColor="@color/colorBlack" />
+        </FrameLayout>
+
+        <!-- View flag 10 name START -->
+        <View
+            android:id="@+id/v_flag_10"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorBlack" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/txv_flag_10"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:padding="@dimen/size5dp"
+                android:text="@string/flag_10"
+                android:textColor="@color/colorBlack" />
+        </FrameLayout>
+        <!-- View flag 10 name END -->
+
+        <!-- View flag 20 name START -->
+        <View
+            android:id="@+id/v_flag_20"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorBlack" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/txv_flag_20"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:padding="@dimen/size5dp"
+                android:text="@string/flag_20"
+                android:textColor="@color/colorBlack" />
+        </FrameLayout>
+        <!-- View flag 20 name END -->
+
+        <!-- View flag 30 name START -->
+        <View
+            android:id="@+id/v_flag_30"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorBlack" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/txv_flag_30"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:padding="@dimen/size5dp"
+                android:text="@string/flag_30"
+                android:textColor="@color/colorBlack" />
+        </FrameLayout>
+        <!-- View flag 10 name END -->
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorBlack" />
+</LinearLayout>

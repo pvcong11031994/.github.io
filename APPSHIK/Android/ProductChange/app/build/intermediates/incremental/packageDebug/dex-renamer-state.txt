@@ -1,0 +1,7 @@
+#Sat Sep 22 17:11:47 ICT 2018
+base.0=D\:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_b4932cfabe8f24bd66ac9b18f30c9cea2786418d
+renamed.1=classes.dex
+renamed.0=classes2.dex
+file.1=D\:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run-bootstrap_a08ed1e62fc1372682d3838b570450fda7005a26\\classes.dex
+base.1=D\:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run-bootstrap_a08ed1e62fc1372682d3838b570450fda7005a26
+file.0=D\:\\Project\\shouhin_irekae\\Android\\ProductChange\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_b4932cfabe8f24bd66ac9b18f30c9cea2786418d\\classes.dex

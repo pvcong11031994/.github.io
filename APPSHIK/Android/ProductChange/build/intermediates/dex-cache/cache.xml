@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="D:\Project\shouhin_irekae\Android\ProductChange\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="D:\Project\shouhin_irekae\Android\ProductChange\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_b4932cfabe8f24bd66ac9b18f30c9cea2786418d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Project\shouhin_irekae\Android\ProductChange\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="2980fad0f7d4e953ed2a2f05c00e8fa15f25fea7">
+        <dex dex="D:\Project\shouhin_irekae\Android\ProductChange\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_a08ed1e62fc1372682d3838b570450fda7005a26\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Project\shouhin_irekae\Android\ProductChange\app\libs\ZBarDecoder.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="491976f010e6196c0b1a0470c4657f295ed933fc">
+        <dex dex="D:\Project\shouhin_irekae\Android\ProductChange\app\build\intermediates\transforms\dex\debug\folders\1000\2\ZBarDecoder_655faf7c74ce1d685dd515129a46147a1d35b242\classes.dex" />
+    </item>
+
+</items>
