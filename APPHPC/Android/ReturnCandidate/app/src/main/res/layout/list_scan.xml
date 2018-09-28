@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGrey"
+    android:weightSum="2">
+
+    <TextView
+        android:id="@+id/txv_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/txv_column1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="ISBN"
+        android:textSize="17sp"
+        android:textColor="@color/colorWhite"
+        android:padding="9sp"
+        android:gravity="center_vertical"/>
+
+    <TextView
+        android:id="@+id/txv_column2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/name"
+        android:textColor="@color/colorGreen"
+        android:textSize="14sp"
+        android:padding="11sp"
+        android:gravity="center"/>
+</LinearLayout>

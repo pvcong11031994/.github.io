@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:layout_gravity="center_vertical"
+              android:layout_marginLeft="@dimen/activity_horizontal_margin"
+              android:layout_marginRight="@dimen/activity_horizontal_margin"
+              android:orientation="vertical"
+              android:weightSum="7">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_gravity="center_vertical"
+        android:background="@android:color/transparent"
+        android:src="@drawable/sa_logo"
+        android:layout_weight="1"/>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_gravity="left"
+        android:src="@drawable/user_id"
+        android:layout_weight="1"/>
+
+    <EditText
+        android:id="@+id/edt_userid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/textborder"
+        android:inputType="text"
+        android:padding="10dp"
+        android:layout_weight="1"/>
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_gravity="left"
+        android:src="@drawable/password"
+        android:layout_weight="1"/>
+
+    <EditText
+        android:id="@+id/edt_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/textborder"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:layout_weight="1"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_login"
+        android:layout_width="185dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="24dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/login"
+        android:layout_weight="1"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/vj_rogo"
+        android:layout_marginBottom="@dimen/size10dp"
+        android:layout_weight="1"/>
+
+</LinearLayout>
