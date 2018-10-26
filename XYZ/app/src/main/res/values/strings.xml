@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">雑誌返品チェック</string>
+    <string name="action_settings">Settings</string>
+    <string name="userid">ユーザID</string>
+    <string name="password">パスワード</string>
+
+    <!-- scan -->
+    <string name="logout">ログアウト</string>
+    <string name="send_data">送信</string>
+    <string name="input_jan_code">手入力</string>
+    <string name="ISBN">ISBN</string>
+    <string name="name">書名</string>
+    <string name="number_stock">数量</string>
+    <string name="cancel_msg">スキャンした商品の\n取消を行います。\nよろしいですか？</string>
+    <!-- scan -->
+
+    <!-- detail product -->
+    <string name="jan_cd">JAN</string>
+    <string name="jan_code">JANコード</string>
+    <string name="group1_name">大分類</string>
+    <string name="group2_name">中分類</string>
+    <string name="location_id">ロケーション</string>
+    <string name="product_name">品名</string>
+    <string name="writer_name">著者</string>
+    <string name="publisher_name">出版社</string>
+    <string name="publish_date">発売日</string>
+    <string name="price">価格</string>
+    <string name="number_return">数量</string>
+    <string name="first_supply_date">初回入荷日</string>
+    <string name="last_supply_date">最終入荷日</string>
+    <string name="last_sales_date">最終売上日</string>
+    <string name="last_order_date">最終発注日</string>
+    <string name="total_supply">累計仕入数</string>
+    <string name="total_sales">累計売上数</string>
+    <string name="total_return">累計返品数</string>
+    <string name="year_rank">売上順位</string>
+    <string name="joubi">対象外</string>
+    <string name="submit_edit">保存</string>
+    <!-- detail product -->
+
+</resources>

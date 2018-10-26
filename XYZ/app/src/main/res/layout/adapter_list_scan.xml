@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGrey"
+    >
+
+    <TextView
+        android:id="@+id/txv_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/txv_column1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:gravity="center_vertical"
+        android:padding="9sp"
+        android:text="ISBN"
+        android:textColor="@color/colorWhite"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/txv_column2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        android:padding="11sp"
+        android:text="@string/name"
+        android:textColor="@color/colorGreen"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/txv_column3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.7"
+        android:gravity="center"
+        android:padding="11sp"
+        android:text="@string/number_stock"
+        android:textColor="@color/colorGreen"
+        android:textSize="14sp" />
+</LinearLayout>
